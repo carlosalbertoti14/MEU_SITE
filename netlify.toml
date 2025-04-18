@@ -1,0 +1,3 @@
+[build]
+  publish = "MEU_SITE"
+  command = "npm run build"
