@@ -1,0 +1,287 @@
+@charset "UTF=8";
+
+/*  SITES RELEVANTES
+
+Curso em Vídeo Modulo 2
+https://www.youtube.com/watch?v=I_vi2q6sC1k&list=PLHz_AreHm4dlUpEXkY1AyVLQGcpSgVF8s&index=36
+
+Fontes do Google
+https://fonts.google.com/
+
+caracteres especiais
+https://emojipedia.org/check-mark
+
+
+
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+@font-face {
+    font-family: "Android";
+    src: url("../fontes/idroid.otf") format("opentype");
+    font-weight: normal;
+}
+
+:root {
+    --cor0: #31d9f7;
+    --cor1: #83b3e1;
+    --cor2: #3e8feb;
+    --cor3: #1273c4;
+    --cor4: #1d3fda;
+    --cor5: #200e86;
+    --cor6: #000000;
+
+    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
+    --fonte-destaque: "Bebas Neue", cursive;
+    --fonte-android: "Android", cursive;
+}
+
+* {
+    /* configuração global para todos os elementos */
+    margin: 0px;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+    color: var(--cor4);
+}
+
+body {
+    
+
+font-family: var(--fonte-padrao);
+
+}
+
+a.externo::after {
+    content: '\🔗';
+}
+
+header {
+
+    min-height: 50px;
+    text-align: center;
+    padding-top: 40px;
+
+}
+
+header > h1 {
+    color: white;
+    font-family: var(--fonte-destaque);
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+header > p {
+    font-family: var(--fonte-destaque);
+    font-size: 1.2;
+    color: white;
+    max-width: 500px;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+
+}
+/**********************************  inicio configuração do menu ***********************************/
+#divcentral{
+    display: flex;
+    max-width: 800px; 
+    margin: auto;
+    justify-content: space-around;
+}
+
+#divmenu {
+  /*   background-color: #f0f0f0; */
+    max-width: 800px;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+#navmenu{
+    display: flex; /* Alinha os itens horizontalmente */
+    width: 800px;
+    justify-content: space-around;
+    padding: 10px;
+    text-shadow: 0px 7px 9px rgba(0, 0, 0, 0.452);
+   
+}
+
+nav a {
+
+    color: var(--cor2);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: var(--fonte-destaque);
+    font-size: 2EM;
+    text-decoration: none;
+    font-weight: bold;
+    transition-duration: .5s;    /* da um atraso para fazser o efeito*/
+    
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.089);
+    color: white;
+
+}
+
+  /* Media query para telas menores (ex: tablets) */
+  @media (max-width: 768px) {
+
+    #divcentral{
+
+        max-width: 470px;
+    }
+
+    #divmenu {
+        /*   background-color: #f0f0f0; */
+          max-width: 470px;
+          padding: 0px;
+          justify-content: space-around;
+      }
+
+      #navmenu{
+        max-width: 450px;
+
+    }
+
+    #navmenu a {
+        font-size: 1.5em; /* Diminui o tamanho da fonte */
+        padding: 8px 12px;
+    }
+}
+
+/********************************** fim configuração do menu ***********************************/
+main {
+    min-height: 940px;
+    min-width: 300px;
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 20px;
+    /* background: white; */
+    /* box-shadow: 0px 0px 10px black; */
+    /* configurar borda individualmente */
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+main p{
+    margin: 15px 0px;
+    text-align: justify;
+    text-indent: 30px;    /* é o quanto ele dará de recuo de paragrafo no inicio do texto*/
+    font-size: 1em;
+    line-height: 2em;     /*  é o espaçamento de uma linha para outra linha de baixo e de cima, parecido com o padding  */
+}
+
+main strong {
+    color: var(--cor4);
+    font-weight: bold;
+
+}
+
+main a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--cor5);
+    background: var(--cor1);
+    padding: 2px 6px;
+}
+
+main a:hover {
+    text-decoration: underline;
+
+    color: pink;
+}
+
+main img.pequena {
+    max-width: 400px;   /* não deixa que ela estique muito, para não desfocar */
+    /* para centralizer uma imagem, precisamos transfoma-la em bloco */
+    display: block;
+    margin: auto;
+}
+
+main h1 {
+    color: var(--cor5);
+    font-family: var(--fonte-android);
+}
+
+main h2 {
+    font-family: var(--fonte-android);
+    color: var(--cor4); 
+    font-size: 1.3em;
+    background-image: linear-gradient(to right, var(--cor1,), transparent);
+    text-indent: 8px;
+}
+
+main img {
+    width: 100%;
+}
+
+div.video {
+    background-color: var(--cor5);
+    margin-bottom: 30px;
+    margin: 0px -20px 30px;
+    padding: 20px;
+    padding-bottom: 50%;
+    position: relative;
+}
+
+div.video > iframe {
+    position: absolute;   /* só é possível usar top, left, width e height, usando position: absolute; onde a div de cima tiver o position: relative;  */
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+
+}
+
+footer {
+    background: var(--cor5);
+    color: white;
+    text-align: center;
+    font-size: 0.8;
+    padding: 5px;
+}
+
+aside {
+    background: var(--cor1);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px black;
+}
+
+aside > ul {
+    list-style-type: '\✔️';     /*  caso queria colocar um espaço maoir entre o simbolo e o texto basta digitar :  '\✔️'\00A0'; e assim por diante, caso queira colocar mais espaços ou simbolos */  
+    list-style-position: inside;  /*  posiciona a bolinha da lista para dentro da lista  */
+    columns: 2;
+
+
+}
+
+aside > h3 {
+    background: var(--cor4);
+    color: white;
+    padding: 5px;
+    margin: -10px -10px 0px -10px;   /*  botamos valores negativos para ela crescer para o lado oposto */
+    border-radius: 10px 10px 0px 0px;
+}
+
+
+footer a {
+    color: white;
+    font-weight: bolder;
+    text-decoration: none; 
+    
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: var(--cor1);
+}
