@@ -7,7 +7,7 @@
 
         <link
         rel="shortcut icon"
-        href="imagens/favicon.ico"
+        href="midia/favicon.ico"
         type="image/x-icon"
     />
     <link rel="stylesheet" href="estilos/style.css" />
@@ -49,7 +49,7 @@
             
                         <a href="#">UTILITÁRIOS</a>
                         <ul id="utilitarioslist" class="submenu">
-                            <li><a href="#">MERCADO</a></li>
+                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> <li><a href="#">CALCULOS ELABORADOS</a></li>
                             <li><a href="#">CALCULOS ELABORADOS</a></li>
                             <li><a href="#">PINTAR CARRO (GUIA)</a></li>
                             <li><a href="#">ALGUNS SITES UTEIS</a></li>
@@ -67,11 +67,87 @@
             </div>
 
 
-            <main>
+
+
+            <div id="mainpai">
+                <div id="mianfilho">
+                    <main>
+
+                        <div id="mercado">
+
+                            <h1>Comparativo de Preços do Mercado</h1>
+
+
+                            <div class="botoes-controle">
+                                <button id="resetar-valores">Resetar Valores</button>
+                                <button id="fechar-mercado">Fechar Comparativo</button>
+                            </div>
+
+
+                            <div class="produto-card">
+                                <h2 class="produto-nome" data-produto-id="produto1">Produto 1</h2>
+                                <p>Valor: <input type="number" id="produto1-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto1-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto1-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto1-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="produto-card">
+                                <h2 class="produto-nome" data-produto-id="produto2">Produto 2</h2>
+                                <p>Valor: <input type="number" id="produto2-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto2-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto2-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto2-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="produto-card blanca">
+                                <h2 class="produto-nome" data-produto-id="produto3">Produto 3</h2>
+                                <p>Valor: <input type="number" id="produto3-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto3-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto3-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto3-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="menor-preco">
+                                <p>O menor preço é: <span id="menor-preco-produto"></span> <span id="menor-preco-valor"></span></p>
+                            </div>
+                    
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
 
                 
+                    </main>
+                </div>
+            </div>
 
-            </main>
+
+
+
+
         <footer>
             ENTRAR
 
@@ -79,5 +155,6 @@
 
 
         <script src="script/MENU.js"></script> 
+        <script src="script/MERCADO.js"></script>
     </body>
 </html>

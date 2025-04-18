@@ -24,7 +24,7 @@ https://emojipedia.org/check-mark
 }
 
 :root {
-    --cor0: #31d9f7;
+    --cor0: #ddedf0;
     --cor1: #83b3e1;
     --cor2: #3e8feb;
     --cor3: #1273c4;
@@ -49,9 +49,13 @@ a {
     color: var(--cor4);
 }
 
+h1 {
+    text-align: center;
+}
+
 body {
     
-
+background-color: #000000;
 font-family: var(--fonte-padrao);
 
 }
@@ -159,7 +163,8 @@ ul li {
 }
 
 ul#projetolist{
-    margin-left: 20%;
+/*     margin-top: -10px; */
+    margin-left: 25%;
 
 }
 
@@ -169,7 +174,7 @@ ul#utilitarioslist{
 }
 
 ul#sobrelist{
-    margin-left: 70%;
+    margin-left: 80%;
     
 }
 
@@ -344,3 +349,68 @@ footer a:hover {
     text-decoration: underline;
     color: var(--cor1);
 }
+
+/**************************************CONFIGURAÇÃO DO MERCADO*********************** */
+#mercado{
+   display: none;
+   background-color: var(--cor0);
+   padding: 10px;
+   
+   max-width: 800px;
+   margin: 0 auto;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.produto-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+
+.menor-preco {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.blanca .preco-volume {
+    color: red; /* Indica o erro #DIV/0! */
+
+}
+
+/* ... seus estilos CSS anteriores ... */
+
+.botoes-controle {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+    justify-content: center;
+}
+
+.botoes-controle button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #eee;
+}
+
+.botoes-controle button:hover {
+    background-color: #ddd;
+}
+
+/**************************************CONFIGURAÇÃO DO MERCADO*********************** */
