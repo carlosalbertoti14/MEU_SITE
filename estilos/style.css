@@ -131,8 +131,60 @@ nav a:hover {
 
 }
 
+/* submenu */
+
+#divmenu {
+    position: relative; /* Define o contexto de posicionamento */
+}
+
+ul.submenu {
+    display: none; /* Esconde o submenu inicialmente */
+    position: absolute; /* Permite que o submenu flutue */
+    top: 100%; /* Posiciona logo abaixo do link PROJETOS */
+    left: 0; /* Alinha à esquerda */
+    background-color: #00000075; /* Cor de fundo */
+    /* border: 1px solid #02020252;  Borda para o submenu */
+    list-style-type: none;
+    padding: 0;
+   
+    z-index: 1000; /* Garante que o submenu fique acima de outros elementos */
+    width: 200px; /* Largura do submenu */
+}
+
+ul#projetolist{
+    margin-left: 20%;
+
+}
+
+ul#utilitarioslist{
+    margin-left: 40%;
+    
+}
+
+ul#sobrelist{
+    margin-left: 60%;
+    
+}
+
+ul.submenu li {
+    padding: 10px;
+}
+
+ul.submenu a {
+    text-decoration: none;
+    color: var(--cor2);
+    display: block;
+}
+
+ul.submenu a:hover {
+    background-color: #f0f0f0; /* Efeito hover */
+}
+
+/* fim do submenu */
+
+
   /* Media query para telas menores (ex: tablets) */
-  @media (max-width: 768px) {
+  @media (max-width: 880px) {
 
     #divcentral{
 
