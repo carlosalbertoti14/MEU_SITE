@@ -51,6 +51,12 @@ a {
 
 h1 {
     text-align: center;
+    color: white;
+    font-family: var(--fonte-padrao);
+    font-weight: bolder;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
 }
 
 body {
@@ -72,26 +78,9 @@ header {
 
 }
 
-header > h1 {
-    color: white;
-    font-family: var(--fonte-destaque);
-    font-size: 3em;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
-}
 
-header > p {
-    font-family: var(--fonte-destaque);
-    font-size: 1.2;
-    color: white;
-    max-width: 500px;
-    margin: auto;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin: auto;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
 
-}
+
 /**********************************  inicio configuração do menu ***********************************/
 #divcentral{
     display: flex;
@@ -122,7 +111,7 @@ nav a {
     padding: 10px;
     border-radius: 5px;
     font-family: var(--fonte-destaque);
-    font-size: 2EM;
+    font-size: 2em;
     text-decoration: none;
     font-weight: bold;
     transition-duration: .5s;    /* da um atraso para fazser o efeito*/
@@ -237,7 +226,7 @@ main {
 }
 
 main p{
-    margin: 15px 0px;
+    margin: 0px 0px;
     text-align: justify;
     text-indent: 30px;    /* é o quanto ele dará de recuo de paragrafo no inicio do texto*/
     font-size: 1em;
@@ -273,11 +262,11 @@ main img.pequena {
 
 main h1 {
     color: var(--cor5);
-    font-family: var(--fonte-android);
+
 }
 
 main h2 {
-    font-family: var(--fonte-android);
+
     color: var(--cor4); 
     font-size: 1.3em;
     background-image: linear-gradient(to right, var(--cor1,), transparent);

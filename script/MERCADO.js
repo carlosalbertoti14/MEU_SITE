@@ -108,7 +108,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener para o link "MERCADO" no menu
     mostrarMercadoLink.addEventListener('click', function(event) {
         event.preventDefault(); // Evita que o link navegue para outra página (se tiver um href)
-        mercadoDiv.style.display = 'block';
+        // Verifica se a lista já está visível
+        if (mercadoDiv.style.display === 'block') {
+            mercadoDiv.style.display = 'none'; // Se estiver visível, esconde
+        } else {
+            mercadoDiv.style.display = 'block'; // Se estiver escondida, mostra
+        }
     });
 
     // Calcular inicialmente ao carregar a página
