@@ -189,18 +189,18 @@ ul.submenu a:hover {
 
     #divcentral{
 
-        max-width: 470px;
+        width: auto;
     }
 
     #divmenu {
         /*   background-color: #f0f0f0; */
-          max-width: 470px;
+           width: auto;
           padding: 0px;
           justify-content: space-around;
       }
 
       #navmenu{
-        max-width: 450px;
+         width: auto;
 
     }
 
