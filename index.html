@@ -49,8 +49,8 @@
             
                         <a href="#">UTILITÁRIOS</a>
                         <ul id="utilitarioslist" class="submenu">
-                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> <li><a href="#">CALCULOS ELABORADOS</a></li>
-                            <li><a href="#">CALCULOS ELABORADOS</a></li>
+                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
+                            <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
                             <li><a href="#">PINTAR CARRO (GUIA)</a></li>
                             <li><a href="#">ALGUNS SITES UTEIS</a></li>
                         </ul>
@@ -93,7 +93,7 @@
                                 <p>Volume Total: <span class="vol-total"></span></p>
                                 <p>Preço por Volume: <span class="preco-volume"></span></p>
                                 <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
                             </div>
 
                             <div class="produto-card">
@@ -105,7 +105,7 @@
                                 <p>Volume Total: <span class="vol-total"></span></p>
                                 <p>Preço por Volume: <span class="preco-volume"></span></p>
                                 <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
                             </div>
 
                             <div class="produto-card blanca">
@@ -117,7 +117,7 @@
                                 <p>Volume Total: <span class="vol-total"></span></p>
                                 <p>Preço por Volume: <span class="preco-volume"></span></p>
                                 <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>Pago a Mais: <span class="pago-a-mais"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
                             </div>
 
                             <div class="menor-preco">
@@ -130,6 +130,56 @@
                         </div>
 
 
+                        <div id="soma_dinamica">
+
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>SOMA</th>
+                                        <th>OPERADOR</th>
+                                        <th>ULTIPLICADOR</th>
+                                        <th>RESULTADO</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabela-corpo">
+                                    <tr>
+                                        <td><input type="number" class="soma" value="5"></td>
+                                        <td>
+                                            <select class="operador">
+                                                <option value="multiplicacao">Multiplicação</option>
+                                                <option value="divisao">Divisão</option>
+                                                <option value="soma">Soma</option>
+                                                <option value="raiz">Raiz Quadrada</option>
+                                                <option value="elevado">Elevado a</option>
+                                                <option value="porcentagem">Porcentagem de</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" class="multiplicador" value="52"></td>
+                                        <td class="resultado"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="number" class="soma" value="10"></td>
+                                        <td>
+                                            <select class="operador">
+                                                <option value="multiplicacao">Multiplicação</option>
+                                                <option value="divisao" selected>Divisão</option>
+                                                <option value="soma">Soma</option>
+                                                <option value="raiz">Raiz Quadrada</option>
+                                                <option value="elevado">Elevado a</option>
+                                                <option value="porcentagem">Porcentagem de</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" class="multiplicador" value="15"></td>
+                                        <td class="resultado"></td>
+                                    </tr>
+                                    </tbody>
+                            </table>
+
+                            <button id="calcular">Calcular Resultados</button>
+
+
+
+                        </div>
 
 
 

@@ -15,61 +15,84 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
 
-    function atualizarComparativo() {
-        let menorPreco = Infinity;
-        let produtoMenorPreco = '';
+function atualizarComparativo() {
+    let menorPrecoVolume = Infinity;
+    let produtoMenorPrecoNome = '';
+    const volumesTotais = {};
+    const nomesProdutosMap = {};
 
-        produtos.forEach(produtoElement => {
-            const nomeElement = produtoElement.querySelector('.produto-nome');
-            const nomeProduto = nomeElement.textContent.toLowerCase().replace(/\s+/g, '');
-            const produtoId = nomeElement.dataset.produtoId;
-            const valor = parseFloat(inputs[produtoId]?.valor?.value) || 0;
-            const volume = parseFloat(inputs[produtoId]?.volume?.value) || 0;
-            const qntPac = parseInt(inputs[produtoId]?.qntPac?.value) || 0;
-            const qnt2 = parseInt(inputs[produtoId]?.qnt2?.value) || 0;
-            const volTotalElement = produtoElement.querySelector('.vol-total');
-            const precoVolumeElement = produtoElement.querySelector('.preco-volume');
-            const deveriaSerElement = produtoElement.querySelector('.deveria-ser');
-            const pagoAMaisElement = produtoElement.querySelector('.pago-a-mais');
+    // Primeiro loop: Calcular o volume total e o preço por volume de cada produto
+    produtos.forEach(produtoElement => {
+        const nomeElement = produtoElement.querySelector('.produto-nome');
+        const nomeProduto = nomeElement.textContent;
+        const produtoId = nomeElement.dataset.produtoId;
+        const valor = parseFloat(inputs[produtoId]?.valor?.value) || 0;
+        const volume = parseFloat(inputs[produtoId]?.volume?.value) || 0;
+        const qntPac = parseInt(inputs[produtoId]?.qntPac?.value) || 0;
+        const qnt2 = parseInt(inputs[produtoId]?.qnt2?.value) || 0;
+        const volTotalElement = produtoElement.querySelector('.vol-total');
+        const precoVolumeElement = produtoElement.querySelector('.preco-volume');
 
-            // Calcular Vol.TOTAL
-            const volTotal = volume * qntPac * qnt2;
-            volTotalElement.textContent = volTotal.toFixed(2);
+        // Calcular Vol.TOTAL
+        const volTotal = volume * qntPac * qnt2;
+        volTotalElement.textContent = volTotal.toFixed(2);
+        volumesTotais[produtoId] = volTotal;
+        nomesProdutosMap[produtoId] = nomeProduto;
 
-            // Calcular P. Vol.
-            let precoVolume = 0;
-            if (volTotal !== 0) {
-                precoVolume = valor / volTotal;
-                precoVolumeElement.textContent = `R$ ${precoVolume.toFixed(3)}`;
-                if (precoVolume < menorPreco) {
-                    menorPreco = precoVolume;
-                    produtoMenorPreco = nomeElement.textContent;
-                }
-            } else {
-                precoVolumeElement.textContent = '#DIV/0!';
-                precoVolumeElement.style.color = 'red';
+        // Calcular P. Vol.
+        let precoVolume = Infinity;
+        if (volTotal !== 0) {
+            precoVolume = valor / volTotal;
+            precoVolumeElement.textContent = `R$ ${precoVolume.toFixed(3)}`;
+            if (precoVolume < menorPrecoVolume) {
+                menorPrecoVolume = precoVolume;
+                produtoMenorPrecoNome = nomeProduto;
             }
+        } else {
+            precoVolumeElement.textContent = '#DIV/0!';
+            precoVolumeElement.style.color = 'red';
+        }
+    });
 
-            // Calcular DEVERIA SER (usando a lógica para o segundo produto baseada no primeiro)
-            let deveriaSer = valor;
-            if (produtoId === 'produto2') {
-                const primeiroValor = parseFloat(inputs['produto1']?.valor?.value) || 0;
-                const primeiroVolTotal = parseFloat(produtos[0].querySelector('.vol-total').textContent) || 0;
-                if (primeiroVolTotal !== 0) {
-                    deveriaSer = (primeiroValor / primeiroVolTotal) * volTotal;
-                }
-            }
-            deveriaSerElement.textContent = `R$ ${deveriaSer.toFixed(2)}`;
+    // Segundo loop: Calcular o "Deveria Ser" e o "Pago a Mais" usando o menor preço por volume
+    produtos.forEach(produtoElement => {
+        const nomeElement = produtoElement.querySelector('.produto-nome');
+        const produtoId = nomeElement.dataset.produtoId;
+        const valor = parseFloat(inputs[produtoId]?.valor?.value) || 0;
+        const volTotal = volumesTotais[produtoId];
+        const deveriaSerElement = produtoElement.querySelector('.deveria-ser');
+        const pagoAMaisElement = produtoElement.querySelector('.pago-a-mais');
+        const pagoAMaisParagrafo = pagoAMaisElement.parentNode;
 
-            // Calcular PAGO A MAIS
-            const pagoAMais = valor - deveriaSer;
-            pagoAMaisElement.textContent = `R$ ${pagoAMais.toFixed(2)}`;
-        });
+        // Calcular DEVERIA SER
+        let deveriaSer = menorPrecoVolume * volTotal;
+        if (menorPrecoVolume === Infinity) {
+            deveriaSer = valor; // Se não há preços válidos, o "Deveria Ser" é o próprio valor
+        }
+        deveriaSerElement.textContent = `R$ ${deveriaSer.toFixed(2)}`;
 
-        // Exibir o menor preço
-        document.getElementById('menor-preco-produto').textContent = produtoMenorPreco;
-        document.getElementById('menor-preco-valor').textContent = `R$ ${menorPreco.toFixed(2)}`;
-    }
+        // Calcular e exibir PAGO A MAIS (ou a menos)
+        const pagoAMais = valor - deveriaSer;
+        pagoAMaisElement.textContent = `R$ ${pagoAMais.toFixed(2)}`;
+
+        // Atualizar o texto do parágrafo "Pago a Mais"
+        if (pagoAMais < 0) {
+            pagoAMaisParagrafo.textContent = `Valor Pago a Menos: `;
+            pagoAMaisParagrafo.appendChild(pagoAMaisElement);
+        } else if (pagoAMais > 0) {
+            pagoAMaisParagrafo.textContent = `Valor Pago a Mais: `;
+            pagoAMaisParagrafo.appendChild(pagoAMaisElement);
+        } else {
+            pagoAMaisParagrafo.textContent = `VALOR: `;
+            pagoAMaisParagrafo.appendChild(pagoAMaisElement);
+        }
+    });
+
+    // Exibir o menor preço (agora o menor preço *por volume*)
+    document.getElementById('menor-preco-produto').textContent = produtoMenorPrecoNome;
+    document.getElementById('menor-preco-valor').textContent = `R$ ${menorPrecoVolume !== Infinity ? menorPrecoVolume.toFixed(3) : 'N/A'}`;
+}
+
 
     // Adicionar event listeners para os inputs de valor, volume e quantidade
     for (const produtoId in inputs) {
