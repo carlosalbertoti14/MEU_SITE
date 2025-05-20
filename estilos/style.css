@@ -408,7 +408,7 @@ h1 {
 /**************************************CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
 #soma_dinamica{
-    display: none;
+    display: block;
    background-color: var(--cor0);
    padding: 10px;
    
@@ -424,26 +424,38 @@ h1 {
     max-width: auto;
   }
 
-input.soma {
-  width: 75px;
-  margin-right: 10px;
+  thead th{
+    font-size: 0.6em;
+  }
+
+.soma, td, tr{
+  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+
 }
 
-input.operador {
-  width: 75px;
-  margin-right: 10px;
+.operador, td, tr{
+  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+
 }
 
-input.NUMERO {
-  width: 75px;
+.NUMERO, td, tr{
+  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+
 }
 
-input.NUMERADOR {
-  width: 75px;
+.NUMERADOR, td, tr{
+  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+
 }
 
-input.RESULTADO {
-  width: 75px;
+.RESULTADO, td, tr{
+  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+
 }
 
 .totais {
@@ -468,7 +480,36 @@ button.RESULTADO {
 
 /*******************************FIM DA CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
-/*******************************CONFIGURAÇÃO REGRA DE TRES************************/
+/******************************* PORCENTAGEM ************************/
+
+#tabela-corpoPORCENTAGEM td {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* Impede a quebra de linha do texto dentro da célula */
+  font-size: 0.8em;
+ 
+}
+
+#tabela-corpoPORCENTAGEM td input.soma {
+  margin-right: 10px;
+  flex-grow: 1;
+ 
+  max-width: 100px;
+}
+
+#tabela-corpoPORCENTAGEM td button.RP {
+     margin-left: 10px;
+  flex-shrink: 0;
+}
+
+/* Opcional: Para melhor responsividade em telas menores, você pode impedir o "encolhimento" excessivo do botão */
+#tabela-corpoPORCENTAGEM td button.RP {
+    
+  flex-shrink: 0;
+}
+/******************************* FIM PORCENTAGEM ************************/
+
+/******************************* CONFIGURAÇÃO REGRA DE TRES ************************/
     #REGRA_D3 {
         font-family: sans-serif;
         padding: 20px;
