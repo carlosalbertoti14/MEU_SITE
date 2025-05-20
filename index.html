@@ -132,50 +132,283 @@
 
                         <div id="soma_dinamica">
 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>SOMA</th>
-                                        <th>OPERADOR</th>
-                                        <th>ULTIPLICADOR</th>
-                                        <th>RESULTADO</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabela-corpo">
-                                    <tr>
-                                        <td><input type="number" class="soma" value="5"></td>
-                                        <td>
-                                            <select class="operador">
-                                                <option value="multiplicacao">Multiplicação</option>
-                                                <option value="divisao">Divisão</option>
-                                                <option value="soma">Soma</option>
-                                                <option value="raiz">Raiz Quadrada</option>
-                                                <option value="elevado">Elevado a</option>
-                                                <option value="porcentagem">Porcentagem de</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="number" class="multiplicador" value="52"></td>
-                                        <td class="resultado"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="number" class="soma" value="10"></td>
-                                        <td>
-                                            <select class="operador">
-                                                <option value="multiplicacao">Multiplicação</option>
-                                                <option value="divisao" selected>Divisão</option>
-                                                <option value="soma">Soma</option>
-                                                <option value="raiz">Raiz Quadrada</option>
-                                                <option value="elevado">Elevado a</option>
-                                                <option value="porcentagem">Porcentagem de</option>
-                                            </select>
-                                        </td>
-                                        <td><input type="number" class="multiplicador" value="15"></td>
-                                        <td class="resultado"></td>
-                                    </tr>
-                                    </tbody>
-                            </table>
+                            <div class="botoes-controle">
+                                <button id="resetar-valores">Resetar Valores</button>
+                                <button id="fechar-soma_dinamica">Fechar Comparativo</button>
+                            </div>
 
-                            <button id="calcular">Calcular Resultados</button>
+
+                             <h2>CÁLCULOS DINÂMICOS</h2>
+
+                            <div id="organizar_tabela_soma">
+                                <table>
+                                        <div id="tabela-soma">
+                                            <thead>
+                                                <tr>
+                                                    <th>SOMA</th>
+                                                </tr>
+                                            </thead>
+                                             <tbody id="tabela-corpoSOMA">
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="totais">TOTAL: <button type="button" id="botao-soma-total" class="RESULTADO"><button></td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                </table>
+                                <table>
+                                        <div id="tabela_calculos">
+                                            <thead>
+                                                <tr>
+                                                    <th>NUMERO</th>
+                                                    <th>OPERADOR</th>
+                                                    <th>NUMERADOR</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tabela-corpo">
+                                
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">                                                            
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz Quadrada</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem de</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR">                                
+                                                    <button type="button" class="RESULTADO"><button></td>                               
+                                                </tr>
+
+                                               
+
+                                                </tbody>
+                                            </div>
+                                
+                                        </table>
+                            </div>
+
+                            <DIV id="porcentagem">
+                                <h2>PORCENTAGEM AVANÇADA</h2>
+
+                                         <table>
+                                        <div id="tabela-porcentagem">
+                                            <thead>
+                                                <tr>
+                                                    <th>PORCENTAGEM</th>
+                                                </tr>
+                                            </thead>
+                                             <tbody id="tabela-corpoPORCENTAGEM">
+                                                <tr><!-- Aqui será colocado o valor total do produto sem nenhum desconto -->
+                                                    <td><input id="pvt" type="number" class="soma" value="">VALOR TOTAL <button type="button" id="pvt_b" class="RP">0</button></td>
+                                                </tr>
+                                                <tr> <!-- Aqui será colocado o valor da porcentagem utilizada na operação -->
+                                                    <td><input id="porc" type="number" class="soma" value="">PORCENTAGEM <button type="button" id="porc_b" class="RP">0</button></td>
+                                                </tr>
+                                                <tr> <!-- Aqui será colocada o valor liquido do porduto já com o desconto ou com aumento-->
+                                                    <td><input id="vcA" type="number" class="soma" value="">V. C. AUMENTO <button type="button" id="vcA_b" class="RP">0</button></td>
+                                                </tr>
+                                                <tr> <!-- Aqui será colocada o valor liquido do porduto já com o desconto ou com aumento-->
+                                                    <td><input id="vcD" type="number" class="soma" value="">V. C. DESCONTO <button type="button" id="vcD_b" class="RP">0</button></td>
+                                                </tr>
+                                                <tr> <!-- Aqui será colocado somente o valor que foi descontado ex.: 40 reais (do valor total que era 200 agora passou a ser 160 reais) -->
+                                                    <td><input id="desc" type="number" class="soma" value="">DESCONTO <button type="button" id="desc_b" class="RP">0</button></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </div>
+                                </table>
+                                
+                            
+
+                             <DIV id="REGRA_D3">
+
+                                <h2>REGRA DE TRÊS</h2>
+                                <h3>REGRA DE TRÊS SIMPLES</h3>
+                                <div id="regra_simples">
+                                    <p>Insira os valores conhecidos:</p>
+                                    <label for="a1_simples">A1:</label>
+                                    <input type="number" id="a1_simples">
+                                    <label for="b1_simples">B1:</label>
+                                    <input type="number" id="b1_simples">
+                                    <label for="a2_simples">A2:</label>
+                                    <input type="number" id="a2_simples">
+                                    <label for="resultado_simples">Resultado (B2):</label>
+                                    <input type="text" id="resultado_simples" readonly>
+                                    <button type="button" onclick="calcularRegraTresSimples()">Calcular</button>
+                                </div>
+
+                                <h3>REGRA DE TRÊS COMPOSTA</h3>
+                                <div id="regra_composta">
+                                    <p>Insira as grandezas e seus valores:</p>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Grandeza</th>
+                                                <th>Valor 1</th>
+                                                <th>Valor 2</th>
+                                                <th>Diretamente/Inversamente</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabela_composta">
+                                            <tr>
+                                                <td><input type="text" class="grandeza"></td>
+                                                <td><input type="number" class="valor1"></td>
+                                                <td><input type="number" class="valor2"></td>
+                                                <td>
+                                                    <select class="tipo">
+                                                        <option value="diretamente">Diretamente</option>
+                                                        <option value="inversamente">Inversamente</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="grandeza"></td>
+                                                <td><input type="number" class="valor1"></td>
+                                                <td><input type="number" class="valor2"></td>
+                                                <td>
+                                                    <select class="tipo">
+                                                        <option value="diretamente">Diretamente</option>
+                                                        <option value="inversamente">Inversamente</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><input type="text" class="grandeza"></td>
+                                                <td><input type="number" class="valor1"></td>
+                                                <td><input type="number" class="valor2" id="x_composta"></td>
+                                                <td>
+                                                    <select class="tipo">
+                                                        <option value="diretamente">Diretamente</option>
+                                                        <option value="inversamente">Inversamente</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <label for="resultado_composta">Resultado (X):</label>
+                                    <input type="text" id="resultado_composta" readonly>
+                                    <button type="button" onclick="calcularRegraTresComposta()">Calcular</button>
+                                    <button type="button" onclick="adicionarGrandeza()">Adicionar Grandeza</button>
+                                </div>
+                            </DIV>
+
+
+
 
 
 
@@ -206,5 +439,6 @@
 
         <script src="script/MENU.js"></script> 
         <script src="script/MERCADO.js"></script>
+        <script src="script/calculos_dinamicos.js"></script>
     </body>
 </html>
