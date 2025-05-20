@@ -1,36 +1,100 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const botaoOperacao = document.getElementById('botao-operacao');
+    const botaoSomaTotal = document.getElementById('botao-soma-total');
+    const tabelaCorpoSOMA = document.getElementById('tabela-corpoSOMA');
+    const tabelaCorpoCalculos = document.getElementById('tabela-corpo');
 
+    let operacaoAtual = "SOMA"; // Operação inicial
 
+    botaoOperacao.addEventListener('click', function () {
+        // Alternar entre SOMA, MMC, MDC e LOG
+        if (operacaoAtual === "SOMA") {
+            operacaoAtual = "MMC";
+        } else if (operacaoAtual === "MMC") {
+            operacaoAtual = "MDC";
+        } else if (operacaoAtual === "MDC") {
+            operacaoAtual = "LOG";
+        } else {
+            operacaoAtual = "SOMA";
+        }
+        botaoOperacao.textContent = operacaoAtual; // Atualizar o botão
+        calcularOperacaoTotal(); // Recalcular com a nova operação
+    });
 
+    tabelaCorpoSOMA.addEventListener('change', calcularOperacaoTotal);
+    botaoSomaTotal.addEventListener('click', copiarSomaParaNumero);
 
+    function calcularOperacaoTotal() {
+        const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
+        let valores = [];
 
-//*************** SOMA **********************//
-function calcularSomaTotal() {
-  const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
-  const resultadoBotao = document.querySelector('#tabela-corpoSOMA .RESULTADO');
-  let somaTotal = 0;
+        inputsSoma.forEach(input => {
+            const valor = parseInt(input.value);
+            if (!isNaN(valor)) {
+                valores.push(valor);
+            }
+        });
 
-  inputsSoma.forEach(input => {
-    const valor = parseFloat(input.value);
-    if (!isNaN(valor)) {
-      somaTotal += valor;
+        let resultado = 0;
+        if (operacaoAtual === "SOMA") {
+            resultado = valores.reduce((acc, num) => acc + num, 0);
+        } else if (operacaoAtual === "MMC") {
+            resultado = calcularMMC(valores);
+        } else if (operacaoAtual === "MDC") {
+            resultado = calcularMDC(valores);
+        } else if (operacaoAtual === "LOG") {
+            resultado = calcularLogaritmo();
+        }
+
+        botaoSomaTotal.textContent = resultado;
     }
-  });
 
-  resultadoBotao.textContent = somaTotal; // Alterado para textContent
-}
+    function copiarSomaParaNumero() {
+        const resultadoSoma = botaoSomaTotal.textContent;
+        const linhasCalculos = tabelaCorpoCalculos.querySelectorAll('tr');
 
-document.addEventListener('DOMContentLoaded', function() {
-  const tabelaCorpoSOMA = document.getElementById('tabela-corpoSOMA');
+        for (let i = 0; i < linhasCalculos.length; i++) {
+            const linhaCalculo = linhasCalculos[i];
+            const campoNumero = linhaCalculo.querySelector('.NUMERO');
+            if (campoNumero && campoNumero.value === '') {
+                campoNumero.value = resultadoSoma;
+                break;
+            }
+        }
+    }
 
-  tabelaCorpoSOMA.addEventListener('change', calcularSomaTotal);
+    function calcularMMC(numeros) {
+        function mmc(a, b) {
+            return (a * b) / calcularMDC([a, b]);
+        }
+        return numeros.reduce((acc, num) => mmc(acc, num));
+    }
 
-  // Calcular a soma inicial ao carregar a página
-  calcularSomaTotal();
+    function calcularMDC(numeros) {
+        function mdc(a, b) {
+            return b === 0 ? a : mdc(b, a % b);
+        }
+        return numeros.reduce((acc, num) => mdc(acc, num));
+    }
+
+    function calcularLogaritmo() {
+        let a = parseFloat(document.getElementById('a').value);
+        let b = parseFloat(document.getElementById('b').value);
+        let x = parseFloat(document.getElementById('x').value);
+
+        if (a === 0) {
+            return Math.pow(b, x); // Encontrar a base
+        } else if (b === 0) {
+            return Math.log(x) / Math.log(a); // Encontrar o logaritmando
+        } else if (x === 0) {
+            return Math.log(b) / Math.log(a); // Encontrar o expoente
+        } else {
+            return "Erro: Preencha um campo com 0 para encontrar o valor.";
+        }
+    }
+
+    calcularOperacaoTotal(); // Calcular operação inicial
 });
-
-
-
-//*************** FIM SOMA **********************//
 
 
 //***************CALCULOS DINAMICOS**********************//
@@ -48,41 +112,85 @@ function calcularResultado(linha) {
     return;
   }
 
-  switch (operador) {
+// Função auxiliar para calcular o fatorial
+function calcularFatorial(n) {
+    if (n < 0) {
+        return NaN; // Fatorial de números negativos não é definido para inteiros
+    }
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+    let resultadoFatorial = 1;
+    for (let i = 2; i <= n; i++) {
+        resultadoFatorial *= i;
+    }
+    return resultadoFatorial;
+}
+
+// Seu switch statement
+switch (operador) {
     case 'multiplicacao':
-      resultado = numero * numerador;
-      break;
+        resultado = numero * numerador;
+        break;
     case 'divisao':
-      if (numerador === 0) {
-        resultado = 'Erro! Divisão por zero.';
-      } else {
-        resultado = numero / numerador;
-      }
-      break;
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = numero / numerador;
+        }
+        break;
+    case 'quociente':
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = Math.floor(numero / numerador);
+        }
+        break;
+    case 'resto':
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = numero % numerador;
+        }
+        break;
     case 'soma':
-      resultado = numero + numerador;
-      break;
-
-       case 'raiz': // Calculará a raiz enésima ou quadrada
-            if (numerador <= 0) {
-                resultado = 'Erro! Radical inválido.';
-            } else if (isNaN(numerador) || numerador == 0) {
-                resultado = Math.sqrt(numero);
-            } else {
-                resultado = Math.pow(numero, 1 / numerador);
-            }
-
-      break;
+        resultado = numero + numerador;
+        break;
+    case 'raiz':
+        if (numerador <= 0) {
+            resultado = 'Erro! Radical inválido.';
+        } else if (isNaN(numerador) || numerador == 0) {
+            resultado = Math.sqrt(numero);
+        } else {
+            resultado = Math.pow(numero, 1 / numerador);
+        }
+        break;
     case 'elevado':
-      resultado = Math.pow(numero, numerador);
-      break;
+        resultado = Math.pow(numero, numerador);
+        break;
     case 'porcentagem':
-      resultado = (numero * numerador) / 100;
-      break;
+        resultado = (numero * numerador) / 100;
+        break;
+    case 'fatorial':
+        const fatorialNumero = calcularFatorial(numero);
+
+        if (isNaN(numerador) || numerador === 0) {
+            // Se o numerador não for mencionado ou for zero, calcula apenas o fatorial do 'numero'
+            resultado = fatorialNumero;
+        } else {
+            // Se o numerador for mencionado, calcula o fatorial do 'numero' vezes o fatorial do 'numerador'
+            const fatorialNumerador = calcularFatorial(numerador);
+            if (isNaN(fatorialNumero) || isNaN(fatorialNumerador)) {
+                resultado = 'Erro! Entrada inválida para fatorial.';
+            } else {
+                resultado = fatorialNumero * fatorialNumerador;
+            }
+        }
+        break;
     default:
-      resultado = '';
-      break;
-  }
+        resultado = '';
+        break;
+}
 
   resultadoBotao.textContent = resultado; // Define o texto do botão
 }
@@ -342,35 +450,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //*************** FIM BOTÃO CALCULOS DINAMICOS **********************//
 
-//*************** BOTÃO SOMA **********************//
-
-
-function copiarSomaParaNumero() {
-  const botaoSomaTotal = document.getElementById('botao-soma-total');
-  const resultadoSoma = botaoSomaTotal.textContent;
-  const tabelaCorpoCalculos = document.getElementById('tabela-corpo');
-  const linhasCalculos = tabelaCorpoCalculos.querySelectorAll('tr');
-
-  for (let i = 0; i < linhasCalculos.length; i++) {
-    const linhaCalculo = linhasCalculos[i];
-    const campoNumero = linhaCalculo.querySelector('.NUMERO');
-    if (campoNumero && campoNumero.value === '') {
-      campoNumero.value = resultadoSoma;
-      break;
-    }
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  // ... (seu código existente aqui) ...
-
-  const botaoSomaTotal = document.getElementById('botao-soma-total');
-  if (botaoSomaTotal) {
-    botaoSomaTotal.addEventListener('click', copiarSomaParaNumero);
-  }
-});
-//*************** FIM BOTÃO SOMA **********************//
-
 //*************** BOTÃO PORCENTAGEM **********************//
 
 function copiarParaTransferencia(event) {
@@ -414,3 +493,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //*************** FIM BOTÃO PORCENTAGEM **********************//
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Seleciona o botão de "Resetar Valores" da soma dinâmica
+    const resetarValoresSomaDinamicaButton = document.getElementById('resetar-valores_soma_dinamica');
+
+    // 2. Define os seletores para todas as input boxes que você quer resetar
+    //    Estes seletores cobrem a maioria das input boxes que você mencionou.
+    const seletoresDeInputs = [
+        '#tabela-corpoSOMA .soma',             // Inputs da tabela de soma (a, b, etc.)
+        '#mercadoDiv input[type="number"]',    // Se houver inputs de número em mercadoDiv
+        '#mercadoDiv input[type="text"]',     // Se houver inputs de texto em mercadoDiv
+        '#soma_dinamica .NUMERO',              // Inputs NUMERO da tabela de cálculos dinâmicos
+        '#soma_dinamica .NUMERADOR',           // Inputs NUMERADOR da tabela de cálculos dinâmicos
+        '#pvt',                                // Input de valor total (porcentagem)
+        '#porc',                               // Input de porcentagem
+        '#vcA',                                // Input de valor com aumento
+        '#vcD',                                // Input de valor com desconto
+        '#desc',                               // Input de desconto
+        '#a1_simples',                         // Input a1 da regra de três simples
+        '#b1_simples',                         // Input b1 da regra de três simples
+        '#a2_simples',                         // Input a2 da regra de três simples
+        '#resultado_simples',                  // Input de resultado da regra de três simples
+        '#resultado_composta',                 // Input de resultado da regra de três composta
+        '#tabela_composta .grandeza',          // Inputs de grandeza da regra de três composta
+        '#tabela_composta .valor1',            // Inputs de valor1 da regra de três composta
+        '#tabela_composta .valor2'             // Inputs de valor2 da regra de três composta
+        // Adicione quaisquer outros seletores de inputs que você queira resetar
+    ];
+
+    // 3. Adiciona o listener de clique ao botão
+    if (resetarValoresSomaDinamicaButton) {
+        resetarValoresSomaDinamicaButton.addEventListener('click', function() {
+            // Itera sobre cada seletor de input
+            seletoresDeInputs.forEach(seletor => {
+                // Seleciona todos os inputs que correspondem ao seletor atual
+                const inputs = document.querySelectorAll(seletor);
+
+                // Para cada input encontrado, define seu valor como vazio
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+            });
+
+            // Opcional: Se você quiser garantir que os resultados também sejam limpos
+            // Você pode precisar chamar funções de cálculo relevantes para redefinir as exibições.
+            // Por exemplo, para a parte de soma dinâmica, você pode chamar:
+            // if (typeof calcularOperacaoTotal === 'function') {
+            //     calcularOperacaoTotal(); // Recalcula a soma, que deve ser 0 ou vazia
+            // }
+            // Se tiver botões de resultado que exibem texto, você pode limpá-los também.
+            // Exemplo:
+            // document.querySelectorAll('.RESULTADO2').forEach(btn => btn.textContent = '');
+            // document.querySelectorAll('.RESULTADO_P').forEach(btn => btn.textContent = '');
+        });
+    }
+});

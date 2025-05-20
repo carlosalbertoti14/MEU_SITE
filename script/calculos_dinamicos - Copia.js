@@ -1,145 +1,495 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA input.soma');
-    const primeiraCelulaNumero = document.querySelector('#tabela-corpo tr:first-child input.NUMERO');
-    const botaoCalcular = document.getElementById('calcular');
+document.addEventListener('DOMContentLoaded', function () {
+    const botaoOperacao = document.getElementById('botao-operacao');
+    const botaoSomaTotal = document.getElementById('botao-soma-total');
+    const tabelaCorpoSOMA = document.getElementById('tabela-corpoSOMA');
     const tabelaCorpoCalculos = document.getElementById('tabela-corpo');
 
-    function calcularSoma() {
-        let soma = 0;
+    let operacaoAtual = "SOMA"; // Operação inicial
+
+    botaoOperacao.addEventListener('click', function () {
+        // Alternar entre SOMA, MMC, MDC e LOG
+        if (operacaoAtual === "SOMA") {
+            operacaoAtual = "MMC";
+        } else if (operacaoAtual === "MMC") {
+            operacaoAtual = "MDC";
+        } else if (operacaoAtual === "MDC") {
+            operacaoAtual = "LOG";
+        } else {
+            operacaoAtual = "SOMA";
+        }
+        botaoOperacao.textContent = operacaoAtual; // Atualizar o botão
+        calcularOperacaoTotal(); // Recalcular com a nova operação
+    });
+
+    tabelaCorpoSOMA.addEventListener('change', calcularOperacaoTotal);
+    botaoSomaTotal.addEventListener('click', copiarSomaParaNumero);
+
+    function calcularOperacaoTotal() {
+        const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
+        let valores = [];
+
         inputsSoma.forEach(input => {
-            const valor = parseFloat(input.value);
+            const valor = parseInt(input.value);
             if (!isNaN(valor)) {
-                soma += valor;
+                valores.push(valor);
             }
         });
-        return soma;
+
+        let resultado = 0;
+        if (operacaoAtual === "SOMA") {
+            resultado = valores.reduce((acc, num) => acc + num, 0);
+        } else if (operacaoAtual === "MMC") {
+            resultado = calcularMMC(valores);
+        } else if (operacaoAtual === "MDC") {
+            resultado = calcularMDC(valores);
+        } else if (operacaoAtual === "LOG") {
+            resultado = calcularLogaritmo();
+        }
+
+        botaoSomaTotal.textContent = resultado;
     }
 
-    function atualizarPrimeiraCelulaNumero() {
-        const resultadoSoma = calcularSoma();
-        const primeiraLinhaNumeroInput = tabelaCorpoCalculos.querySelector('tr:first-child input.NUMERO');
-        if (primeiraLinhaNumeroInput) {
-            primeiraLinhaNumeroInput.value = resultadoSoma;
+    function copiarSomaParaNumero() {
+        const resultadoSoma = botaoSomaTotal.textContent;
+        const linhasCalculos = tabelaCorpoCalculos.querySelectorAll('tr');
+
+        for (let i = 0; i < linhasCalculos.length; i++) {
+            const linhaCalculo = linhasCalculos[i];
+            const campoNumero = linhaCalculo.querySelector('.NUMERO');
+            if (campoNumero && campoNumero.value === '') {
+                campoNumero.value = resultadoSoma;
+                break;
+            }
+        }
+    }
+
+    function calcularMMC(numeros) {
+        function mmc(a, b) {
+            return (a * b) / calcularMDC([a, b]);
+        }
+        return numeros.reduce((acc, num) => mmc(acc, num));
+    }
+
+    function calcularMDC(numeros) {
+        function mdc(a, b) {
+            return b === 0 ? a : mdc(b, a % b);
+        }
+        return numeros.reduce((acc, num) => mdc(acc, num));
+    }
+
+    function calcularLogaritmo() {
+        let a = parseFloat(document.getElementById('a').value);
+        let b = parseFloat(document.getElementById('b').value);
+        let x = parseFloat(document.getElementById('x').value);
+
+        if (a === 0) {
+            return Math.pow(b, x); // Encontrar a base
+        } else if (b === 0) {
+            return Math.log(x) / Math.log(a); // Encontrar o logaritmando
+        } else if (x === 0) {
+            return Math.log(b) / Math.log(a); // Encontrar o expoente
+        } else {
+            return "Erro: Preencha um campo com 0 para encontrar o valor.";
         }
     }
 
-    function criarNovaLinhaCalculo() {
-        const novaLinha = tabelaCorpoCalculos.insertRow();
+    calcularOperacaoTotal(); // Calcular operação inicial
+});
 
-        const celulaNumero = novaLinha.insertCell();
-        const inputNumero = document.createElement('input');
-        inputNumero.type = 'number';
-        inputNumero.classList.add('NUMERO');
-        inputNumero.readOnly = true;
-        celulaNumero.appendChild(inputNumero);
 
-        const celulaOperador = novaLinha.insertCell();
-        const selectOperador = document.createElement('select');
-        selectOperador.classList.add('operador');
-        selectOperador.innerHTML = `
-            <option value="NENHUM">ESCOLHA</option>
-            <option value="multiplicacao">Multiplicação</option>
-            <option value="divisao">Divisão</option>
-            <option value="soma">Soma</option>
-            <option value="raiz">Raiz Quadrada</option>
-            <option value="elevado">Elevado a</option>
-            <option value="porcentagem">Porcentagem de</option>
-        `;
-        celulaOperador.appendChild(selectOperador);
+//***************CALCULOS DINAMICOS**********************//
 
-        const celulaNumerador = novaLinha.insertCell();
-        const inputNumerador = document.createElement('input');
-        inputNumerador.type = 'number';
-        inputNumerador.classList.add('NUMERADOR');
-        celulaNumerador.appendChild(inputNumerador);
+function calcularResultado(linha) {
+  const numero = parseFloat(linha.querySelector('.NUMERO').value);
+  const operador = linha.querySelector('.operador').value;
+  const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
+  const resultadoBotao = linha.querySelector('.RESULTADO2'); // Seleciona o botão
 
-        return novaLinha;
+  let resultado;
+
+  if (isNaN(numero)) {
+    resultadoBotao.textContent = ''; // Atualiza o texto do botão
+    return;
+  }
+
+// Função auxiliar para calcular o fatorial
+function calcularFatorial(n) {
+    if (n < 0) {
+        return NaN; // Fatorial de números negativos não é definido para inteiros
     }
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+    let resultadoFatorial = 1;
+    for (let i = 2; i <= n; i++) {
+        resultadoFatorial *= i;
+    }
+    return resultadoFatorial;
+}
 
-function realizarCalculos() {
-    const linhasCalculos = tabelaCorpoCalculos.querySelectorAll('tr');
-    const somaInicial = parseFloat(primeiraCelulaNumero.value);
-    let resultadoAnterior = somaInicial;
-    let resultadoFinal = somaInicial; // Inicializa com a soma inicial
-    let ultimoOperadorValido = '';
-    let ultimoNumeradorValido = NaN;
+// Seu switch statement
+switch (operador) {
+    case 'multiplicacao':
+        resultado = numero * numerador;
+        break;
+    case 'divisao':
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = numero / numerador;
+        }
+        break;
+    case 'quociente':
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = Math.floor(numero / numerador);
+        }
+        break;
+    case 'resto':
+        if (numerador === 0) {
+            resultado = 'Erro! Divisão por zero.';
+        } else {
+            resultado = numero % numerador;
+        }
+        break;
+    case 'soma':
+        resultado = numero + numerador;
+        break;
+    case 'raiz':
+        if (numerador <= 0) {
+            resultado = 'Erro! Radical inválido.';
+        } else if (isNaN(numerador) || numerador == 0) {
+            resultado = Math.sqrt(numero);
+        } else {
+            resultado = Math.pow(numero, 1 / numerador);
+        }
+        break;
+    case 'elevado':
+        resultado = Math.pow(numero, numerador);
+        break;
+    case 'porcentagem':
+        resultado = (numero * numerador) / 100;
+        break;
+    case 'fatorial':
+        const fatorialNumero = calcularFatorial(numero);
 
-    for (let i = 1; i < linhasCalculos.length; i++) {
-        const linha = linhasCalculos[i-1]; // Correção no índice
-        const inputNumero = linha.querySelector('input.NUMERO');
-        const selectOperador = linha.querySelector('select.operador');
-        const inputNumerador = linha.querySelector('input.NUMERADOR');
-
-        if (!inputNumero || !selectOperador) continue;
-
-        const operador = selectOperador.value;
-        const numerador = parseFloat(inputNumerador.value);
-
-        let resultado = resultadoAnterior;
-
-        if (operador !== 'NENHUM' && !isNaN(numerador)) {
-            ultimoOperadorValido = operador;
-            ultimoNumeradorValido = numerador;
-
-            switch (operador) {
-                case 'multiplicacao':
-                    resultado = resultado * numerador;
-                    break;
-                case 'divisao':
-                    resultado = numerador === 0 ? NaN : resultado / numerador;
-                    break;
-                case 'soma':
-                    resultado = resultado + numerador;
-                    break;
-                case 'raiz':
-                    resultado = resultado < 0 ? NaN : Math.sqrt(resultado);
-                    break;
-                case 'elevado':
-                    resultado = Math.pow(resultado, numerador);
-                    break;
-                case 'porcentagem':
-                    resultado = (resultado * (numerador / 100));
-                    break;
-            }
-
-            if (!isNaN(resultado)) {
-                inputNumero.value = resultado.toFixed(2);
-                resultadoFinal = resultado; // Atualiza o resultado final aqui
+        if (isNaN(numerador) || numerador === 0) {
+            // Se o numerador não for mencionado ou for zero, calcula apenas o fatorial do 'numero'
+            resultado = fatorialNumero;
+        } else {
+            // Se o numerador for mencionado, calcula o fatorial do 'numero' vezes o fatorial do 'numerador'
+            const fatorialNumerador = calcularFatorial(numerador);
+            if (isNaN(fatorialNumero) || isNaN(fatorialNumerador)) {
+                resultado = 'Erro! Entrada inválida para fatorial.';
+            } else {
+                resultado = fatorialNumero * fatorialNumerador;
             }
         }
+        break;
+    default:
+        resultado = '';
+        break;
+}
 
-        resultadoAnterior = parseFloat(inputNumero.value);
+  resultadoBotao.textContent = resultado; // Define o texto do botão
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tabelaCorpo = document.getElementById('tabela-corpo');
+
+  tabelaCorpo.addEventListener('change', function(event) {
+    const elementoAlterado = event.target;
+    const linha = elementoAlterado.closest('tr');
+
+    if (elementoAlterado.classList.contains('NUMERO') ||
+        elementoAlterado.classList.contains('operador') ||
+        elementoAlterado.classList.contains('NUMERADOR')) {
+      calcularResultado(linha);
     }
+  });
 
-    alert(`Resultado da Soma Inicial: ${somaInicial.toFixed(2)}\nÚltimo Operador Válido: ${ultimoOperadorValido}\nÚltimo Numerador Válido: ${isNaN(ultimoNumeradorValido) ? 'N/A' : ultimoNumeradorValido.toFixed(2)}\nResultado Final: ${resultadoFinal.toFixed(2)}`);
+  // Calcular resultados iniciais ao carregar a página
+  const linhas = tabelaCorpo.querySelectorAll('tr');
+  linhas.forEach(calcularResultado);
+});
 
-    const ultimaLinhaNumeroInput = tabelaCorpoCalculos.querySelector('tr:last-child input.NUMERO');
-    if (ultimaLinhaNumeroInput) {
-        ultimaLinhaNumeroInput.value = resultadoFinal.toFixed(2);
+//***************FIM CALCULOS DINAMICOS**********************//
+
+
+//*************** PORCENTAGEM **********************//
+function calcularPorcentagem() {
+    const valorTotalInput = document.getElementById('pvt');
+    const porcentagemInput = document.getElementById('porc');
+    const valorComAumentoInput = document.getElementById('vcA');
+    const valorComDescontoInput = document.getElementById('vcD');
+    const descontoInput = document.getElementById('desc');
+
+    const valorTotalBotao = document.getElementById('pvt_b');
+    const porcentagemBotao = document.getElementById('porc_b');
+    const valorComAumentoBotao = document.getElementById('vcA_b');
+    const valorComDescontoBotao = document.getElementById('vcD_b');
+    const descontoBotao = document.getElementById('desc_b');
+
+    const valorTotal = parseFloat(valorTotalInput.value);
+    const porcentagem = parseFloat(porcentagemInput.value);
+    const valorComAumento = parseFloat(valorComAumentoInput.value);
+    const valorComDesconto = parseFloat(valorComDescontoInput.value);
+    const desconto = parseFloat(descontoInput.value);
+
+    let camposPreenchidos = 0;
+    if (!isNaN(valorTotal)) camposPreenchidos++;
+    if (!isNaN(porcentagem)) camposPreenchidos++;
+    if (!isNaN(valorComAumento)) camposPreenchidos++;
+    if (!isNaN(valorComDesconto)) camposPreenchidos++;
+    if (!isNaN(desconto)) camposPreenchidos++;
+
+    if (camposPreenchidos === 2) {
+        if (!isNaN(valorTotal) && !isNaN(porcentagem)) {
+            const valorDoDesconto = valorTotal * (porcentagem / 100);
+            const novoValorComDesconto = valorTotal - valorDoDesconto;
+            const novoValorComAumento = valorTotal + valorDoDesconto;
+            valorComDescontoBotao.textContent = novoValorComDesconto.toFixed(2);
+            valorComAumentoBotao.textContent = novoValorComAumento.toFixed(2);
+            descontoBotao.textContent = valorDoDesconto.toFixed(2);
+            valorTotalBotao.textContent = valorTotal.toFixed(2);
+            porcentagemBotao.textContent = porcentagem.toFixed(2);
+        } else if (!isNaN(valorTotal) && !isNaN(valorComDesconto)) {
+            const valorDoDesconto = valorTotal - valorComDesconto;
+            const porcentagemDesconto = (valorDoDesconto / valorTotal) * 100;
+            const novoValorComAumento = valorTotal + valorDoDesconto;
+            porcentagemBotao.textContent = porcentagemDesconto.toFixed(2);
+            descontoBotao.textContent = valorDoDesconto.toFixed(2);
+            valorTotalBotao.textContent = valorTotal.toFixed(2);
+            valorComDescontoBotao.textContent = valorComDesconto.toFixed(2);
+            valorComAumentoBotao.textContent = novoValorComAumento.toFixed(2);
+        } else if (!isNaN(valorTotal) && !isNaN(desconto)) {
+            const novoValorComDesconto = valorTotal - desconto;
+            const novoValorComAumento = valorTotal + desconto;
+            const porcentagemDesconto = (desconto / valorTotal) * 100;
+            porcentagemBotao.textContent = porcentagemDesconto.toFixed(2);
+            valorComDescontoBotao.textContent = novoValorComDesconto.toFixed(2);
+            valorComAumentoBotao.textContent = novoValorComAumento.toFixed(2);
+            valorTotalBotao.textContent = valorTotal.toFixed(2);
+            descontoBotao.textContent = desconto.toFixed(2);
+        } else if (!isNaN(porcentagem) && !isNaN(valorComDesconto)) {
+            const valorTotalCalculado = valorComDesconto / (1 - (porcentagem / 100));
+            const valorDoDesconto = valorTotalCalculado - valorComDesconto;
+            const novoValorComAumento = valorTotalCalculado + valorDoDesconto;
+            valorTotalBotao.textContent = valorTotalCalculado.toFixed(2);
+            descontoBotao.textContent = valorDoDesconto.toFixed(2);
+            porcentagemBotao.textContent = porcentagem.toFixed(2);
+            valorComDescontoBotao.textContent = valorComDesconto.toFixed(2);
+            valorComAumentoBotao.textContent = novoValorComAumento.toFixed(2);
+        } else if (!isNaN(porcentagem) && !isNaN(desconto)) {
+            const valorTotalCalculado = desconto / (porcentagem / 100);
+            const valorComDescontoCalculado = valorTotalCalculado - desconto;
+            const valorComAumentoCalculado = valorTotalCalculado + desconto;
+            valorTotalBotao.textContent = valorTotalCalculado.toFixed(2);
+            valorComDescontoBotao.textContent = valorComDescontoCalculado.toFixed(2);
+            valorComAumentoBotao.textContent = valorComAumentoCalculado.toFixed(2);
+            porcentagemBotao.textContent = porcentagem.toFixed(2);
+            descontoBotao.textContent = desconto.toFixed(2);
+        } else if (!isNaN(valorComDesconto) && !isNaN(desconto)) {
+            const valorTotalCalculado = valorComDesconto + desconto;
+            const porcentagemDesconto = (desconto / valorTotalCalculado) * 100;
+            const novoValorComAumento = valorTotalCalculado + desconto;
+            valorTotalBotao.textContent = valorTotalCalculado.toFixed(2);
+            porcentagemBotao.textContent = porcentagemDesconto.toFixed(2);
+            valorComDescontoBotao.textContent = valorComDesconto.toFixed(2);
+            descontoBotao.textContent = desconto.toFixed(2);
+            valorComAumentoBotao.textContent = novoValorComAumento.toFixed(2);
+        } else if (!isNaN(valorTotal) && !isNaN(valorComAumento)) {
+            const valorDoAumento = valorComAumento - valorTotal;
+            const porcentagemAumento = (valorDoAumento / valorTotal) * 100;
+            valorTotalBotao.textContent = valorTotal.toFixed(2);
+            valorComAumentoBotao.textContent = valorComAumento.toFixed(2);
+            porcentagemBotao.textContent = porcentagemAumento.toFixed(2);
+            descontoBotao.textContent = (-valorDoAumento).toFixed(2);
+            valorComDescontoBotao.textContent = (valorTotal - valorDoAumento).toFixed(2);
+        } else if (!isNaN(porcentagem) && !isNaN(valorComAumento)) {
+            const valorTotalCalculado = valorComAumento / (1 + (porcentagem / 100));
+            const valorDoAumento = valorComAumento - valorTotalCalculado;
+            valorTotalBotao.textContent = valorTotalCalculado.toFixed(2);
+            valorComAumentoBotao.textContent = valorComAumento.toFixed(2);
+            porcentagemBotao.textContent = porcentagem.toFixed(2);
+            descontoBotao.textContent = (-valorDoAumento).toFixed(2);
+            valorComDescontoBotao.textContent = (valorTotalCalculado - valorDoAumento).toFixed(2);
+        } else if (!isNaN(valorComAumento) && !isNaN(desconto)) {
+            // Lógica corrigida para quando vcA e desconto são preenchidos
+            const valorTotalCalculado = valorComAumento - desconto;
+            valorTotalBotao.textContent = valorTotalCalculado.toFixed(2);
+            valorComAumentoBotao.textContent = valorComAumento.toFixed(2);
+            descontoBotao.textContent = desconto.toFixed(2);
+            valorComDescontoBotao.textContent = (valorTotalCalculado - desconto).toFixed(2);
+            const porcentagemDesconto = (desconto / valorTotalCalculado) * 100;
+            porcentagemBotao.textContent = porcentagemDesconto.toFixed(2);
+        }
+    } else if (camposPreenchidos < 2) {
+        valorTotalBotao.textContent = '0';
+        porcentagemBotao.textContent = '0';
+        valorComAumentoBotao.textContent = '0';
+        valorComDescontoBotao.textContent = '0';
+        descontoBotao.textContent = '0';
     }
 }
 
+const inputs = document.querySelectorAll('#tabela-corpoPORCENTAGEM input');
+inputs.forEach(input => {
+    input.addEventListener('input', calcularPorcentagem);
+});
 
 
+//*************** FIM PORCENTAGEM **********************//
 
-    atualizarPrimeiraCelulaNumero();
-    primeiraCelulaNumero.value = calcularSoma();
-    primeiraCelulaNumero.readOnly = true;
+//*************** REGRA DE TRES **********************//
+    function calcularRegraTresSimples() {
+        const a1 = parseFloat(document.getElementById('a1_simples').value);
+        const b1 = parseFloat(document.getElementById('b1_simples').value);
+        const a2 = parseFloat(document.getElementById('a2_simples').value);
+        const resultadoSimplesInput = document.getElementById('resultado_simples');
 
-    tabelaCorpoCalculos.addEventListener('input', function(event) {
-        if (event.target.classList.contains('NUMERADOR')) {
-            const linhaAtual = event.target.closest('tr');
-            const indiceLinhaAtual = Array.from(tabelaCorpoCalculos.children).indexOf(linhaAtual);
+        if (isNaN(a1) || isNaN(b1) || isNaN(a2)) {
+            resultadoSimplesInput.value = "Preencha todos os campos";
+            return;
+        }
 
-            if (indiceLinhaAtual === tabelaCorpoCalculos.children.length - 1 && event.target.value !== '') {
-                criarNovaLinhaCalculo();
+        const b2 = (a2 * b1) / a1;
+        resultadoSimplesInput.value = b2.toFixed(2);
+    }
+
+    function calcularRegraTresComposta() {
+        const tabelaComposta = document.getElementById('tabela_composta');
+        const resultadoCompostaInput = document.getElementById('resultado_composta');
+        let fatoresDiretos = 1;
+        let fatoresInversos = 1;
+        let xValor1;
+
+        for (let i = 0; i < tabelaComposta.rows.length; i++) {
+            const linha = tabelaComposta.rows[i];
+            const grandeza = linha.querySelector('.grandeza').value.trim();
+            const valor1 = parseFloat(linha.querySelector('.valor1').value);
+            const valor2 = parseFloat(linha.querySelector('.valor2').value);
+            const tipo = linha.querySelector('.tipo').value;
+
+            if (isNaN(valor1) || isNaN(valor2) || grandeza === "") {
+                resultadoCompostaInput.value = "Preencha todos os campos da tabela";
+                return;
+            }
+
+            if (document.getElementById('x_composta') === linha.querySelector('.valor2')) {
+                xValor1 = valor1;
+            } else {
+                if (tipo === 'diretamente') {
+                    fatoresDiretos *= valor2 / valor1;
+                } else if (tipo === 'inversamente') {
+                    fatoresInversos *= valor1 / valor2;
+                }
             }
         }
-    });
 
-    botaoCalcular.addEventListener('click', realizarCalculos);
+        if (isNaN(xValor1)) {
+            resultadoCompostaInput.value = "Campo com 'X' não encontrado";
+            return;
+        }
 
-    inputsSoma.forEach(input => {
-        input.addEventListener('input', atualizarPrimeiraCelulaNumero);
-    });
+        const resultadoX = xValor1 * fatoresDiretos * fatoresInversos;
+        resultadoCompostaInput.value = resultadoX.toFixed(2);
+    }
+
+    function adicionarGrandeza() {
+        const tabelaComposta = document.getElementById('tabela_composta');
+        const novaLinha = tabelaComposta.insertRow();
+
+        const colunaGrandeza = novaLinha.insertCell();
+        colunaGrandeza.innerHTML = '<input type="text" class="grandeza">';
+
+        const colunaValor1 = novaLinha.insertCell();
+        colunaValor1.innerHTML = '<input type="number" class="valor1">';
+
+        const colunaValor2 = novaLinha.insertCell();
+        colunaValor2.innerHTML = '<input type="number" class="valor2">';
+
+        const colunaTipo = novaLinha.insertCell();
+        colunaTipo.innerHTML = `
+            <select class="tipo">
+                <option value="diretamente">Diretamente</option>
+                <option value="inversamente">Inversamente</option>
+            </select>
+        `;
+    }
+
+//*************** FIM REGRA DE TRES **********************//
+
+//*************** BOTÃO CALCULOS DINAMICOS **********************//
+
+function copiarResultadoParaNumero(event) {
+  const botaoResultado = event.target;
+  const resultado = botaoResultado.textContent;
+  const tabelaCorpo = document.getElementById('tabela-corpo');
+  const linhas = tabelaCorpo.querySelectorAll('tr');
+
+  for (let i = 0; i < linhas.length; i++) {
+    const linha = linhas[i];
+    const campoNumero = linha.querySelector('.NUMERO');
+    if (campoNumero && campoNumero.value === '') {
+      campoNumero.value = resultado;
+      break; // Para de procurar após encontrar a primeira célula vazia
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tabelaCorpo = document.getElementById('tabela-corpo');
+  const botoesResultado = tabelaCorpo.querySelectorAll('.RESULTADO2');
+
+  botoesResultado.forEach(botao => {
+    botao.addEventListener('click', copiarResultadoParaNumero);
+  });
 });
+
+//*************** FIM BOTÃO CALCULOS DINAMICOS **********************//
+
+//*************** BOTÃO PORCENTAGEM **********************//
+
+function copiarParaTransferencia(event) {
+    const botao = event.target;
+    const valorParaCopiar = botao.textContent;
+    
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(valorParaCopiar)
+        .then(() => {
+            /* alert(`"${valorParaCopiar}" copiado para a área de transferência!`); */
+        })
+        .catch(err => {
+            console.error('Erro ao copiar para a área de transferência: ', err);
+            alert('Erro ao copiar para a área de transferência. Por favor, tente novamente.');
+        });
+    } else {
+        // Fallback para navegadores mais antigos (pode não funcionar em todos os casos, especialmente em dispositivos móveis)
+        const tempInput = document.createElement('input');
+        tempInput.value = valorParaCopiar;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        /* alert(`"${valorParaCopiar}" copiado para a área de transferência (método antigo)!`); */
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const tabelaCorpo = document.getElementById('tabela-corpo');
+    const botoesResultadoCalculos = tabelaCorpo.querySelectorAll('.RESULTADO');
+    const botaoSomaTotal = document.getElementById('botao-soma-total');
+    
+    botoesResultadoCalculos.forEach(botao => {
+        botao.addEventListener('click', copiarParaTransferencia);
+    });
+    
+    if (botaoSomaTotal) {
+        botaoSomaTotal.addEventListener('click', copiarParaTransferencia);
+    }
+});
+
+//*************** FIM BOTÃO PORCENTAGEM **********************//
+

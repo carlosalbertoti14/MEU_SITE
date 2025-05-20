@@ -1,4 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Array para armazenar todas as divs de conteúdo que podem ser exibidas/ocultadas
+    // IMPORTANTE: Verifique se os IDs aqui correspondem EXATAMENTE aos IDs no seu HTML.
+    const divsDeConteudo = [
+        'mercado',
+        'soma_dinamica',
+        'sites_criados'
+        // Adicione outros IDs de divs de conteúdo conforme você os criar
+    ];
+
+    // Função para esconder todas as divs de conteúdo
+    function esconderTodasDivs() {
+        console.log("Escondendo todas as divs..."); // Para depuração
+        divsDeConteudo.forEach(function(divId) {
+            const div = document.getElementById(divId);
+            if (div) {
+                div.style.display = 'none';
+                console.log(`Div ${divId} escondida.`); // Para depuração
+            } else {
+                console.warn(`Atenção: Div com ID "${divId}" não encontrada.`); // Para depuração
+            }
+        });
+    }
+
     // Controle de submenus padrão
     const linksComSubmenu = document.querySelectorAll("#navmenu > a + ul.submenu");
     let submenuAberto = null; // Variável para rastrear o submenu aberto
@@ -25,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submenu.addEventListener("click", function(event) {
             // Verifica se o clique ocorreu em um item do submenu (você pode refinar essa lógica se necessário)
             if (event.target.tagName === 'A' || event.target.tagName === 'LI') {
-                // Espera 5 milissegundos e então esconde o menu
+                // Pequeno atraso para o clique ser registrado antes de fechar
                 setTimeout(function() {
                     submenu.style.display = "none";
                     submenuAberto = null; // Reseta a variável
@@ -37,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener("click", function(event) {
         // Verifica se o clique ocorreu fora do menu e do link que o abriu
         if (submenuAberto && !submenuAberto.contains(event.target) && !submenuAberto.previousElementSibling.contains(event.target)) {
-            // Espera 5 milissegundos e então esconde o menu
+            // Pequeno atraso para o clique ser registrado antes de fechar
             setTimeout(function() {
                 if (submenuAberto) {
                     submenuAberto.style.display = "none";
@@ -47,25 +70,59 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Funcionalidade específica para "MOSTRAR MERCADO"
-    const mostrarMercadoLink = document.getElementById('mostrar-mercado');
-    const mercadoDiv = document.getElementById('mercadoDiv');
+    // --- Funcionalidades específicas para mostrar/esconder divs de conteúdo ---
+document.addEventListener('DOMContentLoaded', function () {
+    const divsDeConteudo = ['mercado', 'soma_dinamica', 'sites_criados'];
 
-    if (mostrarMercadoLink && mercadoDiv) {
-        mostrarMercadoLink.addEventListener('click', function(event) {
-            event.preventDefault();
-            mercadoDiv.style.display = mercadoDiv.style.display === 'block' ? 'none' : 'block';
+    function fecharTudo() {
+        divsDeConteudo.forEach(divId => {
+            const div = document.getElementById(divId);
+            if (div) div.style.display = 'none';
         });
     }
 
-    // Funcionalidade específica para "CALCULOS DINÂMICOS"
+    document.querySelectorAll('#utilitarioslist a').forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            fecharTudo();
+            esconderTodasDivs();
+
+            const targetId = link.id.replace('mostrar-', '');
+            const targetDiv = document.getElementById(targetId);
+
+            if (targetDiv) {
+                esconderTodasDivs();                
+                targetDiv.style.display = 'block';
+            } else {
+                console.warn(`Elemento com ID '${targetId}' não encontrado.`);
+            }
+        });
+    });
+});
+
+    // Funcionalidade para "CALCULOS DINÂMICOS"
     const mostrarSomaDinamicaLink = document.getElementById('mostrar-soma_dinamica');
     const somaDinamicaDiv = document.getElementById('soma_dinamica');
 
     if (mostrarSomaDinamicaLink && somaDinamicaDiv) {
         mostrarSomaDinamicaLink.addEventListener('click', function(event) {
             event.preventDefault();
-            somaDinamicaDiv.style.display = somaDinamicaDiv.style.display === 'block' ? 'none' : 'block';
+            esconderTodasDivs(); // <--- CHAMA A FUNÇÃO AQUI
+            somaDinamicaDiv.style.display = 'block';
+            console.log("Cálculos Dinâmicos exibidos."); // Para depuração
+        });
+    }
+
+    // Funcionalidade específica para "SITES CRIADOS"
+    const mostrarSitesCriadosLink = document.getElementById('mostrar_sites_criados');
+    const sitesCriadosDiv = document.getElementById('sites_criados');
+
+    if (mostrarSitesCriadosLink && sitesCriadosDiv) {
+        mostrarSitesCriadosLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            esconderTodasDivs(); // <--- CHAMA A FUNÇÃO AQUI
+            sitesCriadosDiv.style.display = 'block';
+            console.log("Sites Criados exibidos."); // Para depuração
         });
     }
 
@@ -75,12 +132,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (fecharSomaDinamicaButton && somaDinamicaDiv) {
         fecharSomaDinamicaButton.addEventListener('click', function() {
             somaDinamicaDiv.style.display = 'none'; // Força o fechamento ao clicar no botão
+            console.log("Cálculos Dinâmicos fechados pelo botão."); // Para depuração
         });
     }
 
     // Funcionalidade para o botão "Resetar Valores" dentro de "CALCULOS DINÂMICOS"
     const resetarValoresButton = document.getElementById('resetar-valores');
-    const tabelaCalculosDinamicos = document.getElementById('tabela-corpo'); // Alterado o seletor
+    const tabelaCalculosDinamicos = document.getElementById('tabela-corpo');
 
     if (resetarValoresButton && tabelaCalculosDinamicos) {
         resetarValoresButton.addEventListener('click', function() {
@@ -88,7 +146,24 @@ document.addEventListener('DOMContentLoaded', function() {
             inputsParaResetar.forEach(input => {
                 input.value = '';
             });
-            // Adicione aqui a lógica para resetar outros elementos dentro da tabela, se necessário.
+            console.log("Valores resetados."); // Para depuração
         });
+    }
+
+    // --- Nova funcionalidade para o botão "Fechar" da div "sites_criados" ---
+    const fecharSitesCriadosButton = document.getElementById('fechar-sites_crados'); // ID do seu botão
+    if (fecharSitesCriadosButton && sitesCriadosDiv) {
+        fecharSitesCriadosButton.addEventListener('click', function() {
+            sitesCriadosDiv.style.display = 'none'; // Esconde a div "sites_criados"
+            console.log("Sites Criados fechados pelo botão."); // Para depuração
+        });
+    }
+
+    // --- Nova função para fechar todas as divs de conteúdo (conforme solicitado) ---
+    // Você pode chamar esta função se precisar esconder todas as divs a partir de outro evento,
+    // como um botão "Fechar Tudo" geral.
+    function fecharTudo() {
+        console.log("Executando fecharTudo()..."); // Para depuração
+        esconderTodasDivs();
     }
 });

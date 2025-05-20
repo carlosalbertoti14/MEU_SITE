@@ -34,7 +34,7 @@ https://emojipedia.org/check-mark
 
     --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
     --fonte-destaque: "Bebas Neue", cursive;
-    --fonte-android: "Android", cursive;
+    --fonte-title: sans-serif, cursive;
 }
 
 * {
@@ -52,7 +52,7 @@ a {
 h1 {
     text-align: center;
     color: white;
-    font-family: var(--fonte-padrao);
+    font-family: var(--fonte-title);
     font-weight: bolder;
     font-size: 2em;
     margin-bottom: 20px;
@@ -62,7 +62,7 @@ h1 {
 body {
     
 background-color: #000000;
-font-family: var(--fonte-padrao);
+/* font-family: var(--fonte-padrao); */
 
 }
 
@@ -79,7 +79,15 @@ header {
 }
 
 
+/**********************************  inicio botões de controle ***********************************/
 
+div.botoes-controle button {
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--cor3);
+}
+
+/**********************************  fim botões de controle ***********************************/
 
 /**********************************  inicio configuração do menu ***********************************/
 #divcentral{
@@ -212,6 +220,7 @@ ul.submenu a:hover {
 
 /********************************** fim configuração do menu ***********************************/
 main {
+    display: block;
     min-height: 940px;
     min-width: 300px;
     max-width: 800px;
@@ -339,7 +348,7 @@ footer a:hover {
     color: var(--cor1);
 }
 
-/**************************************CONFIGURAÇÃO DO MERCADO*********************** */
+/**************************************CONFIGURAÇÃO DO COMPARATIVO DO PREÇO DO MERCADO*********************** */
 #mercado{
    display: none;
    background-color: var(--cor0);
@@ -352,6 +361,12 @@ footer a:hover {
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+#mercado p {
+      white-space: nowrap;
+      max-width: 100px; /* Em telas menores, pode ocupar toda a largura */
+      /* width: calc(100% - 10px); */
+}
 
 
 
@@ -402,7 +417,7 @@ h1 {
     background-color: #ddd;
 }
 
-/**************************************CONFIGURAÇÃO DO MERCADO*********************** */
+/**************************************fim da CONFIGURAÇÃO DO MERCADO*********************** */
 
 
 /**************************************CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
@@ -418,6 +433,18 @@ h1 {
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+#botao-operacao {
+    color: blue;
+    font-weight: bolder;
+
+}
+
+#a, #b, #x {
+    
+    background:#1274c427
+
+} 
 
   #organizar_tabela_soma {
     display: flex;
@@ -470,7 +497,7 @@ h1 {
 
 .RESULTADO2 {
   display: flex;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   align-items: center;
   justify-content: center;
   font-weight: bold;
@@ -613,3 +640,41 @@ h1 {
         font-size: 0.8em;
     }
 /*******************************FIM DA CONFIGURAÇÃO REGRA DE TRES************************/
+
+#mainpai, #mianfilho, main {
+    display: block;
+}
+
+/************************************** CONFIGURAÇÃO SITES CRIADOS ************************/
+
+
+    div#sites_criados{
+    display: none;
+    background-color: var(--cor0);
+    padding: 10px;
+    
+    max-width: auto;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    picture.sites img  {
+     width: 100%;
+     height: auto;
+     object-fit: cover; /* Ou contain, fill, etc. */
+     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.550);
+     border-radius: 10px;
+    }
+
+    picture.sites a {
+        text-decoration: none;
+        background-color: inherit;
+
+    }
+
+
+
+
+/************************************** CONFIGURAÇÃO SITES CRIADOS ************************/
