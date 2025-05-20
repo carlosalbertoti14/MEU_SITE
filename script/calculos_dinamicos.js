@@ -6,7 +6,7 @@
 //*************** SOMA **********************//
 function calcularSomaTotal() {
   const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
-  const resultadoBotao = document.querySelector('#tabela-corpoSOMA .RESULTADO2');
+  const resultadoBotao = document.querySelector('#tabela-corpoSOMA .RESULTADO');
   let somaTotal = 0;
 
   inputsSoma.forEach(input => {
@@ -62,8 +62,16 @@ function calcularResultado(linha) {
     case 'soma':
       resultado = numero + numerador;
       break;
-    case 'raiz':
-      resultado = Math.sqrt(numero);
+
+       case 'raiz': // Calculará a raiz enésima ou quadrada
+            if (numerador <= 0) {
+                resultado = 'Erro! Radical inválido.';
+            } else if (isNaN(numerador) || numerador == 0) {
+                resultado = Math.sqrt(numero);
+            } else {
+                resultado = Math.pow(numero, 1 / numerador);
+            }
+
       break;
     case 'elevado':
       resultado = Math.pow(numero, numerador);
@@ -325,7 +333,7 @@ function copiarResultadoParaNumero(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
   const tabelaCorpo = document.getElementById('tabela-corpo');
-  const botoesResultado = tabelaCorpo.querySelectorAll('.RESULTADO');
+  const botoesResultado = tabelaCorpo.querySelectorAll('.RESULTADO2');
 
   botoesResultado.forEach(botao => {
     botao.addEventListener('click', copiarResultadoParaNumero);
@@ -372,7 +380,7 @@ function copiarParaTransferencia(event) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(valorParaCopiar)
         .then(() => {
-            alert(`"${valorParaCopiar}" copiado para a área de transferência!`);
+            /* alert(`"${valorParaCopiar}" copiado para a área de transferência!`); */
         })
         .catch(err => {
             console.error('Erro ao copiar para a área de transferência: ', err);
@@ -386,7 +394,7 @@ function copiarParaTransferencia(event) {
         tempInput.select();
         document.execCommand('copy');
         document.body.removeChild(tempInput);
-        alert(`"${valorParaCopiar}" copiado para a área de transferência (método antigo)!`);
+        /* alert(`"${valorParaCopiar}" copiado para a área de transferência (método antigo)!`); */
     }
 }
 
