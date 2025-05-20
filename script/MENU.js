@@ -80,14 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Funcionalidade para o botão "Resetar Valores" dentro de "CALCULOS DINÂMICOS"
     const resetarValoresButton = document.getElementById('resetar-valores');
+    const tabelaCalculosDinamicos = document.getElementById('tabela-corpo'); // Alterado o seletor
 
-    if (resetarValoresButton && somaDinamicaDiv) {
+    if (resetarValoresButton && tabelaCalculosDinamicos) {
         resetarValoresButton.addEventListener('click', function() {
-            const inputsParaResetar = somaDinamicaDiv.querySelectorAll('input[type="number"], input[type="text"]');
+            const inputsParaResetar = tabelaCalculosDinamicos.querySelectorAll('input[type="number"], input[type="text"]');
             inputsParaResetar.forEach(input => {
                 input.value = '';
             });
-            // Adicione aqui a lógica para resetar outros elementos dentro de soma_dinamica, se necessário.
+            // Adicione aqui a lógica para resetar outros elementos dentro da tabela, se necessário.
         });
     }
 });

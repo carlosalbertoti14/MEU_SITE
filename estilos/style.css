@@ -408,7 +408,7 @@ h1 {
 /**************************************CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
 #soma_dinamica{
-    display: block;
+    display: none;
    background-color: var(--cor0);
    padding: 10px;
    
@@ -452,11 +452,9 @@ h1 {
 
 }
 
-.RESULTADO, td, tr{
-  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
-  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
-}
+
+
 
 .totais {
     font-size: 0.6em;
@@ -470,12 +468,17 @@ h1 {
   /* Outras formatações que você já tinha */
 }
 
-button.RESULTADO {
-    display: inline-block; /* Permite que fique ao lado de outros elementos em linha */
-  text-align: center;
+.RESULTADO2 {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
   color: red;
-  /* Outras formatações que você já tinha */
+  width: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  /* Outros estilos do botão */
 }
 
 /*******************************FIM DA CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
@@ -499,14 +502,14 @@ button.RESULTADO {
 
 #tabela-corpoPORCENTAGEM td button.RP {
      margin-left: 10px;
-  flex-shrink: 0;
+    flex-shrink: 0;
+    padding-left: 5px;
+     padding-right: 5px;
+    font-weight: bold;
+    color: red;
 }
 
-/* Opcional: Para melhor responsividade em telas menores, você pode impedir o "encolhimento" excessivo do botão */
-#tabela-corpoPORCENTAGEM td button.RP {
-    
-  flex-shrink: 0;
-}
+
 /******************************* FIM PORCENTAGEM ************************/
 
 /******************************* CONFIGURAÇÃO REGRA DE TRES ************************/
@@ -525,6 +528,10 @@ button.RESULTADO {
         border: 1px solid #eee;
         border-radius: 3px;
         background-color: #f9f9f9;
+    }
+    #tabela_composta, input, select {
+          max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+         width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
     }
 
     DIV#REGRA_D3 label {
@@ -575,21 +582,34 @@ button.RESULTADO {
     } */
 
     DIV#REGRA_D3 th {
+         max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+         width: calc(100% - 5px); /* Em telas maiores, ocupa metade menos a margem */
         background-color: #f2f2f2;
     }
 
     DIV#REGRA_D3 .grandeza {
-        width: 100%;
-        box-sizing: border-box;
+          max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+         width: calc(100% - 5px); /* Em telas maiores, ocupa metade menos a margem */
     }
 
     DIV#REGRA_D3 .valor1, .valor2 {
-        width: 80px;
-        box-sizing: border-box;
+          max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+         width: calc(100% - 5px); /* Em telas maiores, ocupa metade menos a margem */
     }
 
     DIV#REGRA_D3 .tipo {
-        width: 150px;
-        box-sizing: border-box;
+          max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+         width: calc(100% - 5px); /* Em telas maiores, ocupa metade menos a margem */
+    }
+
+    #resultado_composta {
+        display: inline-block;
+        width: 100px;
+        display: inline-block;
+    }
+
+    .res_comp {
+        white-space: nowrap;
+        font-size: 0.8em;
     }
 /*******************************FIM DA CONFIGURAÇÃO REGRA DE TRES************************/

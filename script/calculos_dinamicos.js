@@ -6,7 +6,7 @@
 //*************** SOMA **********************//
 function calcularSomaTotal() {
   const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
-  const resultadoBotao = document.querySelector('#tabela-corpoSOMA .RESULTADO');
+  const resultadoBotao = document.querySelector('#tabela-corpoSOMA .RESULTADO2');
   let somaTotal = 0;
 
   inputsSoma.forEach(input => {
@@ -39,7 +39,7 @@ function calcularResultado(linha) {
   const numero = parseFloat(linha.querySelector('.NUMERO').value);
   const operador = linha.querySelector('.operador').value;
   const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
-  const resultadoBotao = linha.querySelector('.RESULTADO'); // Seleciona o botão
+  const resultadoBotao = linha.querySelector('.RESULTADO2'); // Seleciona o botão
 
   let resultado;
 
