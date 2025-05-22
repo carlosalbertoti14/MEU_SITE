@@ -96,122 +96,192 @@ document.addEventListener('DOMContentLoaded', function () {
     calcularOperacaoTotal(); // Calcular operação inicial
 });
 
+/* ADICIONAR LINHAS SOMA */
 
+document.addEventListener('DOMContentLoaded', function () {
+    const tabelaCorpoSOMA = document.getElementById('tabela-corpoSOMA');
+    const linhaTotal = document.querySelector('.totais').parentElement; // Captura a linha do total
+
+    tabelaCorpoSOMA.addEventListener('change', function () {
+        adicionarNovaLinhaSeNecessario();
+        calcularOperacaoTotal();
+    });
+
+    function adicionarNovaLinhaSeNecessario() {
+        const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
+        const ultimaCelula = inputsSoma[inputsSoma.length - 1];
+
+        if (ultimaCelula.value !== '') {
+            let novaLinha = document.createElement('tr');
+            let novaCelula = document.createElement('td');
+            let novoInput = document.createElement('input');
+
+            novoInput.type = "number";
+            novoInput.className = "soma";
+            novaCelula.appendChild(novoInput);
+            novaLinha.appendChild(novaCelula);
+
+            // Insere antes da linha total
+            tabelaCorpoSOMA.insertBefore(novaLinha, linhaTotal);
+        }
+    }
+
+    calcularOperacaoTotal(); // Calcular operação inicial
+});
 //***************CALCULOS DINAMICOS**********************//
 
-function calcularResultado(linha) {
-  const numero = parseFloat(linha.querySelector('.NUMERO').value);
-  const operador = linha.querySelector('.operador').value;
-  const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
-  const resultadoBotao = linha.querySelector('.RESULTADO2'); // Seleciona o botão
+document.addEventListener('DOMContentLoaded', function () {
+    const tabelaCorpo = document.getElementById('tabela-corpo');
 
-  let resultado;
+    tabelaCorpo.addEventListener('change', function (event) {
+        const elementoAlterado = event.target;
+        const linha = elementoAlterado.closest('tr');
 
-  if (isNaN(numero)) {
-    resultadoBotao.textContent = ''; // Atualiza o texto do botão
-    return;
-  }
+        if (elementoAlterado.classList.contains('NUMERO') || 
+            elementoAlterado.classList.contains('operador') || 
+            elementoAlterado.classList.contains('NUMERADOR')) {
+            calcularResultado(linha);
+            adicionarNovaLinhaSeNecessario();
+        }
+    });
 
-// Função auxiliar para calcular o fatorial
-function calcularFatorial(n) {
-    if (n < 0) {
-        return NaN; // Fatorial de números negativos não é definido para inteiros
+    /* ADICIONAR LINHA */
+    function adicionarNovaLinhaSeNecessario() {
+        const linhas = tabelaCorpo.querySelectorAll('tr');
+        const ultimaLinha = linhas[linhas.length - 1];
+        const ultimaCelula = ultimaLinha.querySelector('.NUMERO');
+
+        if (ultimaCelula.value !== '') {
+            let novaLinha = document.createElement('tr');
+
+            let novaCelulaNumero = document.createElement('td');
+            let novoInputNumero = document.createElement('input');
+            novoInputNumero.type = "number";
+            novoInputNumero.className = "NUMERO";
+            novaCelulaNumero.appendChild(novoInputNumero);
+            novaLinha.appendChild(novaCelulaNumero);
+
+            let novaCelulaOperador = document.createElement('td');
+            let novoSelectOperador = document.createElement('select');
+            novoSelectOperador.className = "operador";
+            ["multiplicacao", "divisao", "quociente", "resto", "soma", "raiz", "elevado", "porcentagem", "fatorial"]
+                .forEach(op => {
+                    let option = document.createElement('option');
+                    option.value = op;
+                    option.textContent = op;
+                    novoSelectOperador.appendChild(option);
+                });
+            novaCelulaOperador.appendChild(novoSelectOperador);
+            novaLinha.appendChild(novaCelulaOperador);
+
+            let novaCelulaNumerador = document.createElement('td');
+            let novoInputNumerador = document.createElement('input');
+            novoInputNumerador.type = "number";
+            novoInputNumerador.className = "NUMERADOR";
+            novaCelulaNumerador.appendChild(novoInputNumerador);
+            novaLinha.appendChild(novaCelulaNumerador);
+
+            let novaCelulaResultado = document.createElement('td');
+            let novoBotaoResultado = document.createElement('button');
+            novoBotaoResultado.className = "RESULTADO2";
+            novoBotaoResultado.textContent = "Resultado";
+            novoBotaoResultado.addEventListener('click', function () {
+                copiarResultadoParaProximaLinha(novaLinha);
+            });
+            novaCelulaResultado.appendChild(novoBotaoResultado);
+            novaLinha.appendChild(novaCelulaResultado);
+
+            tabelaCorpo.appendChild(novaLinha);
+        }
     }
-    if (n === 0 || n === 1) {
-        return 1;
-    }
-    let resultadoFatorial = 1;
-    for (let i = 2; i <= n; i++) {
-        resultadoFatorial *= i;
-    }
-    return resultadoFatorial;
-}
+    
+     /* fim ADICIONAR LINHA */
 
-// Seu switch statement
-switch (operador) {
-    case 'multiplicacao':
-        resultado = numero * numerador;
-        break;
-    case 'divisao':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = numero / numerador;
-        }
-        break;
-    case 'quociente':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = Math.floor(numero / numerador);
-        }
-        break;
-    case 'resto':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = numero % numerador;
-        }
-        break;
-    case 'soma':
-        resultado = numero + numerador;
-        break;
-    case 'raiz':
-        if (numerador <= 0) {
-            resultado = 'Erro! Radical inválido.';
-        } else if (isNaN(numerador) || numerador == 0) {
-            resultado = Math.sqrt(numero);
-        } else {
-            resultado = Math.pow(numero, 1 / numerador);
-        }
-        break;
-    case 'elevado':
-        resultado = Math.pow(numero, numerador);
-        break;
-    case 'porcentagem':
-        resultado = (numero * numerador) / 100;
-        break;
-    case 'fatorial':
-        const fatorialNumero = calcularFatorial(numero);
 
-        if (isNaN(numerador) || numerador === 0) {
-            // Se o numerador não for mencionado ou for zero, calcula apenas o fatorial do 'numero'
-            resultado = fatorialNumero;
-        } else {
-            // Se o numerador for mencionado, calcula o fatorial do 'numero' vezes o fatorial do 'numerador'
-            const fatorialNumerador = calcularFatorial(numerador);
-            if (isNaN(fatorialNumero) || isNaN(fatorialNumerador)) {
-                resultado = 'Erro! Entrada inválida para fatorial.';
-            } else {
-                resultado = fatorialNumero * fatorialNumerador;
+    function calcularResultado(linha) {
+        const numero = parseFloat(linha.querySelector('.NUMERO').value);
+        const operador = linha.querySelector('.operador').value;
+        const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
+        const resultadoBotao = linha.querySelector('.RESULTADO2'); 
+
+        let resultado;
+
+        if (isNaN(numero)) {
+            resultadoBotao.textContent = ''; 
+            return;
+        }
+
+        function calcularFatorial(n) {
+            if (n < 0) return NaN;
+            if (n === 0 || n === 1) return 1;
+            let resultadoFatorial = 1;
+            for (let i = 2; i <= n; i++) {
+                resultadoFatorial *= i;
+            }
+            return resultadoFatorial;
+        }
+
+        switch (operador) {
+            case 'multiplicacao':
+                resultado = numero * numerador;
+                break;
+            case 'divisao':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero / numerador;
+                break;
+            case 'quociente':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : Math.floor(numero / numerador);
+                break;
+            case 'resto':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero % numerador;
+                break;
+            case 'soma':
+                resultado = numero + numerador;
+                break;
+            case 'raiz':
+                resultado = numerador <= 0 ? 'Erro! Radical inválido.' : Math.pow(numero, 1 / numerador);
+                break;
+            case 'elevado':
+                resultado = Math.pow(numero, numerador);
+                break;
+            case 'porcentagem':
+                resultado = (numero * numerador) / 100;
+                break;
+            case 'fatorial':
+                const fatorialNumero = calcularFatorial(numero);
+                const fatorialNumerador = calcularFatorial(numerador);
+                resultado = isNaN(fatorialNumero) || isNaN(fatorialNumerador) ? 'Erro! Entrada inválida para fatorial.' : fatorialNumero * fatorialNumerador;
+                break;
+            default:
+                resultado = '';
+                break;
+        }
+
+        resultadoBotao.textContent = resultado;
+    }
+
+    function copiarResultadoParaProximaLinha(linhaAtual) {
+        const resultadoBotao = linhaAtual.querySelector('.RESULTADO2');
+        const resultadoValor = resultadoBotao.textContent;
+
+        const proximaLinha = linhaAtual.nextElementSibling;
+        if (proximaLinha) {
+            const campoNumero = proximaLinha.querySelector('.NUMERO');
+            if (campoNumero && campoNumero.value === '') {
+                campoNumero.value = resultadoValor;
             }
         }
-        break;
-    default:
-        resultado = '';
-        break;
-}
-
-  resultadoBotao.textContent = resultado; // Define o texto do botão
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const tabelaCorpo = document.getElementById('tabela-corpo');
-
-  tabelaCorpo.addEventListener('change', function(event) {
-    const elementoAlterado = event.target;
-    const linha = elementoAlterado.closest('tr');
-
-    if (elementoAlterado.classList.contains('NUMERO') ||
-        elementoAlterado.classList.contains('operador') ||
-        elementoAlterado.classList.contains('NUMERADOR')) {
-      calcularResultado(linha);
     }
-  });
 
-  // Calcular resultados iniciais ao carregar a página
-  const linhas = tabelaCorpo.querySelectorAll('tr');
-  linhas.forEach(calcularResultado);
+    const linhas = tabelaCorpo.querySelectorAll('tr');
+    linhas.forEach(linha => {
+        const botaoResultado = linha.querySelector('.RESULTADO2');
+        if (botaoResultado) {
+            botaoResultado.addEventListener('click', function () {
+                copiarResultadoParaProximaLinha(linha);
+            });
+        }
+        calcularResultado(linha);
+    });
 });
 
 //***************FIM CALCULOS DINAMICOS**********************//
@@ -408,33 +478,38 @@ inputs.forEach(input => {
         });
     }
 
-    // 3️⃣ Função para adicionar uma nova grandeza
-    function adicionarGrandeza() {
-        const tabelaComposta = document.getElementById('tabela_composta');
-        const novaLinha = tabelaComposta.insertRow();
+    /* adicionar grandeza */
+    document.addEventListener('DOMContentLoaded', function () {
+    const tabelaComposta = document.getElementById('tabela_composta');
 
-        novaLinha.innerHTML = `
-            <td class="INgrand"><input type="text" class="g_x1"></td>
-            <td><input type="number" class="valor1"></td>
-            <td><input type="number" class="valor3"></td>
-            <td>
-                <select id="invert_v1" class="tipo">
-                    <option value="diretamente">Diretamente</option>
-                    <option value="inversamente">Inversamente</option>
-                </select>
-            </td>
-        `;
-    }
+    window.adicionarGrandeza = function () {
+        const todasLinhas = tabelaComposta.querySelectorAll('tr');
 
-    // 4️⃣ Função para remover a última grandeza adicionada
-    function removerGrandeza() {
-        const tabelaComposta = document.getElementById('tabela_composta');
-        if (tabelaComposta.rows.length > 2) {
-            tabelaComposta.deleteRow(-1);
-        } else {
-            alert("Você deve manter pelo menos duas grandezas!");
-        }
-    }
+        todasLinhas.forEach((linha, index) => {
+            let novaCelula = document.createElement('td');
+            let novoInput = document.createElement('input');
+
+            novoInput.type = "number";
+            novoInput.className = `valor${document.querySelectorAll('.valor1').length + 1}`;
+
+            novaCelula.appendChild(novoInput);
+            linha.appendChild(novaCelula);
+        });
+    };
+
+    window.removerGrandeza = function () {
+        const todasLinhas = tabelaComposta.querySelectorAll('tr');
+
+        todasLinhas.forEach((linha) => {
+            if (linha.cells.length > 3) {
+                linha.removeChild(linha.lastElementChild);
+            }
+        });
+    };
+});
+
+/* fim adicionar grandeza */
+
 
     // Executar inversão dos valores no carregamento da página
     inverterValores();

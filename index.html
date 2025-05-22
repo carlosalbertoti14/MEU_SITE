@@ -359,7 +359,7 @@
                                                 <th id="r3grandeza">Grandeza</th>
                                                 <th id="r3valor_1">Valor 1</th>
                                                 <th id="r3valor_2">Valor 2</th>
-                                                <th>Diretamente/<br>Inversamente</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody id="tabela_composta">
@@ -367,32 +367,46 @@
                                                 <td class="INgrand"><input type="text" class="g_x1"></td>
                                                 <td><input type="number" class="valor1"></td>
                                                 <td><input type="number" class="valor3"></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td class="INgrand"><input type="text" class="g_x2" value="X"></td>
+                                                <td><input type="number" class="valor2"></td>
+                                                <td><input type="number" class="valor4"></td>
+
+                                            </tr>
+
+                                            <tr>
+
+
+                                                <td><label for="">Direta/Inversa →</label></td>
+
                                                 <td>
                                                     <select id="invert_v1" class="tipo">
                                                         <option value="diretamente">Diretamente</option>
                                                         <option value="inversamente">Inversamente</option>
                                                     </select>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="INgrand"><input type="text" class="g_x2"></td>
-                                                <td><input type="number" class="valor2"></td>
-                                                <td><input type="number" class="valor4"></td>
+
                                                 <td>
                                                     <select id="invert_v2" class="tipo">
                                                         <option value="diretamente">Diretamente</option>
                                                         <option value="inversamente">Inversamente</option>
                                                     </select>
                                                 </td>
+                                                
+
+
                                             </tr>
+
 
                                         </tbody>
                                     </table>
                                     <label class="res_comp" for="resultado_composta">Resultado (X):</label>
                                     <input type="text" id="resultado_composta" readonly><br>
                                     <button type="button" onclick="calcularRegraTresComposta()">Calcular</button>
-                                    <button type="button" onclick="adicionarGrandeza()">Adicionar Grandeza</button>
-                                    <button type="button" onclick="removerGrandeza()">Remover Grandeza</button>
+                                    <button type="button" onclick="adicionarGrandeza()">Add Grandeza</button>
+                                    <button type="button" onclick="removerGrandeza()">Sub Grandeza</button>
                                 </div>
                             </DIV>
 

@@ -358,66 +358,105 @@ inputs.forEach(input => {
         resultadoSimplesInput.value = b2.toFixed(2);
     }
 
-    function calcularRegraTresComposta() {
-        const tabelaComposta = document.getElementById('tabela_composta');
+
+     /* REGRA DE TRES COMPOSTA */
+
+        document.addEventListener('DOMContentLoaded', function () {
+    // 1️⃣ Função para calcular Regra de Três Composta conforme sua lógica
+        function calcularRegraTresComposta() {
+        const valor1 = parseFloat(document.querySelector('.valor1').value);
+        const valor2 = parseFloat(document.querySelector('.valor2').value);
+        const valor3 = parseFloat(document.querySelector('.valor3').value);
+        const valor4 = parseFloat(document.querySelector('.valor4').value);
+        const g_x1 = parseFloat(document.querySelector('.g_x1').value); // Grandeza X1
         const resultadoCompostaInput = document.getElementById('resultado_composta');
-        let fatoresDiretos = 1;
-        let fatoresInversos = 1;
-        let xValor1;
 
-        for (let i = 0; i < tabelaComposta.rows.length; i++) {
-            const linha = tabelaComposta.rows[i];
-            const grandeza = linha.querySelector('.grandeza').value.trim();
-            const valor1 = parseFloat(linha.querySelector('.valor1').value);
-            const valor2 = parseFloat(linha.querySelector('.valor2').value);
-            const tipo = linha.querySelector('.tipo').value;
-
-            if (isNaN(valor1) || isNaN(valor2) || grandeza === "") {
-                resultadoCompostaInput.value = "Preencha todos os campos da tabela";
-                return;
-            }
-
-            if (document.getElementById('x_composta') === linha.querySelector('.valor2')) {
-                xValor1 = valor1;
-            } else {
-                if (tipo === 'diretamente') {
-                    fatoresDiretos *= valor2 / valor1;
-                } else if (tipo === 'inversamente') {
-                    fatoresInversos *= valor1 / valor2;
-                }
-            }
-        }
-
-        if (isNaN(xValor1)) {
-            resultadoCompostaInput.value = "Campo com 'X' não encontrado";
+        // Validar os campos
+        if (isNaN(valor1) || isNaN(valor2) || isNaN(valor3) || isNaN(valor4) || isNaN(g_x1)) {
+            resultadoCompostaInput.value = "Preencha todos os campos corretamente.";
             return;
         }
 
-        const resultadoX = xValor1 * fatoresDiretos * fatoresInversos;
-        resultadoCompostaInput.value = resultadoX.toFixed(2);
+        // Aplicação da fórmula:
+        const x = valor1 * valor3;
+        const y = valor2 * valor4;
+        const z = g_x1 * y;
+        const resultadoFinal = z / x;
+
+        resultadoCompostaInput.value = resultadoFinal.toFixed(2);
     }
 
+    // 2️⃣ Função para inverter os valores conforme "Inversamente" for selecionado
+    function inverterValores() {
+        const selectInvert1 = document.getElementById('invert_v1');
+        const selectInvert2 = document.getElementById('invert_v2');
+
+        selectInvert1.addEventListener('change', function () {
+            if (selectInvert1.value === "inversamente") {
+                const temp = document.querySelector('.valor1').value;
+                document.querySelector('.valor1').value = document.querySelector('.valor2').value;
+                document.querySelector('.valor2').value = temp;
+            }
+        });
+
+        selectInvert2.addEventListener('change', function () {
+            if (selectInvert2.value === "inversamente") {
+                const temp = document.querySelector('.valor3').value;
+                document.querySelector('.valor3').value = document.querySelector('.valor4').value;
+                document.querySelector('.valor4').value = temp;
+            }
+        });
+    }
+
+    // 3️⃣ Função para adicionar uma nova grandeza
     function adicionarGrandeza() {
         const tabelaComposta = document.getElementById('tabela_composta');
         const novaLinha = tabelaComposta.insertRow();
 
-        const colunaGrandeza = novaLinha.insertCell();
-        colunaGrandeza.innerHTML = '<input type="text" class="grandeza">';
-
-        const colunaValor1 = novaLinha.insertCell();
-        colunaValor1.innerHTML = '<input type="number" class="valor1">';
-
-        const colunaValor2 = novaLinha.insertCell();
-        colunaValor2.innerHTML = '<input type="number" class="valor2">';
-
-        const colunaTipo = novaLinha.insertCell();
-        colunaTipo.innerHTML = `
-            <select class="tipo">
-                <option value="diretamente">Diretamente</option>
-                <option value="inversamente">Inversamente</option>
-            </select>
+        novaLinha.innerHTML = `
+            <td class="INgrand"><input type="text" class="g_x1"></td>
+            <td><input type="number" class="valor1"></td>
+            <td><input type="number" class="valor3"></td>
+            <td>
+                <select id="invert_v1" class="tipo">
+                    <option value="diretamente">Diretamente</option>
+                    <option value="inversamente">Inversamente</option>
+                </select>
+            </td>
         `;
     }
+
+    // 4️⃣ Função para remover a última grandeza adicionada
+    function removerGrandeza() {
+        const tabelaComposta = document.getElementById('tabela_composta');
+        if (tabelaComposta.rows.length > 2) {
+            tabelaComposta.deleteRow(-1);
+        } else {
+            alert("Você deve manter pelo menos duas grandezas!");
+        }
+    }
+
+    // Executar inversão dos valores no carregamento da página
+    inverterValores();
+
+    // Associar funções aos botões
+    window.calcularRegraTresComposta = calcularRegraTresComposta;
+    window.adicionarGrandeza = adicionarGrandeza;
+    window.removerGrandeza = removerGrandeza;
+});
+
+ //alterar nome to rótulo
+document.addEventListener('DOMContentLoaded', function () {
+    // Permitir edição dos títulos ao clicar
+    document.querySelectorAll("th").forEach(th => {
+        th.addEventListener("click", function () {
+            const novoTexto = prompt("Digite o novo nome para este título:", this.textContent);
+            if (novoTexto !== null && novoTexto.trim() !== "") {
+                this.textContent = novoTexto;
+            }
+        });
+    });
+});
 
 //*************** FIM REGRA DE TRES **********************//
 
@@ -493,3 +532,61 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //*************** FIM BOTÃO PORCENTAGEM **********************//
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Seleciona o botão de "Resetar Valores" da soma dinâmica
+    const resetarValoresSomaDinamicaButton = document.getElementById('resetar-valores_soma_dinamica');
+
+    // 2. Define os seletores para todas as input boxes que você quer resetar
+    //    Estes seletores cobrem a maioria das input boxes que você mencionou.
+    const seletoresDeInputs = [
+        '#tabela-corpoSOMA .soma',             // Inputs da tabela de soma (a, b, etc.)
+        '#mercadoDiv input[type="number"]',    // Se houver inputs de número em mercadoDiv
+        '#mercadoDiv input[type="text"]',     // Se houver inputs de texto em mercadoDiv
+        '#soma_dinamica .NUMERO',              // Inputs NUMERO da tabela de cálculos dinâmicos
+        '#soma_dinamica .NUMERADOR',           // Inputs NUMERADOR da tabela de cálculos dinâmicos
+        '#pvt',                                // Input de valor total (porcentagem)
+        '#porc',                               // Input de porcentagem
+        '#vcA',                                // Input de valor com aumento
+        '#vcD',                                // Input de valor com desconto
+        '#desc',                               // Input de desconto
+        '#a1_simples',                         // Input a1 da regra de três simples
+        '#b1_simples',                         // Input b1 da regra de três simples
+        '#a2_simples',                         // Input a2 da regra de três simples
+        '#resultado_simples',                  // Input de resultado da regra de três simples
+        '#resultado_composta',                 // Input de resultado da regra de três composta
+        '#tabela_composta .grandeza',          // Inputs de grandeza da regra de três composta
+        '#tabela_composta .valor1',            // Inputs de valor1 da regra de três composta
+        '#tabela_composta .valor2'             // Inputs de valor2 da regra de três composta
+        // Adicione quaisquer outros seletores de inputs que você queira resetar
+    ];
+
+    // 3. Adiciona o listener de clique ao botão
+    if (resetarValoresSomaDinamicaButton) {
+        resetarValoresSomaDinamicaButton.addEventListener('click', function() {
+            // Itera sobre cada seletor de input
+            seletoresDeInputs.forEach(seletor => {
+                // Seleciona todos os inputs que correspondem ao seletor atual
+                const inputs = document.querySelectorAll(seletor);
+
+                // Para cada input encontrado, define seu valor como vazio
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+            });
+
+            // Opcional: Se você quiser garantir que os resultados também sejam limpos
+            // Você pode precisar chamar funções de cálculo relevantes para redefinir as exibições.
+            // Por exemplo, para a parte de soma dinâmica, você pode chamar:
+            // if (typeof calcularOperacaoTotal === 'function') {
+            //     calcularOperacaoTotal(); // Recalcula a soma, que deve ser 0 ou vazia
+            // }
+            // Se tiver botões de resultado que exibem texto, você pode limpá-los também.
+            // Exemplo:
+            // document.querySelectorAll('.RESULTADO2').forEach(btn => btn.textContent = '');
+            // document.querySelectorAll('.RESULTADO_P').forEach(btn => btn.textContent = '');
+        });
+    }
+});

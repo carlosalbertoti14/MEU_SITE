@@ -423,7 +423,7 @@ h1 {
 /**************************************CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
 #soma_dinamica{
-    display: none;
+    display: block;
    background-color: var(--cor0);
    padding: 10px;
    
@@ -541,17 +541,22 @@ h1 {
 
 /******************************* CONFIGURAÇÃO REGRA DE TRES ************************/
     #REGRA_D3 {
+        
         font-family: sans-serif;
-        padding: 20px;
+       /*  padding: 20px; */
         border: 1px solid #ccc;
         border-radius: 5px;
     }
 
+    #REGRA_D3 > h3 {
+        
+        text-align: center;
+    }
  
 
     #regra_simples, #regra_composta {
         margin-bottom: 20px;
-        padding: 15px;
+        padding: 5px; 
         border: 1px solid #eee;
         border-radius: 3px;
         background-color: #f9f9f9;
