@@ -89,129 +89,199 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (x === 0) {
             return Math.log(b) / Math.log(a); // Encontrar o expoente
         } else {
-            return "Erro: Preencha um campo com 0 para encontrar o valor.";
+            return "log a^ b = x → deixe em branco";
         }
     }
 
     calcularOperacaoTotal(); // Calcular operação inicial
 });
 
+/* ADICIONAR LINHAS SOMA */
 
+document.addEventListener('DOMContentLoaded', function () {
+    const tabelaCorpoSOMA = document.getElementById('tabela-corpoSOMA');
+    const linhaTotal = document.querySelector('.totais').parentElement; // Captura a linha do total
+
+    tabelaCorpoSOMA.addEventListener('change', function () {
+        adicionarNovaLinhaSeNecessario();
+        calcularOperacaoTotal();
+    });
+
+    function adicionarNovaLinhaSeNecessario() {
+        const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
+        const ultimaCelula = inputsSoma[inputsSoma.length - 1];
+
+        if (ultimaCelula.value !== '') {
+            let novaLinha = document.createElement('tr');
+            let novaCelula = document.createElement('td');
+            let novoInput = document.createElement('input');
+
+            novoInput.type = "number";
+            novoInput.className = "soma";
+            novaCelula.appendChild(novoInput);
+            novaLinha.appendChild(novaCelula);
+
+            // Insere antes da linha total
+            tabelaCorpoSOMA.insertBefore(novaLinha, linhaTotal);
+        }
+    }
+
+    /* calcularOperacaoTotal(); // Calcular operação inicial */
+});
 //***************CALCULOS DINAMICOS**********************//
 
-function calcularResultado(linha) {
-  const numero = parseFloat(linha.querySelector('.NUMERO').value);
-  const operador = linha.querySelector('.operador').value;
-  const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
-  const resultadoBotao = linha.querySelector('.RESULTADO2'); // Seleciona o botão
+document.addEventListener('DOMContentLoaded', function () {
+    const tabelaCorpo = document.getElementById('tabela-corpo');
 
-  let resultado;
+    tabelaCorpo.addEventListener('change', function (event) {
+        const elementoAlterado = event.target;
+        const linha = elementoAlterado.closest('tr');
 
-  if (isNaN(numero)) {
-    resultadoBotao.textContent = ''; // Atualiza o texto do botão
-    return;
-  }
+        if (elementoAlterado.classList.contains('NUMERO') || 
+            elementoAlterado.classList.contains('operador') || 
+            elementoAlterado.classList.contains('NUMERADOR')) {
+            calcularResultado(linha);
+            adicionarNovaLinhaSeNecessario();
+        }
+    });
 
-// Função auxiliar para calcular o fatorial
-function calcularFatorial(n) {
-    if (n < 0) {
-        return NaN; // Fatorial de números negativos não é definido para inteiros
+    /* ADICIONAR LINHA */
+    function adicionarNovaLinhaSeNecessario() {
+        const linhas = tabelaCorpo.querySelectorAll('tr');
+        const ultimaLinha = linhas[linhas.length - 1];
+        const ultimaCelula = ultimaLinha.querySelector('.NUMERO');
+
+        if (ultimaCelula.value !== '') {
+            let novaLinha = document.createElement('tr');
+
+            let novaCelulaNumero = document.createElement('td');
+            let novoInputNumero = document.createElement('input');
+            novoInputNumero.type = "number";
+            novoInputNumero.className = "NUMERO";
+            novaCelulaNumero.appendChild(novoInputNumero);
+            novaLinha.appendChild(novaCelulaNumero);
+
+            let novaCelulaOperador = document.createElement('td');
+            let novoSelectOperador = document.createElement('select');
+            novoSelectOperador.className = "operador";
+            ["multiplicacao", "divisao", "quociente", "resto", "soma", "raiz", "elevado", "porcentagem", "fatorial"]
+                .forEach(op => {
+                    let option = document.createElement('option');
+                    option.value = op;
+                    option.textContent = op;
+                    novoSelectOperador.appendChild(option);
+                });
+            novaCelulaOperador.appendChild(novoSelectOperador);
+            novaLinha.appendChild(novaCelulaOperador);
+
+            let novaCelulaNumerador = document.createElement('td');
+            let novoInputNumerador = document.createElement('input');
+            novoInputNumerador.type = "number";
+            novoInputNumerador.className = "NUMERADOR";
+            novaCelulaNumerador.appendChild(novoInputNumerador);
+            novaLinha.appendChild(novaCelulaNumerador);
+
+            let novaCelulaResultado = document.createElement('td');
+            let novoBotaoResultado = document.createElement('button');
+            novoBotaoResultado.className = "RESULTADO2";
+            novoBotaoResultado.textContent = "Resultado";
+            novoBotaoResultado.addEventListener('click', function () {
+                copiarResultadoParaProximaLinha(novaLinha);
+            });
+            novaCelulaResultado.appendChild(novoBotaoResultado);
+            novaLinha.appendChild(novaCelulaResultado);
+
+            tabelaCorpo.appendChild(novaLinha);
+        }
     }
-    if (n === 0 || n === 1) {
-        return 1;
-    }
-    let resultadoFatorial = 1;
-    for (let i = 2; i <= n; i++) {
-        resultadoFatorial *= i;
-    }
-    return resultadoFatorial;
-}
+    
+     /* fim ADICIONAR LINHA */
 
-// Seu switch statement
-switch (operador) {
-    case 'multiplicacao':
-        resultado = numero * numerador;
-        break;
-    case 'divisao':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = numero / numerador;
-        }
-        break;
-    case 'quociente':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = Math.floor(numero / numerador);
-        }
-        break;
-    case 'resto':
-        if (numerador === 0) {
-            resultado = 'Erro! Divisão por zero.';
-        } else {
-            resultado = numero % numerador;
-        }
-        break;
-    case 'soma':
-        resultado = numero + numerador;
-        break;
-    case 'raiz':
-        if (numerador <= 0) {
-            resultado = 'Erro! Radical inválido.';
-        } else if (isNaN(numerador) || numerador == 0) {
-            resultado = Math.sqrt(numero);
-        } else {
-            resultado = Math.pow(numero, 1 / numerador);
-        }
-        break;
-    case 'elevado':
-        resultado = Math.pow(numero, numerador);
-        break;
-    case 'porcentagem':
-        resultado = (numero * numerador) / 100;
-        break;
-    case 'fatorial':
-        const fatorialNumero = calcularFatorial(numero);
 
-        if (isNaN(numerador) || numerador === 0) {
-            // Se o numerador não for mencionado ou for zero, calcula apenas o fatorial do 'numero'
-            resultado = fatorialNumero;
-        } else {
-            // Se o numerador for mencionado, calcula o fatorial do 'numero' vezes o fatorial do 'numerador'
-            const fatorialNumerador = calcularFatorial(numerador);
-            if (isNaN(fatorialNumero) || isNaN(fatorialNumerador)) {
-                resultado = 'Erro! Entrada inválida para fatorial.';
-            } else {
-                resultado = fatorialNumero * fatorialNumerador;
+    function calcularResultado(linha) {
+        const numero = parseFloat(linha.querySelector('.NUMERO').value);
+        const operador = linha.querySelector('.operador').value;
+        const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
+        const resultadoBotao = linha.querySelector('.RESULTADO2'); 
+
+        let resultado;
+
+        if (isNaN(numero)) {
+            resultadoBotao.textContent = ''; 
+            return;
+        }
+
+        function calcularFatorial(n) {
+            if (n < 0) return NaN;
+            if (n === 0 || n === 1) return 1;
+            let resultadoFatorial = 1;
+            for (let i = 2; i <= n; i++) {
+                resultadoFatorial *= i;
+            }
+            return resultadoFatorial;
+        }
+
+        switch (operador) {
+            case 'multiplicacao':
+                resultado = numero * numerador;
+                break;
+            case 'divisao':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero / numerador;
+                break;
+            case 'quociente':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : Math.floor(numero / numerador);
+                break;
+            case 'resto':
+                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero % numerador;
+                break;
+            case 'soma':
+                resultado = numero + numerador;
+                break;
+            case 'raiz':
+                resultado = numerador <= 0 ? 'Erro! Radical inválido.' : Math.pow(numero, 1 / numerador);
+                break;
+            case 'elevado':
+                resultado = Math.pow(numero, numerador);
+                break;
+            case 'porcentagem':
+                resultado = (numero * numerador) / 100;
+                break;
+            case 'fatorial':
+                const fatorialNumero = calcularFatorial(numero);
+                const fatorialNumerador = calcularFatorial(numerador);
+                resultado = isNaN(fatorialNumero) || isNaN(fatorialNumerador) ? 'Erro! Entrada inválida para fatorial.' : fatorialNumero * fatorialNumerador;
+                break;
+            default:
+                resultado = '';
+                break;
+        }
+
+        resultadoBotao.textContent = resultado;
+    }
+
+    function copiarResultadoParaProximaLinha(linhaAtual) {
+        const resultadoBotao = linhaAtual.querySelector('.RESULTADO2');
+        const resultadoValor = resultadoBotao.textContent;
+
+        const proximaLinha = linhaAtual.nextElementSibling;
+        if (proximaLinha) {
+            const campoNumero = proximaLinha.querySelector('.NUMERO');
+            if (campoNumero && campoNumero.value === '') {
+                campoNumero.value = resultadoValor;
             }
         }
-        break;
-    default:
-        resultado = '';
-        break;
-}
-
-  resultadoBotao.textContent = resultado; // Define o texto do botão
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const tabelaCorpo = document.getElementById('tabela-corpo');
-
-  tabelaCorpo.addEventListener('change', function(event) {
-    const elementoAlterado = event.target;
-    const linha = elementoAlterado.closest('tr');
-
-    if (elementoAlterado.classList.contains('NUMERO') ||
-        elementoAlterado.classList.contains('operador') ||
-        elementoAlterado.classList.contains('NUMERADOR')) {
-      calcularResultado(linha);
     }
-  });
 
-  // Calcular resultados iniciais ao carregar a página
-  const linhas = tabelaCorpo.querySelectorAll('tr');
-  linhas.forEach(calcularResultado);
+    const linhas = tabelaCorpo.querySelectorAll('tr');
+    linhas.forEach(linha => {
+        const botaoResultado = linha.querySelector('.RESULTADO2');
+        if (botaoResultado) {
+            botaoResultado.addEventListener('click', function () {
+                copiarResultadoParaProximaLinha(linha);
+            });
+        }
+        calcularResultado(linha);
+    });
 });
 
 //***************FIM CALCULOS DINAMICOS**********************//
@@ -408,33 +478,38 @@ inputs.forEach(input => {
         });
     }
 
-    // 3️⃣ Função para adicionar uma nova grandeza
-    function adicionarGrandeza() {
-        const tabelaComposta = document.getElementById('tabela_composta');
-        const novaLinha = tabelaComposta.insertRow();
+    /* adicionar grandeza */
+    document.addEventListener('DOMContentLoaded', function () {
+    const tabelaComposta = document.getElementById('tabela_composta');
 
-        novaLinha.innerHTML = `
-            <td class="INgrand"><input type="text" class="g_x1"></td>
-            <td><input type="number" class="valor1"></td>
-            <td><input type="number" class="valor3"></td>
-            <td>
-                <select id="invert_v1" class="tipo">
-                    <option value="diretamente">Diretamente</option>
-                    <option value="inversamente">Inversamente</option>
-                </select>
-            </td>
-        `;
-    }
+    window.adicionarGrandeza = function () {
+        const todasLinhas = tabelaComposta.querySelectorAll('tr');
 
-    // 4️⃣ Função para remover a última grandeza adicionada
-    function removerGrandeza() {
-        const tabelaComposta = document.getElementById('tabela_composta');
-        if (tabelaComposta.rows.length > 2) {
-            tabelaComposta.deleteRow(-1);
-        } else {
-            alert("Você deve manter pelo menos duas grandezas!");
-        }
-    }
+        todasLinhas.forEach((linha, index) => {
+            let novaCelula = document.createElement('td');
+            let novoInput = document.createElement('input');
+
+            novoInput.type = "number";
+            novoInput.className = `valor${document.querySelectorAll('.valor1').length + 1}`;
+
+            novaCelula.appendChild(novoInput);
+            linha.appendChild(novaCelula);
+        });
+    };
+
+    window.removerGrandeza = function () {
+        const todasLinhas = tabelaComposta.querySelectorAll('tr');
+
+        todasLinhas.forEach((linha) => {
+            if (linha.cells.length > 3) {
+                linha.removeChild(linha.lastElementChild);
+            }
+        });
+    };
+});
+
+/* fim adicionar grandeza */
+
 
     // Executar inversão dos valores no carregamento da página
     inverterValores();
@@ -447,15 +522,25 @@ inputs.forEach(input => {
 
  //alterar nome to rótulo
 document.addEventListener('DOMContentLoaded', function () {
-    // Permitir edição dos títulos ao clicar
-    document.querySelectorAll("th").forEach(th => {
-        th.addEventListener("click", function () {
-            const novoTexto = prompt("Digite o novo nome para este título:", this.textContent);
-            if (novoTexto !== null && novoTexto.trim() !== "") {
-                this.textContent = novoTexto;
-            }
-        });
-    });
+    const thGrandeza = document.getElementById('r3grandeza');
+    const thValor1 = document.getElementById('r3valor_1');
+    const thValor2 = document.getElementById('r3valor_2');
+
+    // Função para adicionar a lógica de edição
+    function enableThEditing(thElement) {
+        if (thElement) { // Verifica se o elemento existe
+            thElement.addEventListener("click", function () {
+                const novoTexto = prompt("Digite o novo nome para este título:", this.textContent);
+                if (novoTexto !== null && novoTexto.trim() !== "") {
+                    this.textContent = novoTexto;
+                }
+            });
+        }
+    }
+
+    enableThEditing(thGrandeza);
+    enableThEditing(thValor1);
+    enableThEditing(thValor2);
 });
 
 //*************** FIM REGRA DE TRES **********************//
@@ -532,8 +617,286 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //*************** FIM BOTÃO PORCENTAGEM **********************//
 
+//*************** CALCULO DE TEMPO **********************//
+
+// Obtenção dos elementos de entrada (o que o usuário digita)
+const inputDias = document.getElementById('tch_dias');
+const inputHoras = document.getElementById('tch_horas');
+const inputMinutos = document.getElementById('tch_minutos');
+const inputSegundos = document.getElementById('tch_segundos');
+
+// Obtenção dos elementos de saída (T. DIAS, T. HORAS, etc.)
+const outputTDias = document.getElementById('T_tch_dias');
+const outputTHoras = document.getElementById('T_tch_horas');
+const outputTMinutos = document.getElementById('T_tch_minutos');
+const outputTSegundos = document.getElementById('T_tch_segundos');
+
+// Elemento onde o resultado final será exibido (o td com id="resp_tch")
+const resultadoTD = document.getElementById('resp_tch'); // Agora pegamos o TD diretamente
+
+// Constantes de tempo em segundos
+const SECONDS_IN_MINUTE = 60;
+const SECONDS_IN_HOUR = 3600; // 60 * 60
+const SECONDS_IN_DAY = 86400; // 24 * 3600
+
+// Função principal para calcular e exibir o tempo
+function calcularTempo() {
+    // 1. Obter os valores dos inputs do usuário
+    // Usamos || 0 para garantir que campos vazios sejam tratados como zero
+    const dias = parseFloat(inputDias.value) || 0;
+    const horas = parseFloat(inputHoras.value) || 0;
+    const minutos = parseFloat(inputMinutos.value) || 0;
+    const segundos = parseFloat(inputSegundos.value) || 0;
+
+    // 2. Calcular o total de segundos a partir dos inputs do usuário
+    let totalSeconds = (dias * SECONDS_IN_DAY) +
+                       (horas * SECONDS_IN_HOUR) +
+                       (minutos * SECONDS_IN_MINUTE) +
+                       segundos;
+    
+    totalSeconds = Math.round(totalSeconds); // Arredonda para evitar problemas de ponto flutuante
+
+    // 3. Distribuir o total de segundos nos campos T. DIAS, T. HORAS, etc.
+    let remainingSeconds = totalSeconds;
+
+    const calcDias = Math.floor(remainingSeconds / SECONDS_IN_DAY);
+    remainingSeconds %= SECONDS_IN_DAY;
+
+    const calcHoras = Math.floor(remainingSeconds / SECONDS_IN_HOUR);
+    remainingSeconds %= SECONDS_IN_HOUR;
+
+    const calcMinutos = Math.floor(remainingSeconds / SECONDS_IN_MINUTE);
+    const calcSegundos = remainingSeconds % SECONDS_IN_MINUTE; 
+
+    // Atualizar os campos de saída (T. DIAS, T. HORAS, etc.)
+    outputTDias.value = calcDias;
+    outputTHoras.value = calcHoras;
+    outputTMinutos.value = calcMinutos;
+    outputTSegundos.value = calcSegundos;
+
+    // 4. Gerar o resultado por extenso
+    let extensoTexto = "";
+    let partes = [];
+
+    if (calcDias > 0) {
+        partes.push(`${calcDias} dia${calcDias !== 1 ? 's' : ''}`);
+    }
+    if (calcHoras > 0) {
+        partes.push(`${calcHoras} hora${calcHoras !== 1 ? 's' : ''}`);
+    }
+    if (calcMinutos > 0) {
+        partes.push(`${calcMinutos} minuto${calcMinutos !== 1 ? 's' : ''}`);
+    }
+    if (calcSegundos > 0) {
+        partes.push(`${calcSegundos} segundo${calcSegundos !== 1 ? 's' : ''}`);
+    }
+
+    if (partes.length === 0) {
+        extensoTexto = "Zero segundos";
+    } else if (partes.length === 1) {
+        extensoTexto = partes[0];
+    } else {
+        extensoTexto = partes.slice(0, -1).join(', ') + ' e ' + partes[partes.length - 1];
+    }
+
+    // 5. Formatar o resultado para o display (HH:MM:SS) e combiná-lo com o texto por extenso
+    const pad = (num) => num.toString().padStart(2, '0');
+    let formattedTime = '';
+
+    if (calcDias > 0) {
+        formattedTime += `${calcDias} dia${calcDias !== 1 ? 's' : ''}`;
+    }
+
+    if (calcHoras > 0 || calcMinutos > 0 || calcSegundos > 0 || (totalSeconds === 0 && formattedTime === "")) {
+        if (formattedTime !== "") {
+            formattedTime += ' e ';
+        }
+        formattedTime += `${pad(calcHoras)}:${pad(calcMinutos)}:${pad(calcSegundos)} min`;
+    } else if (totalSeconds === 0 && formattedTime === "") {
+        formattedTime = `00:00:00 min`;
+    }
+    
+    // Combina o resultado formatado e o resultado por extenso
+    // Aqui vamos substituir o conteúdo do TD
+    resultadoTD.innerHTML = `RESULTADO: ${formattedTime.trim()} (${extensoTexto}) <button onclick="calcularTempo()">Calcular</button>`;
+    // O botão foi recriado aqui dentro do innerHTML, então ele precisa ser colocado de volta.
+}
+
+// Para garantir que os campos de saída sejam inicializados com 0
+// e o resultado seja exibido ao carregar a página
+window.onload = calcularTempo;
+
+// Opcional: Para testar com o valor da sua imagem (177100 segundos)
+// inputSegundos.value = 177100;
+// window.onload = calcularTempo;
 
 
+//*************** FIM CALCULO DE TEMPO **********************//
+
+//*************** CALCULO DE DURAÇÃO DAS HORAS **********************//
+
+// Obtenção dos elementos de entrada (o que o usuário digita)
+const inputDuracaoHoras = document.getElementById('tch_dura');
+const inputDiasSemana = document.getElementById('tch_dSem');
+const inputHorasPorDia = document.getElementById('tch_hpd');
+
+// Obtenção dos elementos de saída
+const outputSemanas = document.getElementById('T_tch_sem');
+const outputMeses = document.getElementById('T_tch_dmes');
+const outputAnos = document.getElementById('T_tch_anos'); // Novo: Referência para o campo de anos
+
+// Referência ao TD onde o resultado final será exibido
+const resultadoTD_dura = document.getElementById('resp_tch_dura');
+
+// Constantes para conversão
+const WEEKS_IN_MONTH = 4.33; // Aproximadamente, 365.25 dias / 7 dias/semana / 12 meses
+const WEEKS_IN_YEAR = 52.14; // Aproximadamente, 365.25 dias / 7 dias/semana
+
+function calcularTempoCorrida() {
+    const duracaoHoras = parseFloat(inputDuracaoHoras.value) || 0;
+    const diasSemana = parseFloat(inputDiasSemana.value) || 0;
+    const horasPorDia = parseFloat(inputHorasPorDia.value) || 0;
+
+    let totalSemanas = 0;
+    let totalMeses = 0;
+    let totalAnos = 0; // Novo: Variável para armazenar o total de anos
+
+    // Cálculo das semanas
+    if (diasSemana > 0 && horasPorDia > 0) {
+        totalSemanas = duracaoHoras / horasPorDia / diasSemana;
+    }
+    outputSemanas.value = totalSemanas.toFixed(2); // Arredonda para 2 casas decimais
+
+    // Cálculo dos meses
+    totalMeses = totalSemanas / WEEKS_IN_MONTH;
+    outputMeses.value = Math.floor(totalMeses); // Arredonda para baixo para meses inteiros
+
+    // NOVO CÁLCULO: Anos
+    totalAnos = totalSemanas / WEEKS_IN_YEAR;
+    outputAnos.value = totalAnos.toFixed(2); // Exibe anos com 2 casas decimais
+
+    // Montar o resultado final para o TD "resp_tch_dura"
+    let resultadoFormatado = '';
+    if (totalSemanas > 0) {
+        resultadoFormatado = `Total de semanas: ${totalSemanas.toFixed(0)} semanas`;
+        if (totalMeses > 0) {
+            resultadoFormatado += `, o que equivale a ${Math.floor(totalMeses)} mês${Math.floor(totalMeses) !== 1 ? 'es' : ''}`;
+        }
+        if (totalAnos > 0) {
+            resultadoFormatado += ` e ${totalAnos.toFixed(2)} ano${totalAnos.toFixed(0) !== '1' ? 's' : ''}.`;
+        } else {
+            resultadoFormatado += `.`;
+        }
+    } else {
+        resultadoFormatado = 'Preencha os campos para calcular.';
+    }
+
+    // Atualiza o conteúdo do TD, incluindo o botão de volta
+    resultadoTD_dura.innerHTML = `RESULTADO: ${resultadoFormatado} <button onclick="calcularTempoCorrida()">Calcular</button>`;
+}
+
+// Inicializa os campos de saída no carregamento da página
+window.onload = calcularTempoCorrida;
+
+// Opcional: Pré-preencher com os valores da imagem para teste
+// inputDuracaoHoras.value = 300;
+// inputDiasSemana.value = 2;
+// inputHorasPorDia.value = 2;
+// window.onload = calcularTempoCorrida;
+
+//*************** FIM CALCULO DE DURAÇÃO DAS HORAS **********************//
+
+
+  
+// Converte HH:MM:SS para segundos totais
+function timeToSeconds(timeStr) {
+    if (!timeStr || timeStr === "00:00:00") return 0;
+    const parts = timeStr.split(':').map(Number);
+    return parts.length === 3 ? parts[0] * 3600 + parts[1] * 60 + parts[2] : 0;
+}
+
+// Converte segundos totais para formato "Dias - HH:MM:SS" (se houver dias) ou "HH:MM:SS"
+function secondsToTime(totalSeconds) {
+    if (totalSeconds < 0) totalSeconds = 0; // Garante que o tempo não seja negativo
+
+    const dias = Math.floor(totalSeconds / 86400);
+    totalSeconds %= 86400;
+    const horas = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    const minutos = Math.floor(totalSeconds / 60);
+    const segundos = Math.round(totalSeconds % 60); // Arredonda segundos
+
+    const pad = (num) => num.toString().padStart(2, '0');
+
+    // Adiciona o hífen apenas se houver dias
+    return dias > 0
+        ? `${dias} - ${pad(horas)}:${pad(minutos)}:${pad(segundos)}`
+        : `${pad(horas)}:${pad(minutos)}:${pad(segundos)}`;
+}
+
+function calcularSomatorioTempo() {
+    let grandTotalSeconds = 0; // Para o somatório final no rodapé
+
+    for (let i = 1; i <= 7; i++) {
+        const somaInput = document.getElementById(`calcH_soma${i}`);
+        const operacaoSelect = document.getElementById(`calcH_operacao${i}`);
+        const valorInput = document.getElementById(`calcH_valor${i}`);
+        const resultadoOutput = document.getElementById(`calcH_resultado${i}`);
+
+        let somaSeconds = timeToSeconds(somaInput ? somaInput.value : "00:00:00");
+        const valor = parseFloat(valorInput ? valorInput.value : 0) || 0;
+        const operacao = operacaoSelect ? operacaoSelect.value : '';
+
+        let resultadoSeconds = 0;
+
+        switch (operacao) {
+            case 'multiplicacao':
+                resultadoSeconds = somaSeconds * valor;
+                break;
+            case 'divisao':
+                resultadoSeconds = valor !== 0 ? somaSeconds / valor : 0;
+                break;
+            case 'adicao':
+                resultadoSeconds = somaSeconds + valor;
+                break;
+            case 'subtracao':
+                resultadoSeconds = somaSeconds - valor;
+                break;
+            default:
+                resultadoSeconds = 0;
+                break;
+        }
+
+        resultadoSeconds = Math.max(Math.round(resultadoSeconds), 0);
+
+        if (resultadoOutput) {
+            resultadoOutput.textContent = secondsToTime(resultadoSeconds);
+        }
+
+        grandTotalSeconds += somaSeconds;
+    }
+
+    const totalSomaElement = document.getElementById('calcH_total_soma');
+    if (totalSomaElement) {
+        totalSomaElement.textContent = secondsToTime(grandTotalSeconds);
+    }
+}
+
+window.onload = calcularSomatorioTempo;
+
+document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_select').forEach(input => {
+    input.addEventListener('input', calcularSomatorioTempo);
+    input.addEventListener('change', calcularSomatorioTempo);
+});
+
+
+
+
+
+
+
+
+//*************** RESETAR VALORES **********************//
 
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Seleciona o botão de "Resetar Valores" da soma dinâmica
@@ -590,3 +953,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+//*************** RESETAR VALORES **********************//

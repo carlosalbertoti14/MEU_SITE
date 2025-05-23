@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    calcularOperacaoTotal(); // Calcular operação inicial
+    /* calcularOperacaoTotal(); // Calcular operação inicial */
 });
 //***************CALCULOS DINAMICOS**********************//
 
@@ -807,98 +807,88 @@ window.onload = calcularTempoCorrida;
 //*************** FIM CALCULO DE DURAÇÃO DAS HORAS **********************//
 
 
-    //*************** FIM CALCULO DE TEMPO **********************//
-// Funções auxiliares para manipulação de tempo (HH:MM:SS)
-    // Converte HH:MM:SS para segundos totais
-    function timeToSeconds(timeStr) {
-        if (!timeStr || timeStr === "00:00:00") return 0;
-        const parts = timeStr.split(':').map(Number);
-        if (parts.length === 3) {
-            return parts[0] * 3600 + parts[1] * 60 + parts[2];
-        }
-        return 0;
-    }
+  
+// Converte HH:MM:SS para segundos totais
+function timeToSeconds(timeStr) {
+    if (!timeStr || timeStr === "00:00:00") return 0;
+    const parts = timeStr.split(':').map(Number);
+    return parts.length === 3 ? parts[0] * 3600 + parts[1] * 60 + parts[2] : 0;
+}
 
-    // Converte segundos totais para HH:MM:SS
-    function secondsToTime(totalSeconds) {
-        // Garante que o tempo não seja negativo
-        if (totalSeconds < 0) totalSeconds = 0; 
-        const hours = Math.floor(totalSeconds / 3600);
-        totalSeconds %= 3600;
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = Math.round(totalSeconds % 60); // Arredonda segundos
+// Converte segundos totais para formato "Dias - HH:MM:SS" (se houver dias) ou "HH:MM:SS"
+function secondsToTime(totalSeconds) {
+    if (totalSeconds < 0) totalSeconds = 0; // Garante que o tempo não seja negativo
 
-        const pad = (num) => num.toString().padStart(2, '0');
-        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-    }
+    const dias = Math.floor(totalSeconds / 86400);
+    totalSeconds %= 86400;
+    const horas = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    const minutos = Math.floor(totalSeconds / 60);
+    const segundos = Math.round(totalSeconds % 60); // Arredonda segundos
 
-    // Função principal para calcular o somatório de tempo
-    function calcularSomatorioTempo() {
-        let grandTotalSeconds = 0; // Para o somatório final no rodapé
+    const pad = (num) => num.toString().padStart(2, '0');
 
-        // Loop para processar cada linha da tabela
-        for (let i = 1; i <= 7; i++) { // Iteramos sobre todas as 7 linhas
-            const somaInput = document.getElementById(`calcH_soma${i}`);
-            const operacaoSelect = document.getElementById(`calcH_operacao${i}`); // Agora é sempre um select
-            const valorInput = document.getElementById(`calcH_valor${i}`);
-            const resultadoOutput = document.getElementById(`calcH_resultado${i}`);
+    // Adiciona o hífen apenas se houver dias
+    return dias > 0
+        ? `${dias} - ${pad(horas)}:${pad(minutos)}:${pad(segundos)}`
+        : `${pad(horas)}:${pad(minutos)}:${pad(segundos)}`;
+}
 
-            let somaSeconds = timeToSeconds(somaInput ? somaInput.value : "00:00:00");
-            const valor = parseFloat(valorInput ? valorInput.value : 0) || 0;
-            const operacao = operacaoSelect ? operacaoSelect.value : ''; // Pega o valor selecionado
+function calcularSomatorioTempo() {
+    let grandTotalSeconds = 0; // Para o somatório final no rodapé
 
-            let resultadoSeconds = 0;
+    for (let i = 1; i <= 7; i++) {
+        const somaInput = document.getElementById(`calcH_soma${i}`);
+        const operacaoSelect = document.getElementById(`calcH_operacao${i}`);
+        const valorInput = document.getElementById(`calcH_valor${i}`);
+        const resultadoOutput = document.getElementById(`calcH_resultado${i}`);
 
-            switch (operacao) {
-                case 'multiplicacao':
-                    resultadoSeconds = somaSeconds * valor;
-                    break;
-                case 'divisao':
-                    // Evita divisão por zero
-                    resultadoSeconds = valor !== 0 ? somaSeconds / valor : 0;
-                    break;
-                case 'adicao':
-                    // Adiciona o valor (interpretado como segundos) à somaSeconds
-                    resultadoSeconds = somaSeconds + valor;
-                    break;
-                case 'subtracao':
-                    // Subtrai o valor (interpretado como segundos) da somaSeconds
-                    resultadoSeconds = somaSeconds - valor;
-                    break;
-                default:
-                    resultadoSeconds = 0; // Se nenhuma operação for selecionada, o resultado é 0
-                    break;
-            }
-            
-            // Arredonda o resultado para o segundo mais próximo e garante que não seja negativo
-            resultadoSeconds = Math.round(resultadoSeconds);
-            if (resultadoSeconds < 0) resultadoSeconds = 0;
+        let somaSeconds = timeToSeconds(somaInput ? somaInput.value : "00:00:00");
+        const valor = parseFloat(valorInput ? valorInput.value : 0) || 0;
+        const operacao = operacaoSelect ? operacaoSelect.value : '';
 
-            if (resultadoOutput) {
-                resultadoOutput.textContent = secondsToTime(resultadoSeconds);
-            }
+        let resultadoSeconds = 0;
 
-            // A imagem indica que o total no rodapé é a SOMA dos tempos da primeira coluna ("SOMA")
-            grandTotalSeconds += somaSeconds;
+        switch (operacao) {
+            case 'multiplicacao':
+                resultadoSeconds = somaSeconds * valor;
+                break;
+            case 'divisao':
+                resultadoSeconds = valor !== 0 ? somaSeconds / valor : 0;
+                break;
+            case 'adicao':
+                resultadoSeconds = somaSeconds + valor;
+                break;
+            case 'subtracao':
+                resultadoSeconds = somaSeconds - valor;
+                break;
+            default:
+                resultadoSeconds = 0;
+                break;
         }
 
-        // Atualizar o total no rodapé
-        const totalSomaElement = document.getElementById('calcH_total_soma');
-        if (totalSomaElement) {
-            totalSomaElement.textContent = secondsToTime(grandTotalSeconds);
+        resultadoSeconds = Math.max(Math.round(resultadoSeconds), 0);
+
+        if (resultadoOutput) {
+            resultadoOutput.textContent = secondsToTime(resultadoSeconds);
         }
+
+        grandTotalSeconds += somaSeconds;
     }
 
-    // Inicializa os cálculos ao carregar a página
-    window.onload = calcularSomatorioTempo;
+    const totalSomaElement = document.getElementById('calcH_total_soma');
+    if (totalSomaElement) {
+        totalSomaElement.textContent = secondsToTime(grandTotalSeconds);
+    }
+}
 
-    // Adiciona event listeners para recalcular automaticamente ao mudar os inputs
-    // Seleciona todos os inputs de tempo, valor e selects de operação
-    document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_select').forEach(input => {
-        input.addEventListener('input', calcularSomatorioTempo); // Para inputs de texto e número
-        input.addEventListener('change', calcularSomatorioTempo); // Para selects e garantir inputs de número
-    });
-    //*************** FIM CALCULO DE TEMPO **********************//
+window.onload = calcularSomatorioTempo;
+
+document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_select').forEach(input => {
+    input.addEventListener('input', calcularSomatorioTempo);
+    input.addEventListener('change', calcularSomatorioTempo);
+});
+
 
 
 

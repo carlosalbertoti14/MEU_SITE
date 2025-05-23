@@ -423,7 +423,7 @@ h1 {
 /**************************************CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
 #soma_dinamica{
-    display: none;
+    display: block;
    background-color: var(--cor0);
    padding: 10px;
    
@@ -432,11 +432,6 @@ h1 {
    padding: 20px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-#tabela-corpoSOMA > tr > td > input,  #tabela-corpo > tr > td >  input{
-    appearance: none;
-    
 }
 
 #botao-operacao {
@@ -470,10 +465,8 @@ h1 {
   }
 
 .soma, td, tr{
-    gap: 10px; /* Espaço entre o input e a label */
-    white-space: nowrap; /* Garante que a label nunca quebre */
-   max-width: 60%; /* Em telas menores, pode ocupar toda a largura */
-   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+  max-width: 90%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
 }
 
