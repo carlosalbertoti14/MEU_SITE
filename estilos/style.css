@@ -783,7 +783,7 @@ div#calcH_calculo_horas button { /* Alterado o seletor para usar o ID da div pri
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #bbd9fa;
 }
 
 /* NOVO ESTILO PARA O SEPARADOR E ALINHAMENTO */
@@ -882,7 +882,7 @@ button:hover {
 /************************************** CONFIGURAÇÃO SITES CRIADOS ************************/
 
 
-    div#sites_criados{
+  div#sites_criados{
     display: none;
     background-color: var(--cor0);
     padding: 10px;
@@ -891,21 +891,33 @@ button:hover {
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.507);
+    }
+    div#banners_sites_criados{
+       box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.685);
+       border-radius: 10px;
+        
+        background-color: #06106e;
+    }
+
+    picture.sites > a {
+        
+/*         align-items: center;
+        text-align: center; */
+        text-decoration: none;
+        background-color: inherit;
     }
 
     picture.sites img  {
-     width: 100%;
+
+     margin-top: 10PX;
+     width: calc(100% - 12px); 
+     /* width: 100%; */
      height: auto;
-     object-fit: cover; /* Ou contain, fill, etc. */
-     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.550);
+    /*  object-fit: cover; /* Ou contain, fill, etc. */ */ */
+     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.603);
      border-radius: 10px;
-    }
-
-    picture.sites a {
-        text-decoration: none;
-        background-color: inherit;
-
+     box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura/altura */
     }
 
 

@@ -277,7 +277,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const botaoResultado = linha.querySelector('.RESULTADO2');
         if (botaoResultado) {
             botaoResultado.addEventListener('click', function () {
-                copiarResultadoParaProximaLinha(linha);
+               /*  copiarResultadoParaProximaLinha(linha); */
             });
         }
         calcularResultado(linha);
@@ -903,10 +903,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const resetarValoresSomaDinamicaButton = document.getElementById('resetar-valores_soma_dinamica');
 
     // 2. Define os seletores para todas as input boxes que você quer resetar
-    //    Estes seletores cobrem a maioria das input boxes que você mencionou.
     const seletoresDeInputs = [
         '#tabela-corpoSOMA .soma',             // Inputs da tabela de soma (a, b, etc.)
-        '#mercadoDiv input[type="number"]',    // Se houver inputs de número em mercadoDiv
+        '#mercadoDiv input[type="number"]',   // Se houver inputs de número em mercadoDiv
         '#mercadoDiv input[type="text"]',     // Se houver inputs de texto em mercadoDiv
         '#soma_dinamica .NUMERO',              // Inputs NUMERO da tabela de cálculos dinâmicos
         '#soma_dinamica .NUMERADOR',           // Inputs NUMERADOR da tabela de cálculos dinâmicos
@@ -922,8 +921,19 @@ document.addEventListener('DOMContentLoaded', function() {
         '#resultado_composta',                 // Input de resultado da regra de três composta
         '#tabela_composta .grandeza',          // Inputs de grandeza da regra de três composta
         '#tabela_composta .valor1',            // Inputs de valor1 da regra de três composta
-        '#tabela_composta .valor2'             // Inputs de valor2 da regra de três composta
-        // Adicione quaisquer outros seletores de inputs que você queira resetar
+        '#tabela_composta .valor2',            // Inputs de valor2 da regra de três composta
+        '.valor3',                             // Adicionado: valor3 da regra de três composta
+        '.valor4',                             // Adicionado: valor4 da regra de três composta
+        '.g_x1',                               // Adicionado: g_x1 da regra de três composta
+        '#tch_dias',                           // Adicionado: Input de Dias (Cálculo de Tempo)
+        '#tch_horas',                          // Adicionado: Input de Horas (Cálculo de Tempo)
+        '#tch_minutos',                        // Adicionado: Input de Minutos (Cálculo de Tempo)
+        '#tch_segundos',                       // Adicionado: Input de Segundos (Cálculo de Tempo)
+        '#tch_dura',                           // Adicionado: Input de Duração Horas (Cálculo de Duração das Horas)
+        '#tch_dSem',                           // Adicionado: Input de Dias na Semana (Cálculo de Duração das Horas)
+        '#tch_hpd',                            // Adicionado: Input de Horas Por Dia (Cálculo de Duração das Horas)
+        '.calcH_input_time',                   // Adicionado: Inputs de tempo (HH:MM:SS) na soma de tempo
+        '.calcH_input_value'                   // Adicionado: Inputs de valor numérico na soma de tempo
     ];
 
     // 3. Adiciona o listener de clique ao botão
@@ -950,6 +960,20 @@ document.addEventListener('DOMContentLoaded', function() {
             // Exemplo:
             // document.querySelectorAll('.RESULTADO2').forEach(btn => btn.textContent = '');
             // document.querySelectorAll('.RESULTADO_P').forEach(btn => btn.textContent = '');
+
+            // Chamar funções de cálculo para atualizar os resultados após o reset
+            if (typeof calcularRegraTresComposta === 'function') {
+                calcularRegraTresComposta();
+            }
+            if (typeof calcularTempo === 'function') {
+                calcularTempo();
+            }
+            if (typeof calcularTempoCorrida === 'function') {
+                calcularTempoCorrida();
+            }
+            if (typeof calcularSomatorioTempo === 'function') {
+                calcularSomatorioTempo();
+            }
         });
     }
 });

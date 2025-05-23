@@ -81,23 +81,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    document.querySelectorAll('#utilitarioslist a').forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
-            fecharTudo();
-            esconderTodasDivs();
+document.querySelectorAll('#utilitarioslist a').forEach(link => {
+    link.addEventListener('click', event => {
+        event.preventDefault();
 
-            const targetId = link.id.replace('mostrar-', '');
-            const targetDiv = document.getElementById(targetId);
+        // Esconde todas as divs ativas
+        esconderTodasDivs();
 
-            if (targetDiv) {
-                esconderTodasDivs();                
-                targetDiv.style.display = 'block';
-            } else {
-                console.warn(`Elemento com ID '${targetId}' não encontrado.`);
-            }
-        });
+        const targetId = link.id.replace('mostrar-', '');
+        const targetDiv = document.getElementById(targetId);
+
+        if (targetDiv) {
+            targetDiv.style.display = 'block'; // Mostra apenas a div desejada
+        } else {
+            console.warn(`Elemento com ID '${targetId}' não encontrado.`);
+        }
     });
+});
 });
 
     // Funcionalidade para "CALCULOS DINÂMICOS"
