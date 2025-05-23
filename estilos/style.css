@@ -440,6 +440,15 @@ h1 {
 
 }
 
+#tabela-corpoSOMA imput {
+    white-space: nowrap;
+}
+
+
+#tabela-corpoSOMA label {
+   margin-left: 3px;
+}
+
 #a, #b, #x {
     
     background:#1274c427
@@ -456,18 +465,25 @@ h1 {
   }
 
 .soma, td, tr{
-  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
+  max-width: 90%; /* Em telas menores, pode ocupar toda a largura */
   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
 }
 
+.operador {
+    background-color: #4cae4c;
+}
+
+
 .operador, td, tr{
+  border-radius: 5px;
   max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
-
+  appearance: none;
 }
 
 .NUMERO, td, tr{
+ 
   max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
@@ -478,9 +494,6 @@ h1 {
   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
 }
-
-
-
 
 
 .totais {
@@ -496,6 +509,7 @@ h1 {
 }
 
 .RESULTADO2 {
+    background-color: #007bff;
   display: flex;
   /* margin-top: 20px; */
   align-items: center;
@@ -507,6 +521,7 @@ h1 {
   padding-right: 5px;
   /* Outros estilos do botão */
 }
+
 
 /*******************************FIM DA CONFIGURAÇÃO DE SOMA DINAMICA, CALCULOS ELABORADOS************************/
 
@@ -644,11 +659,121 @@ h1 {
         white-space: nowrap;
         font-size: 0.8em;
     }
-/*******************************FIM DA CONFIGURAÇÃO REGRA DE TRES************************/
+/******************************* CONFIGURAÇÃO REGRA DE TRES************************/
+
+/******************************* CONFIGURAÇÃO CONVERSÃO DE TEMPO ************************/
+input.f_input_tch {
+        margin-left: 5px;
+        margin-right: 5px;
+        max-width: 25%; /* Em telas menores, pode ocupar toda a largura */
+        width: calc(100% - 5px); /* Em telas maiores, ocupa metade menos a margem */    
+}
+
+#tabela-conv_horas {
+    white-space: nowrap;
+
+}
+
+
+/*******************************FIM DA CONFIGURAÇÃO CONVERSÃO DE TEMPO ************************/
+
+
+/******************************* CONFIGURAÇÃO CALCULO DE TEMPO ************************/
+
+/* Estilos gerais da div conteiner */
+    #calcH_calculo_horas {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    /* Estilos para a tabela de somatório de tempo */
+    .calcH_table {
+        border-collapse: collapse;
+        width: auto;
+        border: 1px solid #c0c0c0;
+    }
+
+    .calcH_table th,
+    .calcH_table td {
+        border: 1px solid #c0c0c0;
+        padding: 5px 8px;
+        text-align: center;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    /* Cores de fundo e texto */
+    .calcH_header_yellow {
+        background-color: #ffff00;
+        font-weight: bold;
+    }
+
+    .calcH_bg_lightyellow {
+        background-color: #ffffcc;
+        font-weight: bold;
+    }
+
+    .calcH_bg_beige {
+        background-color: #f0f0e0;
+    }
+
+    /* Alinhamento de texto */
+    .calcH_text_align_left {
+        text-align: left;
+    }
+
+    /* Cabeçalhos de coluna (th) */
+    .calcH_col_header {
+        font-size: 0.9em;
+    }
+
+    /* Rodapé da tabela */
+    .calcH_footer {
+        font-weight: bold;
+    }
+
+    /* Estilos para os inputs de tempo e valor */
+    .calcH_input_time, .calcH_input_value, .calcH_input_select {
+        width: 80px; /* Ajuste conforme necessário */
+        padding: 3px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        box-sizing: border-box; /* Inclui padding e border na largura */
+        text-align: center;
+    }
+
+    .calcH_input_value {
+        width: 50px; /* Menor para o campo de valor */
+    }
+
+    .calcH_input_select {
+        width: 100px; /* Largura para o select de operações */
+    }
+
+    div#calculo_horas > button {
+        padding: 5px 10px;
+        background-color: #131414;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+/*******************************FIM DA CONFIGURAÇÃO CALCULO DE TEMPO ************************/
 
 #mainpai, #mianfilho, main {
     display: block;
 }
+
+
 
 /************************************** CONFIGURAÇÃO SITES CRIADOS ************************/
 

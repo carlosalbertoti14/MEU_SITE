@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else if (x === 0) {
             return Math.log(b) / Math.log(a); // Encontrar o expoente
         } else {
-            return "Erro: Preencha um campo com 0 para encontrar o valor.";
+            return "log a^ b = x → deixe em branco";
         }
     }
 
@@ -522,15 +522,25 @@ inputs.forEach(input => {
 
  //alterar nome to rótulo
 document.addEventListener('DOMContentLoaded', function () {
-    // Permitir edição dos títulos ao clicar
-    document.querySelectorAll("th").forEach(th => {
-        th.addEventListener("click", function () {
-            const novoTexto = prompt("Digite o novo nome para este título:", this.textContent);
-            if (novoTexto !== null && novoTexto.trim() !== "") {
-                this.textContent = novoTexto;
-            }
-        });
-    });
+    const thGrandeza = document.getElementById('r3grandeza');
+    const thValor1 = document.getElementById('r3valor_1');
+    const thValor2 = document.getElementById('r3valor_2');
+
+    // Função para adicionar a lógica de edição
+    function enableThEditing(thElement) {
+        if (thElement) { // Verifica se o elemento existe
+            thElement.addEventListener("click", function () {
+                const novoTexto = prompt("Digite o novo nome para este título:", this.textContent);
+                if (novoTexto !== null && novoTexto.trim() !== "") {
+                    this.textContent = novoTexto;
+                }
+            });
+        }
+    }
+
+    enableThEditing(thGrandeza);
+    enableThEditing(thValor1);
+    enableThEditing(thValor2);
 });
 
 //*************** FIM REGRA DE TRES **********************//
@@ -607,8 +617,296 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //*************** FIM BOTÃO PORCENTAGEM **********************//
 
+//*************** CALCULO DE TEMPO **********************//
+
+// Obtenção dos elementos de entrada (o que o usuário digita)
+const inputDias = document.getElementById('tch_dias');
+const inputHoras = document.getElementById('tch_horas');
+const inputMinutos = document.getElementById('tch_minutos');
+const inputSegundos = document.getElementById('tch_segundos');
+
+// Obtenção dos elementos de saída (T. DIAS, T. HORAS, etc.)
+const outputTDias = document.getElementById('T_tch_dias');
+const outputTHoras = document.getElementById('T_tch_horas');
+const outputTMinutos = document.getElementById('T_tch_minutos');
+const outputTSegundos = document.getElementById('T_tch_segundos');
+
+// Elemento onde o resultado final será exibido (o td com id="resp_tch")
+const resultadoTD = document.getElementById('resp_tch'); // Agora pegamos o TD diretamente
+
+// Constantes de tempo em segundos
+const SECONDS_IN_MINUTE = 60;
+const SECONDS_IN_HOUR = 3600; // 60 * 60
+const SECONDS_IN_DAY = 86400; // 24 * 3600
+
+// Função principal para calcular e exibir o tempo
+function calcularTempo() {
+    // 1. Obter os valores dos inputs do usuário
+    // Usamos || 0 para garantir que campos vazios sejam tratados como zero
+    const dias = parseFloat(inputDias.value) || 0;
+    const horas = parseFloat(inputHoras.value) || 0;
+    const minutos = parseFloat(inputMinutos.value) || 0;
+    const segundos = parseFloat(inputSegundos.value) || 0;
+
+    // 2. Calcular o total de segundos a partir dos inputs do usuário
+    let totalSeconds = (dias * SECONDS_IN_DAY) +
+                       (horas * SECONDS_IN_HOUR) +
+                       (minutos * SECONDS_IN_MINUTE) +
+                       segundos;
+    
+    totalSeconds = Math.round(totalSeconds); // Arredonda para evitar problemas de ponto flutuante
+
+    // 3. Distribuir o total de segundos nos campos T. DIAS, T. HORAS, etc.
+    let remainingSeconds = totalSeconds;
+
+    const calcDias = Math.floor(remainingSeconds / SECONDS_IN_DAY);
+    remainingSeconds %= SECONDS_IN_DAY;
+
+    const calcHoras = Math.floor(remainingSeconds / SECONDS_IN_HOUR);
+    remainingSeconds %= SECONDS_IN_HOUR;
+
+    const calcMinutos = Math.floor(remainingSeconds / SECONDS_IN_MINUTE);
+    const calcSegundos = remainingSeconds % SECONDS_IN_MINUTE; 
+
+    // Atualizar os campos de saída (T. DIAS, T. HORAS, etc.)
+    outputTDias.value = calcDias;
+    outputTHoras.value = calcHoras;
+    outputTMinutos.value = calcMinutos;
+    outputTSegundos.value = calcSegundos;
+
+    // 4. Gerar o resultado por extenso
+    let extensoTexto = "";
+    let partes = [];
+
+    if (calcDias > 0) {
+        partes.push(`${calcDias} dia${calcDias !== 1 ? 's' : ''}`);
+    }
+    if (calcHoras > 0) {
+        partes.push(`${calcHoras} hora${calcHoras !== 1 ? 's' : ''}`);
+    }
+    if (calcMinutos > 0) {
+        partes.push(`${calcMinutos} minuto${calcMinutos !== 1 ? 's' : ''}`);
+    }
+    if (calcSegundos > 0) {
+        partes.push(`${calcSegundos} segundo${calcSegundos !== 1 ? 's' : ''}`);
+    }
+
+    if (partes.length === 0) {
+        extensoTexto = "Zero segundos";
+    } else if (partes.length === 1) {
+        extensoTexto = partes[0];
+    } else {
+        extensoTexto = partes.slice(0, -1).join(', ') + ' e ' + partes[partes.length - 1];
+    }
+
+    // 5. Formatar o resultado para o display (HH:MM:SS) e combiná-lo com o texto por extenso
+    const pad = (num) => num.toString().padStart(2, '0');
+    let formattedTime = '';
+
+    if (calcDias > 0) {
+        formattedTime += `${calcDias} dia${calcDias !== 1 ? 's' : ''}`;
+    }
+
+    if (calcHoras > 0 || calcMinutos > 0 || calcSegundos > 0 || (totalSeconds === 0 && formattedTime === "")) {
+        if (formattedTime !== "") {
+            formattedTime += ' e ';
+        }
+        formattedTime += `${pad(calcHoras)}:${pad(calcMinutos)}:${pad(calcSegundos)} min`;
+    } else if (totalSeconds === 0 && formattedTime === "") {
+        formattedTime = `00:00:00 min`;
+    }
+    
+    // Combina o resultado formatado e o resultado por extenso
+    // Aqui vamos substituir o conteúdo do TD
+    resultadoTD.innerHTML = `RESULTADO: ${formattedTime.trim()} (${extensoTexto}) <button onclick="calcularTempo()">Calcular</button>`;
+    // O botão foi recriado aqui dentro do innerHTML, então ele precisa ser colocado de volta.
+}
+
+// Para garantir que os campos de saída sejam inicializados com 0
+// e o resultado seja exibido ao carregar a página
+window.onload = calcularTempo;
+
+// Opcional: Para testar com o valor da sua imagem (177100 segundos)
+// inputSegundos.value = 177100;
+// window.onload = calcularTempo;
 
 
+//*************** FIM CALCULO DE TEMPO **********************//
+
+//*************** CALCULO DE DURAÇÃO DAS HORAS **********************//
+
+// Obtenção dos elementos de entrada (o que o usuário digita)
+const inputDuracaoHoras = document.getElementById('tch_dura');
+const inputDiasSemana = document.getElementById('tch_dSem');
+const inputHorasPorDia = document.getElementById('tch_hpd');
+
+// Obtenção dos elementos de saída
+const outputSemanas = document.getElementById('T_tch_sem');
+const outputMeses = document.getElementById('T_tch_dmes');
+const outputAnos = document.getElementById('T_tch_anos'); // Novo: Referência para o campo de anos
+
+// Referência ao TD onde o resultado final será exibido
+const resultadoTD_dura = document.getElementById('resp_tch_dura');
+
+// Constantes para conversão
+const WEEKS_IN_MONTH = 4.33; // Aproximadamente, 365.25 dias / 7 dias/semana / 12 meses
+const WEEKS_IN_YEAR = 52.14; // Aproximadamente, 365.25 dias / 7 dias/semana
+
+function calcularTempoCorrida() {
+    const duracaoHoras = parseFloat(inputDuracaoHoras.value) || 0;
+    const diasSemana = parseFloat(inputDiasSemana.value) || 0;
+    const horasPorDia = parseFloat(inputHorasPorDia.value) || 0;
+
+    let totalSemanas = 0;
+    let totalMeses = 0;
+    let totalAnos = 0; // Novo: Variável para armazenar o total de anos
+
+    // Cálculo das semanas
+    if (diasSemana > 0 && horasPorDia > 0) {
+        totalSemanas = duracaoHoras / horasPorDia / diasSemana;
+    }
+    outputSemanas.value = totalSemanas.toFixed(2); // Arredonda para 2 casas decimais
+
+    // Cálculo dos meses
+    totalMeses = totalSemanas / WEEKS_IN_MONTH;
+    outputMeses.value = Math.floor(totalMeses); // Arredonda para baixo para meses inteiros
+
+    // NOVO CÁLCULO: Anos
+    totalAnos = totalSemanas / WEEKS_IN_YEAR;
+    outputAnos.value = totalAnos.toFixed(2); // Exibe anos com 2 casas decimais
+
+    // Montar o resultado final para o TD "resp_tch_dura"
+    let resultadoFormatado = '';
+    if (totalSemanas > 0) {
+        resultadoFormatado = `Total de semanas: ${totalSemanas.toFixed(0)} semanas`;
+        if (totalMeses > 0) {
+            resultadoFormatado += `, o que equivale a ${Math.floor(totalMeses)} mês${Math.floor(totalMeses) !== 1 ? 'es' : ''}`;
+        }
+        if (totalAnos > 0) {
+            resultadoFormatado += ` e ${totalAnos.toFixed(2)} ano${totalAnos.toFixed(0) !== '1' ? 's' : ''}.`;
+        } else {
+            resultadoFormatado += `.`;
+        }
+    } else {
+        resultadoFormatado = 'Preencha os campos para calcular.';
+    }
+
+    // Atualiza o conteúdo do TD, incluindo o botão de volta
+    resultadoTD_dura.innerHTML = `RESULTADO: ${resultadoFormatado} <button onclick="calcularTempoCorrida()">Calcular</button>`;
+}
+
+// Inicializa os campos de saída no carregamento da página
+window.onload = calcularTempoCorrida;
+
+// Opcional: Pré-preencher com os valores da imagem para teste
+// inputDuracaoHoras.value = 300;
+// inputDiasSemana.value = 2;
+// inputHorasPorDia.value = 2;
+// window.onload = calcularTempoCorrida;
+
+//*************** FIM CALCULO DE DURAÇÃO DAS HORAS **********************//
+
+
+    //*************** FIM CALCULO DE TEMPO **********************//
+// Funções auxiliares para manipulação de tempo (HH:MM:SS)
+    // Converte HH:MM:SS para segundos totais
+    function timeToSeconds(timeStr) {
+        if (!timeStr || timeStr === "00:00:00") return 0;
+        const parts = timeStr.split(':').map(Number);
+        if (parts.length === 3) {
+            return parts[0] * 3600 + parts[1] * 60 + parts[2];
+        }
+        return 0;
+    }
+
+    // Converte segundos totais para HH:MM:SS
+    function secondsToTime(totalSeconds) {
+        // Garante que o tempo não seja negativo
+        if (totalSeconds < 0) totalSeconds = 0; 
+        const hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = Math.round(totalSeconds % 60); // Arredonda segundos
+
+        const pad = (num) => num.toString().padStart(2, '0');
+        return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    }
+
+    // Função principal para calcular o somatório de tempo
+    function calcularSomatorioTempo() {
+        let grandTotalSeconds = 0; // Para o somatório final no rodapé
+
+        // Loop para processar cada linha da tabela
+        for (let i = 1; i <= 7; i++) { // Iteramos sobre todas as 7 linhas
+            const somaInput = document.getElementById(`calcH_soma${i}`);
+            const operacaoSelect = document.getElementById(`calcH_operacao${i}`); // Agora é sempre um select
+            const valorInput = document.getElementById(`calcH_valor${i}`);
+            const resultadoOutput = document.getElementById(`calcH_resultado${i}`);
+
+            let somaSeconds = timeToSeconds(somaInput ? somaInput.value : "00:00:00");
+            const valor = parseFloat(valorInput ? valorInput.value : 0) || 0;
+            const operacao = operacaoSelect ? operacaoSelect.value : ''; // Pega o valor selecionado
+
+            let resultadoSeconds = 0;
+
+            switch (operacao) {
+                case 'multiplicacao':
+                    resultadoSeconds = somaSeconds * valor;
+                    break;
+                case 'divisao':
+                    // Evita divisão por zero
+                    resultadoSeconds = valor !== 0 ? somaSeconds / valor : 0;
+                    break;
+                case 'adicao':
+                    // Adiciona o valor (interpretado como segundos) à somaSeconds
+                    resultadoSeconds = somaSeconds + valor;
+                    break;
+                case 'subtracao':
+                    // Subtrai o valor (interpretado como segundos) da somaSeconds
+                    resultadoSeconds = somaSeconds - valor;
+                    break;
+                default:
+                    resultadoSeconds = 0; // Se nenhuma operação for selecionada, o resultado é 0
+                    break;
+            }
+            
+            // Arredonda o resultado para o segundo mais próximo e garante que não seja negativo
+            resultadoSeconds = Math.round(resultadoSeconds);
+            if (resultadoSeconds < 0) resultadoSeconds = 0;
+
+            if (resultadoOutput) {
+                resultadoOutput.textContent = secondsToTime(resultadoSeconds);
+            }
+
+            // A imagem indica que o total no rodapé é a SOMA dos tempos da primeira coluna ("SOMA")
+            grandTotalSeconds += somaSeconds;
+        }
+
+        // Atualizar o total no rodapé
+        const totalSomaElement = document.getElementById('calcH_total_soma');
+        if (totalSomaElement) {
+            totalSomaElement.textContent = secondsToTime(grandTotalSeconds);
+        }
+    }
+
+    // Inicializa os cálculos ao carregar a página
+    window.onload = calcularSomatorioTempo;
+
+    // Adiciona event listeners para recalcular automaticamente ao mudar os inputs
+    // Seleciona todos os inputs de tempo, valor e selects de operação
+    document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_select').forEach(input => {
+        input.addEventListener('input', calcularSomatorioTempo); // Para inputs de texto e número
+        input.addEventListener('change', calcularSomatorioTempo); // Para selects e garantir inputs de número
+    });
+    //*************** FIM CALCULO DE TEMPO **********************//
+
+
+
+
+
+
+
+//*************** RESETAR VALORES **********************//
 
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Seleciona o botão de "Resetar Valores" da soma dinâmica
@@ -665,3 +963,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+//*************** RESETAR VALORES **********************//
