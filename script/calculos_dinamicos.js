@@ -1189,38 +1189,48 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. Seleciona o botão de "Resetar Valores" da soma dinâmica
     const resetarValoresSomaDinamicaButton = document.getElementById('resetar-valores_soma_dinamica');
 
+    // **IMPORTANTE:** Defina DZERO_PLACEHOLDER aqui também se ele não for globalmente acessível
+    // ou certifique-se de que ele esteja definido no escopo onde este script é executado.
+    // Se DZERO_PLACEHOLDER estiver no seu arquivo principal de cálculos de data,
+    // ele já será acessível. Se este reset estiver em um arquivo separado, você pode
+    // precisar definir a constante aqui:
+    const DZERO_PLACEHOLDER = '  /  /    '; // <- Adicione esta linha se DZERO_PLACEHOLDER não for global
+
     // 2. Define os seletores para todas as input boxes que você quer resetar
     const seletoresDeInputs = [
-        '#tabela-corpoSOMA .soma',             // Inputs da tabela de soma (a, b, etc.)
-        '#mercadoDiv input[type="number"]',   // Se houver inputs de número em mercadoDiv
-        '#mercadoDiv input[type="text"]',     // Se houver inputs de texto em mercadoDiv
-        '#soma_dinamica .NUMERO',              // Inputs NUMERO da tabela de cálculos dinâmicos
-        '#soma_dinamica .NUMERADOR',           // Inputs NUMERADOR da tabela de cálculos dinâmicos
-        '#pvt',                                // Input de valor total (porcentagem)
-        '#porc',                               // Input de porcentagem
-        '#vcA',                                // Input de valor com aumento
-        '#vcD',                                // Input de valor com desconto
-        '#desc',                               // Input de desconto
-        '#a1_simples',                         // Input a1 da regra de três simples
-        '#b1_simples',                         // Input b1 da regra de três simples
-        '#a2_simples',                         // Input a2 da regra de três simples
-        '#resultado_simples',                  // Input de resultado da regra de três simples
-        '#resultado_composta',                 // Input de resultado da regra de três composta
-        '#tabela_composta .grandeza',          // Inputs de grandeza da regra de três composta
-        '#tabela_composta .valor1',            // Inputs de valor1 da regra de três composta
-        '#tabela_composta .valor2',            // Inputs de valor2 da regra de três composta
-        '.valor3',                             // Adicionado: valor3 da regra de três composta
-        '.valor4',                             // Adicionado: valor4 da regra de três composta
-        '.g_x1',                               // Adicionado: g_x1 da regra de três composta
-        '#tch_dias',                           // Adicionado: Input de Dias (Cálculo de Tempo)
-        '#tch_horas',                          // Adicionado: Input de Horas (Cálculo de Tempo)
-        '#tch_minutos',                        // Adicionado: Input de Minutos (Cálculo de Tempo)
-        '#tch_segundos',                       // Adicionado: Input de Segundos (Cálculo de Tempo)
-        '#tch_dura',                           // Adicionado: Input de Duração Horas (Cálculo de Duração das Horas)
-        '#tch_dSem',                           // Adicionado: Input de Dias na Semana (Cálculo de Duração das Horas)
-        '#tch_hpd',                            // Adicionado: Input de Horas Por Dia (Cálculo de Duração das Horas)
-        '.calcH_input_time',                   // Adicionado: Inputs de tempo (HH:MM:SS) na soma de tempo
-        '.calcH_input_value'                   // Adicionado: Inputs de valor numérico na soma de tempo
+        '#tabela-corpoSOMA .soma',
+        '#mercadoDiv input[type="number"]',
+        '#mercadoDiv input[type="text"]',
+        '#soma_dinamica .NUMERO',
+        '#soma_dinamica .NUMERADOR',
+        '#pvt',
+        '#porc',
+        '#vcA',
+        '#vcD',
+        '#desc',
+        '#a1_simples',
+        '#b1_simples',
+        '#a2_simples',
+        '#resultado_simples',
+        '#resultado_composta',
+        '#tabela_composta .grandeza',
+        '#tabela_composta .valor1',
+        '#tabela_composta .valor2',
+        '.valor3',
+        '.valor4',
+        '.g_x1',
+        '#tch_dias',
+        '#tch_horas',
+        '#tch_minutos',
+        '#tch_segundos',
+        '#tch_dura',
+        '#tch_dSem',
+        '#tch_hpd',
+        '.calcH_input_time',
+        '.calcH_input_value',
+        // **NOVOS SELETORES PARA O CALCULADOR DE DATAS**
+        '.caldt_input_date',     // Campos de "DATA INICIAL"
+        '.caldt_input_add_date'  // Campos de "DIAS/MESES/ANOS A SOMAR"
     ];
 
     // 3. Adiciona o listener de clique ao botão
@@ -1228,27 +1238,36 @@ document.addEventListener('DOMContentLoaded', function() {
         resetarValoresSomaDinamicaButton.addEventListener('click', function() {
             // Itera sobre cada seletor de input
             seletoresDeInputs.forEach(seletor => {
-                // Seleciona todos os inputs que correspondem ao seletor atual
                 const inputs = document.querySelectorAll(seletor);
 
-                // Para cada input encontrado, define seu valor como vazio
                 inputs.forEach(input => {
-                    input.value = '';
+                    // Lógica para resetar campos de data para o placeholder DZERO
+                    if (input.classList.contains('caldt_input_date') || input.classList.contains('caldt_input_add_date')) {
+                        input.value = DZERO_PLACEHOLDER;
+                    } else {
+                        // Para todos os outros inputs, reseta para vazio
+                        input.value = '';
+                    }
                 });
             });
 
-            // Opcional: Se você quiser garantir que os resultados também sejam limpos
-            // Você pode precisar chamar funções de cálculo relevantes para redefinir as exibições.
-            // Por exemplo, para a parte de soma dinâmica, você pode chamar:
-            // if (typeof calcularOperacaoTotal === 'function') {
-            //     calcularOperacaoTotal(); // Recalcula a soma, que deve ser 0 ou vazia
-            // }
-            // Se tiver botões de resultado que exibem texto, você pode limpá-los também.
-            // Exemplo:
-            // document.querySelectorAll('.RESULTADO2').forEach(btn => btn.textContent = '');
-            // document.querySelectorAll('.RESULTADO_P').forEach(btn => btn.textContent = '');
+            // **Limpa os resultados da coluna "RESULTADO" do calculador de datas**
+            document.querySelectorAll('.caldt_resultado_cell').forEach(cell => {
+                cell.textContent = 'N/A'; // Ou ''. Depende de como você quer que o resultado "vazio" apareça
+            });
+
+            // Define a data atual na primeira célula "DATA INICIAL" novamente, como no onload
+            const today = new Date();
+            const dataInicial1Input = document.getElementById('caldt_data1');
+            if (dataInicial1Input) {
+                dataInicial1Input.value = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+            }
 
             // Chamar funções de cálculo para atualizar os resultados após o reset
+            // Isso é crucial para que os resultados calculados também se atualizem.
+            if (typeof calcularOperacaoTotal === 'function') {
+                calcularOperacaoTotal();
+            }
             if (typeof calcularRegraTresComposta === 'function') {
                 calcularRegraTresComposta();
             }
@@ -1260,6 +1279,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (typeof calcularSomatorioTempo === 'function') {
                 calcularSomatorioTempo();
+            }
+            // **IMPORTANTE: Chamar a função de cálculo de datas para atualizar a tabela**
+            if (typeof calcularSomatorioDatas === 'function') {
+                calcularSomatorioDatas();
             }
         });
     }
