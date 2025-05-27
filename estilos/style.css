@@ -666,7 +666,11 @@ h1 {
         white-space: nowrap;
         font-size: 0.8em;
     }
-/******************************* CONFIGURAÇÃO REGRA DE TRES************************/
+
+    /* regra de 3 composta */
+/******************************* fim CONFIGURAÇÃO REGRA DE TRES************************/
+
+
 
 /******************************* CONFIGURAÇÃO CONVERSÃO DE TEMPO ************************/
 input.f_input_tch {
@@ -681,6 +685,23 @@ input.f_input_tch {
 
 }
 
+
+#resp_tch_dura {
+    white-space: wrap;
+
+}
+
+#resp_tch_dura button {
+    display: block;
+    margin: 2px;
+    padding: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: #8fb7d8;
+    color: white;
+    font-weight: bolder;
+    border-radius: 10px;
+}
 
 /*******************************FIM DA CONFIGURAÇÃO CONVERSÃO DE TEMPO ************************/
 
@@ -872,6 +893,185 @@ button:hover {
     }
 }
 /*******************************FIM DA CONFIGURAÇÃO CALCULO DE TEMPO ************************/
+
+
+
+/* Estilos gerais da div conteiner */
+#caldt_calculo_datas {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 10px;
+    width: 100%; /* Garante que a div ocupe a largura total disponível */
+    box-sizing: border-box; /* Inclui padding na largura total */
+    overflow-x: auto; /* Adiciona scroll horizontal se a tabela for muito larga */
+}
+
+/* Estilos para a tabela de somatório de datas */
+.caldt_table {
+    border-collapse: collapse;
+    width: 100%; /* A tabela agora ocupa 100% da largura do contêiner */
+    min-width: 320px; /* Define uma largura mínima para evitar quebras estranhas em telas muito pequenas */
+    border: 1px solid #71e677;
+    font-size: 1em; /* Tamanho da fonte base, que será ajustado */
+    table-layout: fixed; /* Isso é crucial para a responsividade baseada em porcentagem! */
+}
+
+.caldt_table th,
+.caldt_table td {
+    border: 1px solid  #71e677;
+    padding: 0.5em 0.3em; /* Padding em unidades relativas */
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Cores de fundo e texto */
+.caldt_header_yellow {
+    background-color: #05ad51;
+    font-weight: bold;
+    font-size: 1.1em; /* Um pouco maior que o texto normal */
+}
+
+.caldt_bg_lightyellow {
+    background-color: #51e9aa;
+    font-weight: bold;
+}
+
+.caldt_bg_beige {
+    background-color: #f0f0e0;
+}
+
+/* Alinhamento de texto */
+.caldt_text_align_left {
+    text-align: left;
+}
+
+/* Cabeçalhos de coluna (th) */
+.caldt_col_header {
+    font-size: 0.9em; /* Relativo ao font-size da tabela */
+}
+
+/* Rodapé da tabela */
+.caldt_footer {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+/* Estilos para os inputs de data e valor */
+.caldt_input_date, .caldt_input_add_date, .caldt_input_select {
+    width: 90%; /* Ocupa a maior parte da célula */
+    max-width: 120px; /* Garante que não fiquem muito largos em telas grandes */
+    padding: 0.3em; /* Padding relativo */
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    text-align: center;
+    appearance: none;
+    font-size: 0.9em; /* Tamanho da fonte relativo */
+}
+
+/* Ajuste específico para o campo de data de adição (d/m/a) */
+.caldt_input_add_date {
+    max-width: 100px; /* Um pouco mais largo para a data completa */
+}
+
+
+.caldt_input_select {
+    max-width: 150px; /* Ajuste para o select de operações */
+}
+
+/* Estilos para o botão */
+div#caldt_calculo_datas button {
+    padding: 0.6em 1.2em; /* Padding relativo */
+    background-color: #131414;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1em; /* Tamanho da fonte relativo */
+    white-space: nowrap; /* Impede que o texto do botão quebre */
+}
+
+button:hover {
+    background-color: #bbd9fa;
+}
+
+/* Definindo larguras percentuais para as colunas */
+/* A soma das larguras deve ser 100% */
+.caldt_table th:nth-child(1), .caldt_table td:nth-child(1) { width: 30%; } /* DATA INICIAL */
+.caldt_table th:nth-child(2), .caldt_table td:nth-child(2) { width: 25%; } /* OPERAÇÃO */
+.caldt_table th:nth-child(3), .caldt_table td:nth-child(3) { width: 25%; } /* DIAS/MESES/ANOS A SOMAR */
+.caldt_table th:nth-child(4), .caldt_table td:nth-child(4) { width: 20%; } /* RESULTADO */
+
+
+/* Media Queries para responsividade */
+
+/* Para telas menores que 600px (ex: celulares) */
+@media screen and (max-width: 600px) {
+    #caldt_calculo_datas {
+        padding: 5px;
+    }
+
+    .caldt_table {
+        font-size: 0.8em; /* Reduz a fonte base da tabela */
+    }
+
+    .caldt_table th,
+    .caldt_table td {
+        padding: 0.3em 0.2em; /* Reduz o padding */
+    }
+
+    .caldt_input_date, .caldt_input_add_date, .caldt_input_select {
+        width: 100%; /* Ocupa a largura total da célula em telas pequenas */
+        max-width: none; /* Remove o limite máximo de largura */
+        font-size: 0.85em; /* Reduz a fonte dos inputs */
+        padding: 0.2em;
+    }
+
+    .caldt_input_add_date {
+        width: 100%;
+    }
+
+    .caldt_input_select {
+        width: 100%;
+    }
+
+    .caldt_col_header {
+        font-size: 0.8em; /* Reduz ainda mais a fonte dos cabeçalhos de coluna */
+    }
+
+    div#caldt_calculo_datas button {
+        font-size: 0.9em; /* Reduz a fonte do botão */
+        padding: 0.5em 1em;
+    }
+
+    .caldt_header_yellow {
+        font-size: 1em; /* Ajusta o título principal */
+    }
+}
+
+/* Para telas menores que 400px (ex: celulares muito pequenos) */
+@media screen and (max-width: 400px) {
+    .caldt_table {
+        font-size: 0.7em; /* Reduz a fonte base ainda mais */
+    }
+    .caldt_table th,
+    .caldt_table td {
+        padding: 0.2em 0.1em;
+    }
+    .caldt_col_header {
+        font-size: 0.7em;
+    }
+    .caldt_input_date, .caldt_input_add_date, .caldt_input_select {
+        font-size: 0.8em;
+    }
+}
+
+/*************** FIM CALCULOS DE DATAS **********************/
+
+
 
 #mainpai, #mianfilho, main {
     display: block;

@@ -41,7 +41,7 @@
                         
                         <a href="#" id="projetos">PROJETOS</a>
                         <ul id="projetolist" class="submenu">
-                            <li><a href="#">SITES CRIADOS</a></li>
+                            <li><a href="#" id="mostrar_sites_criados">SITES CRIADOS</a></li>
                             <li><a href="#">PLANILHAS</a></li>
                             <li><a href="#">PROJETOS</a></li>
                             <li><a href="#">INVENÇÕES</a></li>
@@ -133,10 +133,10 @@
                         <div id="soma_dinamica">
 
                             <div class="botoes-controle">
-                                <button id="resetar-valores">Resetar Valores</button>
+                                <button id="resetar-valores_soma_dinamica">Resetar Valores</button>
                                 <button id="fechar-soma_dinamica">Fechar Comparativo</button>
                             </div>
-
+                                <h1>CALCULOS DINAMICOS</h1><br>
 
                              <h2>CÁLCULOS DINÂMICOS</h2>
 
@@ -145,18 +145,20 @@
                                         <div id="tabela-soma">
                                             <thead>
                                                 <tr>
-                                                    <th>SOMA</th>
+                                                    
+                                                 <th><button id="botao-operacao">SOMA</button></th>
+                                                    
                                                 </tr>
                                             </thead>
                                              <tbody id="tabela-corpoSOMA">
                                                 <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
+                                                    <td><input type="number" id="a" class="soma" value=""><label for="a">a</label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
+                                                    <td><input type="number" id="b" class="soma" value=""><label for="b">b</label></td>
                                                 </tr>
                                                 <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
+                                                    <td><input type="number" id="x" class="soma" value=""><label for="x">x</label></td>
                                                 </tr>
                                                 <tr>
                                                     <td><input type="number" class="soma" value=""></td>
@@ -185,7 +187,7 @@
                                             </tbody>
                                         </div>
                                 </table>
-                                
+
                                 <table>
                                         <div id="tabela_calculos">
                                             <thead>
@@ -197,102 +199,102 @@
                                                 </tr>
                                             </thead>
                                            <tbody id="tabela-corpo">
-    <tr>
-        <td><input type="number" class="NUMERO" value=""></td>
-        <td>
-            <select class="operador">
-                <option value="NENHUM">ESCOLHA</option>
-                <option value="multiplicacao">Multiplicação</option>
-                <option value="divisao">Divisão</option>
-                <option value="quociente">Quociente</option>
-                <option value="resto">Resto</option>
-                <option value="soma">Soma</option>
-                <option value="raiz">Raiz nº</option>
-                <option value="elevado">Elevado a</option>
-                <option value="porcentagem">Porcentagem de</option>
-                <option value="fatorial">Fatorial</option>
-            </select>
-        </td>
-        <td><input type="number" class="NUMERADOR"></td>
-        <td><button type="button" class="RESULTADO2"></button></td>
-    </tr>
-    <tr>
-        <td><input type="number" class="NUMERO" value=""></td>
-        <td>
-            <select class="operador">
-                <option value="NENHUM">ESCOLHA</option>
-                <option value="multiplicacao">Multiplicação</option>
-                <option value="divisao">Divisão</option>
-                <option value="quociente">Quociente</option>
-                <option value="resto">Resto</option>
-                <option value="soma">Soma</option>
-                <option value="raiz">Raiz nº</option>
-                <option value="elevado">Elevado a</option>
-                <option value="porcentagem">Porcentagem de</option>
-                <option value="fatorial">Fatorial</option>
-            </select>
-        </td>
-        <td><input type="number" class="NUMERADOR"></td>
-        <td><button type="button" class="RESULTADO2"></button></td>
-    </tr>
-    <tr>
-        <td><input type="number" class="NUMERO" value=""></td>
-        <td>
-            <select class="operador">
-                <option value="NENHUM">ESCOLHA</option>
-                <option value="multiplicacao">Multiplicação</option>
-                <option value="divisao">Divisão</option>
-                <option value="quociente">Quociente</option>
-                <option value="resto">Resto</option>
-                <option value="soma">Soma</option>
-                <option value="raiz">Raiz nº</option>
-                <option value="elevado">Elevado a</option>
-                <option value="porcentagem">Porcentagem de</option>
-                <option value="fatorial">Fatorial</option>
-            </select>
-        </td>
-        <td><input type="number" class="NUMERADOR"></td>
-        <td><button type="button" class="RESULTADO2"></button></td>
-    </tr>
-    <tr>
-        <td><input type="number" class="NUMERO" value=""></td>
-        <td>
-            <select class="operador">
-                <option value="NENHUM">ESCOLHA</option>
-                <option value="multiplicacao">Multiplicação</option>
-                <option value="divisao">Divisão</option>
-                <option value="quociente">Quociente</option>
-                <option value="resto">Resto</option>
-                <option value="soma">Soma</option>
-                <option value="raiz">Raiz nº</option>
-                <option value="elevado">Elevado a</option>
-                <option value="porcentagem">Porcentagem de</option>
-                <option value="fatorial">Fatorial</option>
-            </select>
-        </td>
-        <td><input type="number" class="NUMERADOR"></td>
-        <td><button type="button" class="RESULTADO2"></button></td>
-    </tr>
-    <tr>
-        <td><input type="number" class="NUMERO" value=""></td>
-        <td>
-            <select class="operador">
-                <option value="NENHUM">ESCOLHA</option>
-                <option value="multiplicacao">Multiplicação</option>
-                <option value="divisao">Divisão</option>
-                <option value="quociente">Quociente</option>
-                <option value="resto">Resto</option>
-                <option value="soma">Soma</option>
-                <option value="raiz">Raiz nº</option>
-                <option value="elevado">Elevado a</option>
-                <option value="porcentagem">Porcentagem de</option>
-                <option value="fatorial">Fatorial</option>
-            </select>
-        </td>
-        <td><input type="number" class="NUMERADOR"></td>
-        <td><button type="button" class="RESULTADO2"></button></td>
-    </tr>
-</tbody>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="quociente">Quociente</option>
+                                                            <option value="resto">Resto</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz nº</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem</option>
+                                                            <option value="fatorial">Fatorial</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR"></td>
+                                                    <td><button type="button" class="RESULTADO2"></button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="quociente">Quociente</option>
+                                                            <option value="resto">Resto</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz nº</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem</option>
+                                                            <option value="fatorial">Fatorial</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR"></td>
+                                                    <td><button type="button" class="RESULTADO2"></button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="quociente">Quociente</option>
+                                                            <option value="resto">Resto</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz nº</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem</option>
+                                                            <option value="fatorial">Fatorial</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR"></td>
+                                                    <td><button type="button" class="RESULTADO2"></button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="quociente">Quociente</option>
+                                                            <option value="resto">Resto</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz nº</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem</option>
+                                                            <option value="fatorial">Fatorial</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR"></td>
+                                                    <td><button type="button" class="RESULTADO2"></button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="NUMERO" value=""></td>
+                                                    <td>
+                                                        <select class="operador">
+                                                            <option value="NENHUM">ESCOLHA</option>
+                                                            <option value="multiplicacao">Multiplicação</option>
+                                                            <option value="divisao">Divisão</option>
+                                                            <option value="quociente">Quociente</option>
+                                                            <option value="resto">Resto</option>
+                                                            <option value="soma">Soma</option>
+                                                            <option value="raiz">Raiz nº</option>
+                                                            <option value="elevado">Elevado a</option>
+                                                            <option value="porcentagem">Porcentagem</option>
+                                                            <option value="fatorial">Fatorial</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" class="NUMERADOR"></td>
+                                                    <td><button type="button" class="RESULTADO2"></button></td>
+                                                </tr>
+                                            </tbody>
                                         </div>
                                 
                                         </table>
@@ -301,7 +303,7 @@
                             <DIV id="porcentagem">
                                 <h2>PORCENTAGEM AVANÇADA</h2>
 
-                                         <table>
+                                    <table>
                                         <div id="tabela-porcentagem">
                                             <thead>
                                                 <tr>
@@ -327,13 +329,13 @@
 
                                             </tbody>
                                         </div>
-                                </table>
-                                
+                                    </table>
+                            </div>
                             
 
-                             <DIV id="REGRA_D3">
+                            <DIV id="REGRA_D3">
 
-                                <h2>REGRA DE TRÊS</h2>
+                                <h2>REGRA DE TRÊS</h2><br>
                                 <h3>REGRA DE TRÊS SIMPLES</h3>
                                 <div id="regra_simples">
                                     <p>Insira os valores conhecidos:</p>
@@ -354,52 +356,57 @@
                                     <table>
                                         <thead>
                                             <tr>
-                                                <th>Grandeza</th>
-                                                <th>Valor 1</th>
-                                                <th>Valor 2</th>
-                                                <th>Diretamente/<br>Inversamente</th>
+                                                <th id="r3grandeza">Grandeza</th>
+                                                <th id="r3valor_1">Valor 1</th>
+                                                <th id="r3valor_2">Valor 2</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody id="tabela_composta">
                                             <tr>
-                                                <td><input type="text" class="grandeza"></td>
+                                                <td class="INgrand"><input type="text" class="g_x1"></td>
                                                 <td><input type="number" class="valor1"></td>
-                                                <td><input type="number" class="valor2"></td>
-                                                <td>
-                                                    <select class="tipo">
-                                                        <option value="diretamente">Diretamente</option>
-                                                        <option value="inversamente">Inversamente</option>
-                                                    </select>
-                                                </td>
+                                                <td><input type="number" class="valor3"></td>
+
                                             </tr>
                                             <tr>
-                                                <td><input type="text" class="grandeza"></td>
-                                                <td><input type="number" class="valor1"></td>
+                                                <td class="INgrand"><input type="text" class="g_x2" value="X" readonly></td>
                                                 <td><input type="number" class="valor2"></td>
-                                                <td>
-                                                    <select class="tipo">
-                                                        <option value="diretamente">Diretamente</option>
-                                                        <option value="inversamente">Inversamente</option>
-                                                    </select>
-                                                </td>
+                                                <td><input type="number" class="valor4"></td>
+
                                             </tr>
+
                                             <tr>
-                                                <td><input type="text" class="grandeza"></td>
-                                                <td><input type="number" class="valor1"></td>
-                                                <td><input type="number" class="valor2" id="x_composta"></td>
+
+
+                                                <td><label for="">Direta/Inversa →</label></td>
+
                                                 <td>
-                                                    <select class="tipo">
+                                                    <select id="invert_v1" class="tipo">
                                                         <option value="diretamente">Diretamente</option>
                                                         <option value="inversamente">Inversamente</option>
                                                     </select>
                                                 </td>
+
+                                                <td>
+                                                    <select id="invert_v2" class="tipo">
+                                                        <option value="diretamente">Diretamente</option>
+                                                        <option value="inversamente">Inversamente</option>
+                                                    </select>
+                                                </td>
+                                                
+
+
                                             </tr>
+
+
                                         </tbody>
                                     </table>
                                     <label class="res_comp" for="resultado_composta">Resultado (X):</label>
                                     <input type="text" id="resultado_composta" readonly><br>
                                     <button type="button" onclick="calcularRegraTresComposta()">Calcular</button>
-                                    <button type="button" onclick="adicionarGrandeza()">Adicionar Grandeza</button>
+                                    <button type="button" onclick="adicionarGrandeza()">Add Grand</button>
+                                    <button type="button" onclick="removerGrandeza()">Sub Grand</button>
                                 </div>
                             </DIV>
 
@@ -408,10 +415,211 @@
 
 
 
+
+                                <DIV id="TC_DE_TEMPO">
+                                    <table>
+                                            <div id="conv_horas">
+                                                <thead>
+                                                    <tr>
+                                    
+                                                     <h2>CONVERSÃO DE HORAS</h2><br>
+                                    
+                                                    </tr>
+                                                </thead>
+                                                 <tbody id="tabela-conv_horas">
+                                                    <tr>
+                                                        <td><label for="tch_dias">DIA</label><input type="number" id="tch_dias" class="f_input_tch" value=""> T. DIA <input type="number" id="T_tch_dias" class="f_input_tch" value="" readonly></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="tch_horas">HOR</label><input type="number" id="tch_horas" class="f_input_tch" value="">T. HOR<input type="number" id="T_tch_horas" class="f_input_tch" value="" readonly></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="tch_minutos">MIN</label><input type="number" id="tch_minutos" class="f_input_tch" value="">T. MIN<input type="number" id="T_tch_minutos" class="f_input_tch" value="" readonly></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="tch_segundos">SEG</label><input type="number" id="tch_segundos" class="f_input_tch" value="">T. SEG<input type="number" id="T_tch_segundos" class="f_input_tch" value="" readonly></td>
+                                                    </tr>
+                                                    
+                                                    <tr>
+                                                        <td id="resp_tch" class="totais">RESULTADO: <button onclick="calcularTempo()">Calcular</button></td>
+                                                    </tr>
+
+                                                </tbody>
+
+
+                                                
+                                                    <td>
+                                                        <h3>Duração Em Horas</h3>
+                                                    </td>
+                                                
+
+                                                        <tbody id="tabela-duracao_horas">
+                                                            <tr>
+                                                                <td><label for="tch_dura">Dura;</label><input type="number" id="tch_dura" class="f_input_tch" value="0">T. Sem<input type="number" id="T_tch_sem" class="f_input_tch" value="0" readonly></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><label for="tch_dSem">D.Sem</label><input type="number" id="tch_dSem" class="f_input_tch" value="0">T. Mês<input type="number" id="T_tch_dmes" class="f_input_tch" value="0" readonly></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><label for="tch_hpd">H.Dia</label><input type="number" id="tch_hpd" class="f_input_tch" value="0">T. ANOS<input type="number" id="T_tch_anos" class="f_input_tch" value="0" readonly></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td id="resp_tch_dura" class="totais">RESULTADO: <button onclick="calcularTempoCorrida()">Calcular</button></td>
+                                                            </tr>
+                                                        </tbody>
+                                                
+                                            </div>
+
+                                            <div id="calculo_horas">
+
+<table class="calcH_table">
+        <thead>
+            <tr>
+                <th colspan="4" class="calcH_header_yellow">SOMATORIO DE TEMPO</th>
+            </tr>
+            <tr>
+                <th class="calcH_col_header calcH_bg_lightyellow">SOMA</th>
+                <th class="calcH_col_header calcH_bg_lightyellow">OPERAÇÃO</th>
+                <th class="calcH_col_header calcH_bg_lightyellow">VALOR</th>
+                <th class="calcH_col_header calcH_bg_lightyellow">RESULTADO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma1" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige">
+                    <select id="calcH_operacao1" class="calcH_input_select"><option value="" selected>-</option>
+                        <option value="multiplicacao">MULTIPLICAÇÃO</option>
+                        <option value="divisao">DIVISÃO</option>
+                        <option value="adicao">ADIÇÃO</option>
+                        <option value="subtracao">SUBTRAÇÃO</option>
+                    </select>
+                </td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor1" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado1">04:41:00</td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma2" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige">
+                    <select id="calcH_operacao2" class="calcH_input_select"><option value="" selected>-</option>
+                        <option value="multiplicacao">MULTIPLICAÇÃO</option>
+                        <option value="divisao">DIVISÃO</option>
+                        <option value="adicao">ADIÇÃO</option>
+                        <option value="subtracao">SUBTRAÇÃO</option>
+                    </select>
+                </td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor2" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado2">01:40:15</td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma3" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige">
+                    <select id="calcH_operacao3" class="calcH_input_select"><option value="" selected>-</option>
+                        <option value="multiplicacao">MULTIPLICAÇÃO</option>
+                        <option value="divisao">DIVISÃO</option>
+                        <option value="adicao">ADIÇÃO</option>
+                        <option value="subtracao">SUBTRAÇÃO</option>
+                    </select>
+                </td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor3" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado3"></td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma4" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige"><select id="calcH_operacao4" class="calcH_input_select"><option value="" selected>-</option><option value="multiplicacao">MULTIPLICAÇÃO</option><option value="divisao">DIVISÃO</option><option value="adicao">ADIÇÃO</option><option value="subtracao">SUBTRAÇÃO</option></select></td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor4" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado4"></td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma5" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige"><select id="calcH_operacao5" class="calcH_input_select"><option value="" selected>-</option><option value="multiplicacao">MULTIPLICAÇÃO</option><option value="divisao">DIVISÃO</option><option value="adicao">ADIÇÃO</option><option value="subtracao">SUBTRAÇÃO</option></select></td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor5" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado5"></td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma6" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige"><select id="calcH_operacao6" class="calcH_input_select"><option value="" selected>-</option><option value="multiplicacao">MULTIPLICAÇÃO</option><option value="divisao">DIVISÃO</option><option value="adicao">ADIÇÃO</option><option value="subtracao">SUBTRAÇÃO</option></select></td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor6" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado6"></td>
+            </tr>
+            <tr>
+                <td class="calcH_bg_beige"><input type="text" id="calcH_soma7" class="calcH_input_time" value="00:00:00"></td>
+                <td class="calcH_bg_beige"><select id="calcH_operacao7" class="calcH_input_select"><option value="" selected>-</option><option value="multiplicacao">MULTIPLICAÇÃO</option><option value="divisao">DIVISÃO</option><option value="adicao">ADIÇÃO</option><option value="subtracao">SUBTRAÇÃO</option></select></td>
+                <td class="calcH_bg_beige"><input type="number" id="calcH_valor7" class="calcH_input_value" value="0"></td>
+                <td class="calcH_bg_beige" id="calcH_resultado7"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="calcH_footer calcH_bg_lightyellow calcH_text_align_left" id="calcH_total_soma">5:41:00</td>
+                <td class="calcH_bg_lightyellow"></td>
+                <td class="calcH_bg_lightyellow"></td>
+                <td class="calcH_bg_lightyellow"><button onclick="calcularSomatorioTempo()">Calcular</button></td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+                                            </div>
+                                    </table>
+
+
+                                </DIV>
+
+
+
+
+
+
+
+
+                        
+                    
+
+
+
+                        <div id="sites_criados">
+
+                            <div class="botoes-controle">
+
+                                <button id="fechar-sites_crados">Fechar</button>
+
+                            </div>
+
+                            <h1>SITES CRIADOS POR MIM</h1>
+
+                            <div id="banners_sites_criados">
+                                <picture class="sites">
+                                
+                                
+                                    <a href="https://carlosalbertoti14.github.io/HTML_CSS/PRIMEIRO_PROJETO/android.html#" target="_blank">
+                                        <img src="midia/android_poster.jpg" alt="Site do Android">
+                                    </a>
+                                
+                                    <a href="https://babymonsterbrasil.netlify.app/" target="_blank">
+                                        <img src="midia/babymonster_poster.jpg" alt="Site do grupo BABYMONSTER">
+                                    </a>
+                                
+                                    <a href="https://aespabrasil.netlify.app/" target="_blank">
+                                        <img src="midia/aespa_poster.jpg" alt="Site do grupo aespa">
+                                    </a>
+                                
+                                    <a href="https://carlosalbertoperfil.netlify.app/" target="_blank">
+                                       <img src="midia/meusite_poster.jpg" alt="Meu Site">
+                                    </a>
+                                
+                                </picture>
+                            </div>
+
+
+
+
+
                         </div>
-
-
-
+                        
+                    </div>
 
 
 

@@ -890,7 +890,294 @@ document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_s
 });
 
 
+//***************  CALCULOS DE DATAS **********************//
 
+
+
+
+
+// Define a constante para o estado "vazio" ou placeholder de data
+const DZERO_PLACEHOLDER = '  /  /    ';
+
+// Converte string 'dd/mm/aaaa' (parcial ou completa) para objeto Date ou null
+function parseFlexibleDate(dateStr, baseDate = new Date()) {
+    const cleanedStr = dateStr.replace(/\s/g, ''); // Remove espaços em branco
+
+    // Se a string é DZERO_PLACEHOLDER ou vazia, retorna null
+    if (cleanedStr === '' || cleanedStr === '//' || cleanedStr === '/') {
+        return null;
+    }
+
+    const parts = cleanedStr.split('/');
+
+    let day = baseDate.getDate();
+    let month = baseDate.getMonth(); // 0-based
+    let year = baseDate.getFullYear();
+
+    const parsedDay = parseInt(parts[0], 10);
+    const parsedMonth = parseInt(parts[1], 10);
+    const parsedYear = parseInt(parts[2], 10);
+
+    if (!isNaN(parsedDay)) {
+        day = parsedDay;
+    }
+    if (!isNaN(parsedMonth)) {
+        month = parsedMonth - 1; // Mês é zero-based para o Date object
+    }
+    if (!isNaN(parsedYear)) {
+        // Heurística para anos de 2 dígitos: 00-69 -> 20xx, 70-99 -> 19xx
+        if (parsedYear < 100) {
+            year = (parsedYear < 70) ? 2000 + parsedYear : 1900 + parsedYear;
+        } else {
+            year = parsedYear;
+        }
+    }
+
+    const date = new Date(year, month, day);
+
+    // Validação de data inválida ou anos absurdos
+    if (isNaN(date.getTime()) || date.getFullYear() > 9999 || date.getFullYear() < 1900) {
+        return null;
+    }
+    
+    return date;
+}
+
+// Converte objeto Date para string 'dd/mm/aaaa'
+function formatDate(date) {
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        return "N/A";
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
+// Interpreta a string "d / m / a" do campo de adição/multiplicação/divisão
+// Retorna um objeto {dias, meses, anos} com 0 para campos vazios
+function parseDateComponents(dateComponentsStr) {
+    const cleanedStr = dateComponentsStr.replace(/\s/g, '');
+    if (cleanedStr === '' || cleanedStr === '//' || cleanedStr === '/') {
+        return { dias: 0, meses: 0, anos: 0 };
+    }
+
+    const parts = cleanedStr.split('/');
+    const dias = parseInt(parts[0], 10) || 0;
+    const meses = parseInt(parts[1], 10) || 0;
+    const anos = parseInt(parts[2], 10) || 0;
+
+    return { dias, meses, anos };
+}
+
+function calcularSomatorioDatas() {
+    for (let i = 1; i <= 7; i++) {
+        const dataInput = document.getElementById(`caldt_data${i}`);
+        const operacaoSelect = document.getElementById(`caldt_operacao${i}`);
+        const valorInput = document.getElementById(`caldt_valor${i}`);
+        const resultadoOutput = document.getElementById(`caldt_resultado${i}`);
+
+        // Usamos DZERO_PLACEHOLDER para a base se o input estiver vazio
+        let dataInicial = parseFlexibleDate(dataInput ? dataInput.value : DZERO_PLACEHOLDER, new Date());
+
+        const operacao = operacaoSelect ? operacaoSelect.value : 'adicionar';
+        const { dias: inputDias, meses: inputMeses, anos: inputAnos } = parseDateComponents(valorInput ? valorInput.value : DZERO_PLACEHOLDER);
+
+        let resultadoDate = null;
+
+        if (dataInicial) {
+            resultadoDate = new Date(dataInicial);
+
+            switch (operacao) {
+                case 'adicionar':
+                    resultadoDate.setDate(resultadoDate.getDate() + inputDias);
+                    resultadoDate.setMonth(resultadoDate.getMonth() + inputMeses);
+                    resultadoDate.setFullYear(resultadoDate.getFullYear() + inputAnos);
+                    break;
+
+                case 'multiplicar':
+                    let newDay = resultadoDate.getDate();
+                    let newMonth = resultadoDate.getMonth();
+                    let newYear = resultadoDate.getFullYear();
+
+                    if (inputDias !== 0) {
+                        newDay = newDay * inputDias;
+                    }
+                    if (inputMeses !== 0) {
+                        newMonth = (newMonth + 1) * inputMeses - 1;
+                    }
+                    if (inputAnos !== 0) {
+                        newYear = newYear * inputAnos;
+                    }
+
+                    resultadoDate = new Date(newYear, newMonth, newDay);
+                    if (isNaN(resultadoDate.getTime())) {
+                        resultadoDate = null;
+                    }
+                    break;
+
+                case 'dividir':
+                    let originalDay = resultadoDate.getDate();
+                    let originalMonth = resultadoDate.getMonth();
+                    let originalYear = resultadoDate.getFullYear();
+
+                    let dividedDay = originalDay;
+                    let dividedMonth = originalMonth;
+                    let dividedYear = originalYear;
+
+                    let invalidOperation = false;
+
+                    if (inputDias !== 0) {
+                        dividedDay = Math.round(originalDay / inputDias);
+                    } else if (inputDias === 0 && (originalDay !== 0)) {
+                        invalidOperation = true;
+                    }
+
+                    if (inputMeses !== 0) {
+                        dividedMonth = Math.round((originalMonth + 1) / inputMeses) - 1;
+                    } else if (inputMeses === 0 && (originalMonth !== 0)) {
+                        invalidOperation = true;
+                    }
+
+                    if (inputAnos !== 0) {
+                        dividedYear = Math.round(originalYear / inputAnos);
+                    } else if (inputAnos === 0 && (originalYear !== 0)) {
+                        invalidOperation = true;
+                    }
+                    
+                    if (inputDias === 0 && inputMeses === 0 && inputAnos === 0) {
+                        invalidOperation = false;
+                    }
+
+                    if (invalidOperation) {
+                        resultadoDate = null;
+                    } else {
+                        resultadoDate = new Date(dividedYear, dividedMonth, dividedDay);
+                        if (isNaN(resultadoDate.getTime())) {
+                            resultadoDate = null;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        if (resultadoOutput) {
+            resultadoOutput.textContent = formatDate(resultadoDate);
+        }
+    }
+}
+
+// **NOVA/REVISADA:** Função para verificar se um campo de input está vazio ou é o placeholder
+function isInputEmptyOrPlaceholder(inputElement) {
+    const value = inputElement.value.trim();
+    return value === '' || value === DZERO_PLACEHOLDER.trim(); // Compara com o trim() do DZERO
+}
+
+// **NOVA/REVISADA:** Função para verificar se uma célula de texto está "vazia" (N/A ou vazia)
+function isTextCellEmpty(cellElement) {
+    const text = cellElement.textContent.trim();
+    return text === '' || text === 'N/A';
+}
+
+
+// Função para copiar um valor para a próxima célula de uma CLASSE ESPECÍFICA em linhas abaixo
+function copyValueToNextEmptyInput(currentElement, targetInputClass, valueToCopy) {
+    const currentRow = currentElement.closest('tr');
+    let nextRow = currentRow.nextElementSibling;
+
+    while (nextRow) {
+        const targetInput = nextRow.querySelector(`.${targetInputClass}`);
+        if (targetInput && isInputEmptyOrPlaceholder(targetInput)) {
+            targetInput.value = valueToCopy;
+            calcularSomatorioDatas(); // Recalcula após a cópia
+            return; // Copiou, então sai da função
+        }
+        nextRow = nextRow.nextElementSibling;
+    }
+}
+
+
+// Inicializa os cálculos e adiciona event listeners
+window.onload = () => {
+    // 1. Define a data atual na primeira célula "DATA INICIAL"
+    const today = new Date();
+    const todayFormatted = formatDate(today);
+    const dataInicial1Input = document.getElementById('caldt_data1');
+    if (dataInicial1Input) {
+        dataInicial1Input.value = todayFormatted;
+    }
+
+    // 2. Adiciona event listeners para a coluna DATA INICIAL
+    document.querySelectorAll('.caldt_input_date').forEach(input => {
+        // Define o placeholder se estiver vazio no carregamento
+        if (input.value.trim() === '') {
+            input.value = DZERO_PLACEHOLDER;
+        }
+
+        // Listener para COPIAR DATA INICIAL para a próxima célula DATA INICIAL vazia
+        input.addEventListener('click', function() {
+            // Só copia se a célula atual tiver um valor real (não "N/A" ou DZERO_PLACEHOLDER)
+            if (this.value.trim() !== 'N/A' && !isInputEmptyOrPlaceholder(this)) {
+                copyValueToNextEmptyInput(this, 'caldt_input_date', this.value);
+            }
+        });
+
+        // Listeners para placeholder (blur/focus)
+        input.addEventListener('blur', () => {
+            if (input.value.trim() === '') {
+                input.value = DZERO_PLACEHOLDER;
+            }
+        });
+        input.addEventListener('focus', () => {
+            if (input.value.trim() === DZERO_PLACEHOLDER) {
+                input.value = '';
+            }
+        });
+    });
+
+    // 3. Adiciona event listeners para a coluna DIAS/MESES/ANOS A SOMAR (placeholders)
+    document.querySelectorAll('.caldt_input_add_date').forEach(input => {
+        if (!input.value || input.value.trim() === '00/00/0000' || input.value.trim() === '' || input.value.trim() === '//' || input.value.trim() === '/') {
+            input.value = DZERO_PLACEHOLDER;
+        }
+
+        input.addEventListener('blur', () => {
+            if (input.value.trim() === '') {
+                input.value = DZERO_PLACEHOLDER;
+            }
+        });
+        input.addEventListener('focus', () => {
+            if (input.value.trim() === DZERO_PLACEHOLDER) {
+                input.value = '';
+            }
+        });
+    });
+
+    // 4. Adiciona event listeners para a coluna RESULTADO para COPIAR para a próxima DATA INICIAL vazia
+    document.querySelectorAll('.caldt_resultado_cell').forEach(cell => {
+        cell.addEventListener('click', function() {
+            const resultadoValor = this.textContent;
+            // Só copia se o resultado não for "N/A" e não estiver vazio
+            if (!isTextCellEmpty(this)) { // Usa a nova função para verificar se a célula de texto é "vazia"
+                // Chama a função genérica para copiar para o próximo input de DATA INICIAL
+                copyValueToNextEmptyInput(this, 'caldt_input_date', resultadoValor);
+            }
+        });
+    });
+
+    // Listeners gerais para recalcular ao digitar ou mudar seleção
+    document.querySelectorAll('.caldt_input_date, .caldt_input_add_date, .caldt_input_select').forEach(input => {
+        input.addEventListener('input', calcularSomatorioDatas);
+        input.addEventListener('change', calcularSomatorioDatas);
+    });
+
+    calcularSomatorioDatas(); // Calcula ao carregar a página com os valores iniciais
+};
+
+
+
+
+//*************** FIM CALCULOS DE DATAS **********************//
 
 
 
