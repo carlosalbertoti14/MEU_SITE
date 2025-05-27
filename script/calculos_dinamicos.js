@@ -893,9 +893,6 @@ document.querySelectorAll('.calcH_input_time, .calcH_input_value, .calcH_input_s
 //***************  CALCULOS DE DATAS **********************//
 
 
-
-
-
 // Define a constante para o estado "vazio" ou placeholder de data
 const DZERO_PLACEHOLDER = '  /  /    ';
 
@@ -1107,22 +1104,14 @@ window.onload = () => {
         dataInicial1Input.value = todayFormatted;
     }
 
-    // 2. Adiciona event listeners para a coluna DATA INICIAL
+    // 2. Adiciona event listeners para a coluna DATA INICIAL (TODAS as células, mas o CLICK de cópia apenas na primeira)
     document.querySelectorAll('.caldt_input_date').forEach(input => {
         // Define o placeholder se estiver vazio no carregamento
         if (input.value.trim() === '') {
             input.value = DZERO_PLACEHOLDER;
         }
 
-        // Listener para COPIAR DATA INICIAL para a próxima célula DATA INICIAL vazia
-        input.addEventListener('click', function() {
-            // Só copia se a célula atual tiver um valor real (não "N/A" ou DZERO_PLACEHOLDER)
-            if (this.value.trim() !== 'N/A' && !isInputEmptyOrPlaceholder(this)) {
-                copyValueToNextEmptyInput(this, 'caldt_input_date', this.value);
-            }
-        });
-
-        // Listeners para placeholder (blur/focus)
+        // Listeners para placeholder (blur/focus) - Aplicam-se a TODAS as células de data inicial
         input.addEventListener('blur', () => {
             if (input.value.trim() === '') {
                 input.value = DZERO_PLACEHOLDER;
@@ -1134,6 +1123,17 @@ window.onload = () => {
             }
         });
     });
+
+    // **APLICA O CLICK DE CÓPIA APENAS À PRIMEIRA CÉLULA (caldt_data1)**
+    if (dataInicial1Input) { // Verifica se caldt_data1 existe
+        dataInicial1Input.addEventListener('click', function() {
+            // Só copia se a célula atual tiver um valor real (não "N/A" ou DZERO_PLACEHOLDER)
+            if (this.value.trim() !== 'N/A' && !isInputEmptyOrPlaceholder(this)) {
+                copyValueToNextEmptyInput(this, 'caldt_input_date', this.value);
+            }
+        });
+    }
+
 
     // 3. Adiciona event listeners para a coluna DIAS/MESES/ANOS A SOMAR (placeholders)
     document.querySelectorAll('.caldt_input_add_date').forEach(input => {
@@ -1158,14 +1158,14 @@ window.onload = () => {
         cell.addEventListener('click', function() {
             const resultadoValor = this.textContent;
             // Só copia se o resultado não for "N/A" e não estiver vazio
-            if (!isTextCellEmpty(this)) { // Usa a nova função para verificar se a célula de texto é "vazia"
+            if (!isTextCellEmpty(this)) {
                 // Chama a função genérica para copiar para o próximo input de DATA INICIAL
                 copyValueToNextEmptyInput(this, 'caldt_input_date', resultadoValor);
             }
         });
     });
 
-    // Listeners gerais para recalcular ao digitar ou mudar seleção
+    // Listeners gerais para recalcular ao digitar ou mudar seleção (Aplicam-se a TODOS os inputs de data e select)
     document.querySelectorAll('.caldt_input_date, .caldt_input_add_date, .caldt_input_select').forEach(input => {
         input.addEventListener('input', calcularSomatorioDatas);
         input.addEventListener('change', calcularSomatorioDatas);
