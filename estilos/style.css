@@ -1084,20 +1084,26 @@ button:hover {
 
   div#sites_criados{
     display: none;
-    background-color: var(--cor0);
+    background-color: rgba(0, 0, 0, 0.178);
     padding: 10px;
     
     max-width: auto;
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.507);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.568);
     }
+
+     div#sites_criados h1 {
+        color: white;
+
+     }
+
     div#banners_sites_criados{
        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.685);
        border-radius: 10px;
         
-        background-color: #06106e;
+        background-color: #050505;
     }
 
     picture.sites > a {
