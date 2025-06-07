@@ -57,9 +57,8 @@
                         
                         <a href="#">SOBRE MIM</a>
                         <ul id="sobrelist" class="submenu">
-                            <li><a href="#">TECNICOS</a></li>
-                            <li><a href="#">HABILIDADES</a></li>
-                            <li><a href="#">CURRÍCULO</a></li>
+                            <li><a href="#" id="mostrar-habilidades">HABILIDADES</a></li>
+                            <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
                         </ul>
 
                     </nav>
@@ -408,14 +407,14 @@
                                     <button type="button" onclick="adicionarGrandeza()">Add Grand</button>
                                     <button type="button" onclick="removerGrandeza()">Sub Grand</button>
                                 </div>
-                            </DIV>
+                                 </DIV>
 
 
 
 
 
 
-<DIV id="TC_DE_TEMPO">
+                                    <DIV id="TC_DE_TEMPO">
 
 
                                     <table>
@@ -711,8 +710,271 @@
 
                         </div>
                         
+
+
+
+
+
+
+
+
+
+                    <div id="cur_habilidades">
+                        
+                    <span id="cur_fechar_habilidades" class="cur_fechar_botao">&times;</span> 
+
+
+                    <h2 id="cur_curriculo_titulo">HABILIDADES</h2>
+
+                    <div class="cur_secao_info">
+                        <h3 class="cur_subtitulo_secao">Perfil Profissional</h3>
+                        <p class="cur_paragrafo_info">
+                            Profissional multifacetado e comprometido, com ampla experiência em áreas técnicas, digitais e administrativas.
+                            Focado em otimização de processos, buscando soluções que aumentem a eficiência e a produtividade.
+                            Possuo excelente relacionamento interpessoal e postura ética, com disponibilidade para atuar em diversos contextos e desafios.
+                        </p>
                     </div>
 
+                    <div class="cur_secao_info">
+                        <h3 class="cur_subtitulo_secao">Formação Acadêmica</h3>
+                        <ul class="cur_lista_info">
+                            <li class="cur_item_info">Graduação em TI (Cursando 2° período) – Estácio de Sá.</li>
+                            <li class="cur_item_info">Graduação em Matemática (Até 4º período – trancado em 2016) – Estácio de Sá.</li>
+                        </ul>
+                    </div>
+
+                    <div class="cur_secao_info">
+                        <h3 class="cur_subtitulo_secao">Cursos e Aperfeiçoamento</h3>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Inglês</h4>
+                            <p class="cur_detalhe_curso">
+                                Curso de Inglês no Ulysses Guimarães (CIUG), com duração de cinco anos.
+                                Fluência em conversação, capacidade de compreender filmes e músicas, e habilidade em leitura e redação de textos.
+                            </p>
+                        </div>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Pacote Office</h4>
+                            <p class="cur_detalhe_curso">WORD, EXCEL, POWERPOINT.</p>
+                        </div>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Técnico Administrativo e Contabilidade</h4>
+                            <p class="cur_detalhe_curso">
+                                Curso Técnico em Administração (1 ano e meio, 2010, Macedo Soares) e Contabilidade (1 ano e meio, 2013, Walter Orlandine).
+                            </p>
+                        </div>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Eletricista Residencial</h4>
+                            <p class="cur_detalhe_curso">
+                                Curso de Eletricista Residencial no SENAC – Niterói (6 meses). Capacidade de realizar instalações elétricas residenciais completas,
+                                seguindo normas ABNT e plantas baixas. Experiência em reparos de equipamentos elétricos (ex: chuveiros, ferros de passar, ventiladores de teto).
+                            </p>
+                        </div>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Eletricidade de Lanchas Navais</h4>
+                            <p class="cur_detalhe_curso">
+                                Estágio em Eletricidade de Lanchas Navais (1 mês) na Dinâmica Engenharia Naval (Ilha da Conceição – Niterói).
+                                Realização de instalação elétrica completa de lanchas (12V), com foco em solução de problemas e reparos rápidos. Agilidade no acesso a áreas restritas.
+                            </p>
+                        </div>
+                        <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Desenvolvimento Web Full-Stack</h4>
+                            <p class="cur_detalhe_curso">
+                                Domínio full-stack em desenvolvimento web, abrangendo desde a implementação front-end (HTML5, CSS, JavaScript)
+                                até a hospedagem em servidores dinâmicos e back-end (PHP, SQL, JSON).
+                                Capacidade de desenvolver layouts responsivos para web e mobile-first (utilizando Flexbox ou Grid),
+                                com foco na necessidade do cliente.
+                            </p>
+                        </div>
+                    </div>
+
+
+
+                            <div class="cur_secao_info">
+                    <h3 class="cur_subtitulo_secao" id="cur_habilidades_extra_toggle">
+                        Habilidades Extracurriculares <span class="cur_toggle_icon">+</span>
+                    </h3>
+
+                    <div id="cur_habilidades_extra_conteudo" style="display: none;">
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Excel</h4>
+                            <p class="cur_descricao_habilidade">
+                                Ampla habilidade em Excel, incluindo tabelas dinâmicas, implementação de gráficos, análise e manipulação de grandes volumes de dados.
+                                Desenvolvimento de macros utilizando Visual Basic for Applications (VBA), criando automações complexas com fórmulas, VBA ou abordagens híbridas.
+                                Capacidade de realizar análises e comparações de dados que levariam semanas, em questão de segundos.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">PowerPoint</h4>
+                            <p class="cur_descricao_habilidade">
+                                Expertise na ferramenta, desenvolvendo slides interativos com áudio, vídeos e animações.
+                                Preparo de apresentações de ideias e informações, materiais didáticos, conteúdos para marketing e vendas, além de materiais para treinamentos e workshops.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Access</h4>
+                            <p class="cur_descricao_habilidade">
+                                Curso técnico de Access. Habilidade em organização e armazenamento de dados, criação de formulários personalizados,
+                                geração de relatórios, controle de estoque, controle financeiro e gerenciamento de clientes e projetos.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Montagem e Manutenção de Computadores</h4>
+                            <p class="cur_descricao_habilidade">
+                                Curso técnico em Montagem e Manutenção. Habilidade em montar computadores de forma econômica e funcional,
+                                detectar problemas de hardware e software, e realizar manutenção preventiva.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">AutoCAD 2D e 3D</h4>
+                            <p class="cur_descricao_habilidade">
+                                Curso técnico de Desenho Técnico pela FAETEC. Capacidade de elaborar projetos e transcrevê-los de plantas baixas manuais para desenhos técnicos em AutoCAD 2D e 3D.
+                                Desenvolvimento de blocos para uso futuro, seguindo a ABNT (escala, canetas e plotagem), com flexibilidade para personalização conforme a necessidade do cliente.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">SketchUp</h4>
+                            <p class="cur_descricao_habilidade">
+                                Capacidade de desenvolver e editar desenhos ou projetos no SketchUp (versões mais recentes).
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">CorelDRAW</h4>
+                            <p class="cur_descricao_habilidade">
+                                Habilidades em CorelDRAW, incluindo ilustração, desenho, design gráfico e publicitário, criação de logotipos,
+                                design de produtos e embalagens, design para moda e serigrafia, design para web, sinalização, adesivação e cartões de visita.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Photoshop CS5</h4>
+                            <p class="cur_descricao_habilidade">
+                                Ampla habilidade no Photoshop, com foco em manipulação e alteração de imagens, criação de logotipos, GIFs, ícones, banners,
+                                imagens para redes sociais, restauração de fotos e montagens 2D/3D.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">VLC Player</h4>
+                            <p class="cur_descricao_habilidade">
+                                Conhecimento e habilidade na utilização do VLC Player, reprodutor de mídia versátil.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Pacote Adobe (After Effects, Premiere, Audition e Encoder 2023)</h4>
+                            <p class="cur_descricao_habilidade">
+                                Amplo conhecimento nas ferramentas Adobe: After Effects, Premiere, Audition e Media Encoder (2023).
+                                Habilidade em criação e manipulação de vídeos, incluindo alteração de fundo, correção de cor e iluminação,
+                                e desenvolvimento de vídeos personalizados com efeitos cinematográficos. Capacidade para criar logotipos,
+                                propagandas, efeitos visuais, GIFs, desenhos animados, slides de apresentação, e conteúdos para comerciais de TV ou copywriting.
+                                Domínio em edição e manipulação de áudio, com compilação para diversos formatos e dispositivos.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Blender</h4>
+                            <p class="cur_descricao_habilidade">
+                                Atualmente em desenvolvimento e aprofundamento de conhecimentos no Blender, buscando domínio da ferramenta.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Visual Basic for Applications (VBA)</h4>
+                            <p class="cur_descricao_habilidade">
+                                Habilidade em desenvolver automações, desde simples a avançadas, no ambiente Windows utilizando VBA.
+                                Exemplos incluem organização e categorização automática de arquivos em pastas (ex: downloads, vídeos, músicas, contas a pagar)
+                                e tarefas mais complexas como backups periódicos de arquivos ou automação de acesso a sites.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Batch Scripting Language (Batch)</h4>
+                            <p class="cur_descricao_habilidade">
+                                Utilização de Batch Scripting Language para automatizar tarefas repetitivas no ambiente Windows.
+                                Embora semelhante ao VBA, mas com algumas limitações, é frequentemente combinada para criar scripts mais robustos.
+                                Linguagem altamente funcional e compatível com o Windows, sendo a 'língua materna' do sistema.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">C++</h4>
+                            <p class="cur_descricao_habilidade">
+                                Habilidade em C++, linguagem versátil e amplamente aceita.
+                                Utilização em projetos de automação mecânica com Arduino, como sistemas de iluminação automática baseados em luminosidade ou detecção de presença.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Python</h4>
+                            <p class="cur_descricao_habilidade">
+                                Conhecimento básico em Python, com compreensão de suas estruturas.
+                                Embora versátil e em crescente uso, busca por soluções que se alinhem à preferência por praticidade e dinamismo.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">JAVA APPLICATION</h4>
+                            <p class="cur_descricao_habilidade">
+                                Conhecimento básico em Java. Compreensão da linguagem e de suas similaridades com C++.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Alvenaria</h4>
+                            <p class="cur_descricao_habilidade">
+                                Expertise em obras de pequeno porte, incluindo construção de paredes e emboço (com uso de régua, nível de bolha e prumo),
+                                rebaixamento em gesso cartonado (com sanca aberta) e assentamento de pedra madeira.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Música</h4>
+                            <p class="cur_descricao_habilidade">
+                                Curso de violão, com leitura de partituras e cifras. Habilidade em tocar violão e alguns instrumentos de percussão.
+                            </p>
+                        </div>
+
+                        <div class="cur_habilidade_item">
+                            <h4 class="cur_nome_habilidade">Pequenos Reparos</h4>
+                            <p class="cur_descricao_habilidade">
+                                Habilidade em realizar pequenos reparos diversos, com foco em soluções práticas para problemas cotidianos.
+                                Capacidade de criar peças utilizando materiais disponíveis, buscando otimizar processos e facilitar o trabalho.
+                            </p>
+                        </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+
+                        <div id="curricuro">
+
+                            <h1>MEU CURRÍCULO</h1>
+                            <a href="#" id="mostrar-curriculo-menu">CURRÍCULO</a>
+                             <span id="fechar_curriculo" class="cur_fechar_botao">&times;</span> 
+
+                            <div id="curriculo-pdf-container" style="display:none;">
+                                <div class="cur-pdf-header">
+                                    <button id="fechar-pdf" class="cur-pdf-btn-close">&times;</button>
+                                </div>
+                                <iframe id="curriculo-pdf-iframe" src="arquivos/Curriculo.pdf" frameborder="0"></iframe>
+                                <div class="cur-pdf-footer">
+                                    <a href="arquivos/Curriculo.pdf" download class="cur-pdf-btn-download">Baixar Currículo</a>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                   
 
 
 
@@ -720,8 +982,8 @@
 
                 
                     </main>
-                </div>
-            </div>
+                </div> <!-- DIV FILHO -->
+            </div> <!-- DIV PAI -->
 
 
 
@@ -736,5 +998,7 @@
         <script src="script/MENU.js"></script> 
         <script src="script/MERCADO.js"></script>
         <script src="script/calculos_dinamicos.js"></script>
+        <script src="script/HABILIDADES.js"></script>
+        <script src="script/CURRICULO.js"></script>
     </body>
 </html>
