@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
         function mmc(a, b) {
             return (a * b) / calcularMDC([a, b]);
         }
+        if (numeros.length === 0) return 0; // Adicionado para evitar erro em array vazio
+        if (numeros.length === 1) return numeros[0]; // Retorna o próprio número se houver apenas um
         return numeros.reduce((acc, num) => mmc(acc, num));
     }
 
@@ -74,6 +76,8 @@ document.addEventListener('DOMContentLoaded', function () {
         function mdc(a, b) {
             return b === 0 ? a : mdc(b, a % b);
         }
+        if (numeros.length === 0) return 0; // Adicionado para evitar erro em array vazio
+        if (numeros.length === 1) return numeros[0]; // Retorna o próprio número se houver apenas um
         return numeros.reduce((acc, num) => mdc(acc, num));
     }
 
@@ -103,15 +107,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const linhaTotal = document.querySelector('.totais').parentElement; // Captura a linha do total
 
     tabelaCorpoSOMA.addEventListener('change', function () {
-        adicionarNovaLinhaSeNecessario();
+        adicionarNovaLinhaSeNecessarioSoma(); // Renomeado para evitar conflito
         calcularOperacaoTotal();
     });
 
-    function adicionarNovaLinhaSeNecessario() {
+    function adicionarNovaLinhaSeNecessarioSoma() { // Renomeado
         const inputsSoma = document.querySelectorAll('#tabela-corpoSOMA .soma');
         const ultimaCelula = inputsSoma[inputsSoma.length - 1];
 
-        if (ultimaCelula.value !== '') {
+        if (ultimaCelula && ultimaCelula.value !== '') { // Verifica se ultimaCelula existe
             let novaLinha = document.createElement('tr');
             let novaCelula = document.createElement('td');
             let novoInput = document.createElement('input');
@@ -126,8 +130,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    /* calcularOperacaoTotal(); // Calcular operação inicial */
+    // A chamada de calcularOperacaoTotal() no final do primeiro DOMContentLoaded já cuida disso.
+    // calcularOperacaoTotal(); // Calcular operação inicial
 });
+
+
 //***************CALCULOS DINAMICOS**********************//
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -137,24 +144,47 @@ document.addEventListener('DOMContentLoaded', function () {
         const elementoAlterado = event.target;
         const linha = elementoAlterado.closest('tr');
 
-        if (elementoAlterado.classList.contains('NUMERO') || 
-            elementoAlterado.classList.contains('operador') || 
+        if (elementoAlterado.classList.contains('NUMERO') ||
+            elementoAlterado.classList.contains('operador') ||
             elementoAlterado.classList.contains('NUMERADOR')) {
             calcularResultado(linha);
-            adicionarNovaLinhaSeNecessario();
+            adicionarNovaLinhaSeNecessarioCalculo(); // Chama a função para adicionar linha de cálculo
+        }
+    });
+
+    // Delegacão de eventos para o botão '➡️'
+    tabelaCorpo.addEventListener('click', function (event) {
+        const elementoClicado = event.target;
+        // Verifica se o elemento clicado é a label do botão de troca '➡️'
+        if (elementoClicado.tagName === 'LABEL' && elementoClicado.textContent === '➡️') {
+            const linha = elementoClicado.closest('tr'); // Encontra a linha pai
+            const inputNumero = linha.querySelector('.NUMERO');
+            const inputNumerador = linha.querySelector('.NUMERADOR');
+
+            if (inputNumero && inputNumerador) {
+                let temp = inputNumero.value;
+                inputNumero.value = inputNumerador.value;
+                inputNumerador.value = temp;
+                calcularResultado(linha); // Recalcula o resultado após a troca
+            }
         }
     });
 
     /* ADICIONAR LINHA */
-    function adicionarNovaLinhaSeNecessario() {
+    function adicionarNovaLinhaSeNecessarioCalculo() { // Renomeado para não conflitar
         const linhas = tabelaCorpo.querySelectorAll('tr');
         const ultimaLinha = linhas[linhas.length - 1];
-        const ultimaCelula = ultimaLinha.querySelector('.NUMERO');
+        // Verifica se o campo NUMERO da última linha está preenchido
+        const ultimaCelulaNumero = ultimaLinha.querySelector('.NUMERO');
 
-        if (ultimaCelula.value !== '') {
+        if (ultimaCelulaNumero && ultimaCelulaNumero.value !== '') { // Adicionado verificação
             let novaLinha = document.createElement('tr');
 
             let novaCelulaNumero = document.createElement('td');
+            let labelTroca = document.createElement('label'); // Cria a label do botão de troca
+            labelTroca.htmlFor = "number"; // Associa a um ID (embora não seja estritamente necessário aqui, mantém a estrutura original)
+            labelTroca.textContent = "➡️";
+            novaCelulaNumero.appendChild(labelTroca); // Adiciona a label à célula
             let novoInputNumero = document.createElement('input');
             novoInputNumero.type = "number";
             novoInputNumero.className = "NUMERO";
@@ -164,11 +194,17 @@ document.addEventListener('DOMContentLoaded', function () {
             let novaCelulaOperador = document.createElement('td');
             let novoSelectOperador = document.createElement('select');
             novoSelectOperador.className = "operador";
+            // Adiciona a opção "ESCOLHA" por padrão
+            let optionDefault = document.createElement('option');
+            optionDefault.value = "NENHUM";
+            optionDefault.textContent = "ESCOLHA";
+            novoSelectOperador.appendChild(optionDefault);
+
             ["multiplicacao", "divisao", "quociente", "resto", "soma", "raiz", "elevado", "porcentagem", "fatorial"]
                 .forEach(op => {
                     let option = document.createElement('option');
                     option.value = op;
-                    option.textContent = op;
+                    option.textContent = op.charAt(0).toUpperCase() + op.slice(1); // Capitaliza a primeira letra
                     novoSelectOperador.appendChild(option);
                 });
             novaCelulaOperador.appendChild(novoSelectOperador);
@@ -185,78 +221,92 @@ document.addEventListener('DOMContentLoaded', function () {
             let novoBotaoResultado = document.createElement('button');
             novoBotaoResultado.className = "RESULTADO2";
             novoBotaoResultado.textContent = "Resultado";
-            novoBotaoResultado.addEventListener('click', function () {
-                copiarResultadoParaProximaLinha(novaLinha);
-            });
+            // O event listener para copiar resultado será adicionado abaixo, via delegação
             novaCelulaResultado.appendChild(novoBotaoResultado);
             novaLinha.appendChild(novaCelulaResultado);
 
             tabelaCorpo.appendChild(novaLinha);
+
+            // Calcula o resultado da nova linha, se houver valores
+            calcularResultado(novaLinha);
         }
     }
-    
-     /* fim ADICIONAR LINHA */
 
+    /* fim ADICIONAR LINHA */
+
+
+    function calcularFatorial(n) {
+        if (n < 0) return NaN;
+        if (n === 0 || n === 1) return 1;
+        let resultadoFatorial = 1;
+        for (let i = 2; i <= n; i++) {
+            resultadoFatorial *= i;
+        }
+        return resultadoFatorial;
+    }
 
     function calcularResultado(linha) {
-        const numero = parseFloat(linha.querySelector('.NUMERO').value);
-        const operador = linha.querySelector('.operador').value;
-        const numerador = parseFloat(linha.querySelector('.NUMERADOR').value);
-        const resultadoBotao = linha.querySelector('.RESULTADO2'); 
+        const numeroInput = linha.querySelector('.NUMERO');
+        const operadorInput = linha.querySelector('.operador');
+        const numeradorInput = linha.querySelector('.NUMERADOR');
+        const resultadoBotao = linha.querySelector('.RESULTADO2');
+
+        const numero = parseFloat(numeroInput.value);
+        const operador = operadorInput.value;
+        const numerador = parseFloat(numeradorInput.value);
 
         let resultado;
 
-        if (isNaN(numero)) {
-            resultadoBotao.textContent = ''; 
+        if (isNaN(numero) && (operador !== 'fatorial' || isNaN(numerador))) { // Ajuste para fatorial
+            resultadoBotao.textContent = '';
             return;
         }
-
-        function calcularFatorial(n) {
-            if (n < 0) return NaN;
-            if (n === 0 || n === 1) return 1;
-            let resultadoFatorial = 1;
-            for (let i = 2; i <= n; i++) {
-                resultadoFatorial *= i;
+        
+        // Se for fatorial, e apenas o NUMERO for preenchido, calcula o fatorial do NUMERO
+        if (operador === 'fatorial' && !isNaN(numero) && isNaN(numerador)) {
+            resultado = calcularFatorial(numero);
+        } else if (operador === 'fatorial' && isNaN(numero) && !isNaN(numerador)) {
+             resultado = calcularFatorial(numerador);
+        } else {
+            switch (operador) {
+                case 'multiplicacao':
+                    resultado = numero * numerador;
+                    break;
+                case 'divisao':
+                    resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero / numerador;
+                    break;
+                case 'quociente':
+                    resultado = numerador === 0 ? 'Erro! Divisão por zero.' : Math.floor(numero / numerador);
+                    break;
+                case 'resto':
+                    resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero % numerador;
+                    break;
+                case 'soma':
+                    resultado = numero + numerador;
+                    break;
+                case 'raiz':
+                    resultado = numerador <= 0 ? 'Erro! Radical inválido.' : Math.pow(numero, 1 / numerador);
+                    break;
+                case 'elevado':
+                    resultado = Math.pow(numero, numerador);
+                    break;
+                case 'porcentagem':
+                    resultado = (numero * numerador) / 100;
+                    break;
+                case 'fatorial':
+                    // Este caso já foi tratado acima para permitir fatorial com um único número
+                    // Mas para garantir que ambos sejam tratados se ambos forem preenchidos (mesmo que não seja comum)
+                    const fatorialNumero = calcularFatorial(numero);
+                    const fatorialNumerador = calcularFatorial(numerador);
+                    resultado = isNaN(fatorialNumero) || isNaN(fatorialNumerador) ? 'Erro! Entrada inválida para fatorial.' : fatorialNumero * fatorialNumerador;
+                    break;
+                default:
+                    resultado = '';
+                    break;
             }
-            return resultadoFatorial;
         }
 
-        switch (operador) {
-            case 'multiplicacao':
-                resultado = numero * numerador;
-                break;
-            case 'divisao':
-                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero / numerador;
-                break;
-            case 'quociente':
-                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : Math.floor(numero / numerador);
-                break;
-            case 'resto':
-                resultado = numerador === 0 ? 'Erro! Divisão por zero.' : numero % numerador;
-                break;
-            case 'soma':
-                resultado = numero + numerador;
-                break;
-            case 'raiz':
-                resultado = numerador <= 0 ? 'Erro! Radical inválido.' : Math.pow(numero, 1 / numerador);
-                break;
-            case 'elevado':
-                resultado = Math.pow(numero, numerador);
-                break;
-            case 'porcentagem':
-                resultado = (numero * numerador) / 100;
-                break;
-            case 'fatorial':
-                const fatorialNumero = calcularFatorial(numero);
-                const fatorialNumerador = calcularFatorial(numerador);
-                resultado = isNaN(fatorialNumero) || isNaN(fatorialNumerador) ? 'Erro! Entrada inválida para fatorial.' : fatorialNumero * fatorialNumerador;
-                break;
-            default:
-                resultado = '';
-                break;
-        }
-
-        resultadoBotao.textContent = resultado;
+        resultadoBotao.textContent = isNaN(resultado) ? '' : resultado; // Limpa se for NaN
     }
 
     function copiarResultadoParaProximaLinha(linhaAtual) {
@@ -268,21 +318,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const campoNumero = proximaLinha.querySelector('.NUMERO');
             if (campoNumero && campoNumero.value === '') {
                 campoNumero.value = resultadoValor;
+                // Dispara o evento 'change' para recalcular a próxima linha automaticamente
+                campoNumero.dispatchEvent(new Event('change'));
             }
         }
     }
 
-    const linhas = tabelaCorpo.querySelectorAll('tr');
-    linhas.forEach(linha => {
-        const botaoResultado = linha.querySelector('.RESULTADO2');
-        if (botaoResultado) {
-            botaoResultado.addEventListener('click', function () {
-               /*  copiarResultadoParaProximaLinha(linha); */
-            });
-        }
+    const linhasIniciais = tabelaCorpo.querySelectorAll('tr');
+    linhasIniciais.forEach(linha => {
+        // Não precisamos adicionar listeners para cada botão RESULTADO2 aqui, pois a delegação cuidará disso
         calcularResultado(linha);
     });
+
+    // Delegacão de eventos para os botões RESULTADO2
+    tabelaCorpo.addEventListener('click', function(event) {
+        if (event.target.classList.contains('RESULTADO2')) {
+            copiarResultadoParaProximaLinha(event.target.closest('tr'));
+        }
+    });
+
+    // Certifica-se de que a primeira linha vazia seja adicionada ao carregar
+    adicionarNovaLinhaSeNecessarioCalculo();
 });
+
 
 //***************FIM CALCULOS DINAMICOS**********************//
 
@@ -480,6 +538,8 @@ inputs.forEach(input => {
 
     /* adicionar grandeza */
     document.addEventListener('DOMContentLoaded', function () {
+
+        
     const tabelaComposta = document.getElementById('tabela_composta');
 
     window.adicionarGrandeza = function () {
@@ -518,6 +578,12 @@ inputs.forEach(input => {
     window.calcularRegraTresComposta = calcularRegraTresComposta;
     window.adicionarGrandeza = adicionarGrandeza;
     window.removerGrandeza = removerGrandeza;
+
+
+
+
+
+
 });
 
  //alterar nome to rótulo

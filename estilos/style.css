@@ -226,7 +226,7 @@ main {
     max-width: 800px;
     margin: auto;
     margin-bottom: 30px;
-    padding: 20px;
+    padding: 5px;
     /* background: white; */
     /* box-shadow: 0px 0px 10px black; */
     /* configurar borda individualmente */
@@ -425,11 +425,11 @@ h1 {
 #soma_dinamica{
     display: none;
    background-color: var(--cor0);
-   padding: 10px;
+   padding: 5px;
    
    max-width: auto;
    margin: 0 auto;
-   padding: 20px;
+   padding: 5px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -439,9 +439,15 @@ h1 {
     
 }
 
+#tabela-corpoSOMA > tr > td {
+    width: 5%;
+    
+}
+
 #botao-operacao {
     color: blue;
     font-weight: bolder;
+   
 
 }
 
@@ -467,13 +473,15 @@ h1 {
 
   thead th{
     font-size: 0.6em;
+     align-content: start;
+     
   }
 
 .soma, td, tr{
     gap: 10px; /* Espaço entre o input e a label */
     white-space: nowrap; /* Garante que a label nunca quebre */
    max-width: 60%; /* Em telas menores, pode ocupar toda a largura */
-   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+   width: calc(90% - 0px); /* Em telas maiores, ocupa metade menos a margem */
 
 }
 
@@ -484,9 +492,11 @@ h1 {
 
 .operador, td, tr{
   border-radius: 5px;
-  max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
-  width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
+  max-width: 60%; /* Em telas menores, pode ocupar toda a largura */
+  width: calc(100% - 0px); /* Em telas maiores, ocupa metade menos a margem */
   appearance: none;
+  text-align: center;
+  margin-left: 15px;
 }
 
 .NUMERO, td, tr{
@@ -497,6 +507,7 @@ h1 {
 }
 
 .NUMERADOR, td, tr{
+
   max-width: 100%; /* Em telas menores, pode ocupar toda a largura */
   width: calc(100% - 10px); /* Em telas maiores, ocupa metade menos a margem */
 
@@ -508,7 +519,13 @@ h1 {
 }
 
 #botao-soma-total {
-  display: block; /* Permite que fique ao lado de outros elementos em linha */
+    display: flex;
+    text-align: center;
+    vertical-align: middle; 
+    justify-content: center; /* Centraliza horizontalmente com flexbox */
+    align-items: center; /* Centraliza verticalmente com flexbox */
+
+   /* Permite que fique ao lado de outros elementos em linha */
   text-align: center;
   font-weight: bold;
   color: red;
@@ -519,14 +536,14 @@ h1 {
     background-color: #c4c5c7;
   display: flex;
   /* margin-top: 20px; */
-  align-items: center;
-  justify-content: center;
   font-weight: bold;
   color: red;
   width: auto;
   padding-left: 5px;
   padding-right: 5px;
   /* Outros estilos do botão */
+
+
 }
 
 
@@ -1140,8 +1157,8 @@ button:hover {
    padding: 10px;
    
    max-width: 800px;
-   margin: 10px;
-   padding: 20px;
+   margin: 0px;
+   padding: 10px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -1254,6 +1271,7 @@ button:hover {
     font-size: 1.4em;
     color: #0056b3; /* Cor para nome do curso */
     margin-bottom: 8px;
+    text-align: center;
 }
 
 .cur_detalhe_curso {

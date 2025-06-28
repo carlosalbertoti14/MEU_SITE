@@ -1,0 +1,242 @@
+FIZ UM SITE PARA MIM E QUERO COLOCAR EM UMA PARTE FALANDO SOBRE MINHAS HABILIDADES
+
+QUANDO COLOCAR OS IDS E AS CLASSES COMECE COM cur_... ex: cur_titulo, cur_paragrafo etc... 
+pois tenho outras classes e ids e não quero que tenha conflito com as outras.
+
+NÃO PRECISA CONFIGURAR body, nem main, nem foot pois já estão configurados no site.
+
+configure somente a div, coloque os dados na <div id="cur_CURRICULO">
+
+faça um css separado bem estiloso.
+
+
+  fiz uma nova div
+
+                        <div id="curricuro">
+
+                            
+                        </div>
+
+queria que você dentro dela exibisse meu currículo em pdf que esta em: arquivos\Curriculo.pdf  ...
+e gostaria que você fisesse um botão fechar a div e outro para fechar.
+
+e colocque um script para abrir quando clicar no menu  <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
+
+
+VEJA MEU CÓDIGO ESTOU COM DOIS PROBLEMAS.
+1 - ELE NÃO ESTA EXIBINDO O CURRICULO QUANDO CLICO EM mostrar-curriculo.
+2 - QUANDO A DIV APARECE, O DOCUMENTO PDF NÃO ESTA SENDO EXIBIDO NA HORA.
+
+ME AJUDA
+
+HTML...
+
+            <div id="divcentral">
+                <div id="divmenu">
+                    <nav id="navmenu">
+                        <a href="#">HOME</a>
+                        
+                        <a href="#" id="projetos">PROJETOS</a>
+                        <ul id="projetolist" class="submenu">
+                            <li><a href="#" id="mostrar_sites_criados">SITES CRIADOS</a></li>
+                            <li><a href="#">PLANILHAS</a></li>
+                            <li><a href="#">PROJETOS</a></li>
+                            <li><a href="#">INVENÇÕES</a></li>
+                        </ul>
+            
+                        <a href="#">UTILITÁRIOS</a>
+                        <ul id="utilitarioslist" class="submenu">
+                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
+                            <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
+                            <li><a href="#">PINTAR CARRO (GUIA)</a></li>
+                            <li><a href="#">ALGUNS SITES UTEIS</a></li>
+                        </ul>
+                        
+                        <a href="#">SOBRE MIM</a>
+                        <ul id="sobrelist" class="submenu">
+                            <li><a href="#" id="mostrar-habilidades">HABILIDADES</a></li>
+                            <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
+                        </ul>
+
+                    </nav>
+                </div>
+            </div>
+
+
+...RESTANTE DO HTML...
+
+                        <div id="curricuro">
+
+                            <h1>MEU CURRÍCULO</h1>
+                            <div id="curriculo-pdf-container" style="display:none;">
+                                <div class="cur-pdf-header">
+                                    <button id="fechar-pdf" class="cur-pdf-btn-close">&times;</button>
+                                    </div>
+                                <iframe id="curriculo-pdf-iframe" src="arquivos/Curriculo.pdf" frameborder="0"></iframe>
+                                <div class="cur-pdf-footer">
+                                    <a href="arquivos/Curriculo.pdf" download class="cur-pdf-btn-download">Baixar Currículo</a>
+                                </div>
+                            </div>
+
+                            <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
+
+
+                        </div>
+
+
+CSS...
+
+
+/************************************** MEU CURRICULO ************************/
+
+#curricuro {
+   display: NONE;
+   background-color: rgba(168, 197, 231, 0.658);
+   padding: 10px;
+   
+   max-width: 800px;
+   margin: 10px;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Container do PDF (modal) */
+#curriculo-pdf-container {
+    position: fixed; /* Fixa na tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro semitransparente */
+    display: flex; /* Para centralizar o conteúdo */
+    flex-direction: column; /* Organiza o cabeçalho, iframe e rodapé em coluna */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Garante que fique acima de tudo */
+    padding: 20px;
+    box-sizing: border-box; /* Inclui padding na largura/altura total */
+}
+
+/* Cabeçalho do PDF (onde estará o botão de fechar) */
+.cur-pdf-header {
+    width: 100%;
+    max-width: 800px; /* Mesma largura do iframe */
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Botão de Fechar */
+.cur-pdf-btn-close {
+    background: none;
+    border: none;
+    font-size: 3em; /* Tamanho grande para o 'X' */
+    color: #fff; /* Cor branca para o 'X' */
+    cursor: pointer;
+    line-height: 1; /* Remove espaçamento extra */
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.cur-pdf-btn-close:hover {
+    color: #dc3545; /* Vermelho ao passar o mouse */
+}
+
+/* Iframe do PDF */
+#curriculo-pdf-iframe {
+    width: 100%;
+    max-width: 800px; /* Largura máxima do PDF */
+    height: 80%; /* Altura do iframe */
+    background-color: #fff; /* Fundo branco para o iframe */
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para o iframe */
+}
+
+/* Rodapé do PDF (onde estará o botão de download) */
+.cur-pdf-footer {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center; /* Centraliza o botão de download */
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+/* Botão de Download */
+.cur-pdf-btn-download {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.cur-pdf-btn-download:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 850px) {
+    #curriculo-pdf-iframe,
+    .cur-pdf-header,
+    .cur-pdf-footer {
+        width: 95%; /* Ocupa mais largura em telas menores */
+    }
+}
+
+@media (max-width: 600px) {
+    #curriculo-pdf-container {
+        padding: 10px;
+    }
+    .cur-pdf-btn-close {
+        font-size: 2.5em;
+    }
+    #curriculo-pdf-iframe {
+        height: 75%; /* Ajusta a altura em telas menores */
+    }
+    .cur-pdf-btn-download {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+}
+
+
+
+
+JAVA SCRIPT...
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Referências aos elementos HTML
+    const mostrarCurriculoLink = document.getElementById('mostrar-curriculo');
+    const curriculoPdfContainer = document.getElementById('curriculo-pdf-container');
+    const fecharPdfBtn = document.getElementById('fechar-pdf');
+
+    // Listener para o clique no link "CURRÍCULO" do menu
+    if (mostrarCurriculoLink && curriculoPdfContainer) {
+        mostrarCurriculoLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link (ir para #)
+            curriculoPdfContainer.style.display = 'flex'; // Exibe o container do PDF
+            // Opcional: ajustar o foco para o iframe ou o botão de fechar para acessibilidade
+            // fecharPdfBtn.focus();
+        });
+    }
+
+    // Listener para o clique no botão "X" de fechar
+    if (fecharPdfBtn && curriculoPdfContainer) {
+        fecharPdfBtn.addEventListener('click', function() {
+            curriculoPdfContainer.style.display = 'none'; // Oculta o container do PDF
+        });
+    }
+
+    // Opcional: Fechar o PDF ao pressionar a tecla ESC
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && curriculoPdfContainer.style.display === 'flex') {
+            curriculoPdfContainer.style.display = 'none';
+        }
+    });
+});
