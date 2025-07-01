@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let valores = [];
 
         inputsSoma.forEach(input => {
-            const valor = parseInt(input.value);
+            const valor = parseFloat(input.value);
             if (!isNaN(valor)) {
                 valores.push(valor);
             }
