@@ -1,14 +1,27 @@
-Criei esse site e gostaria da sua ajuda para resolver algo.
+Criei esse site e gostaria da sua ajuda para resolver algo. gostaria de fazer duas coisas
 
-1 - 
-2 - 
-3 - 
+1 - deixar o bg preto, e fazer a imagem ficar piscando ocilando lentamente como um fade in e aut.
+2 - quer escrever um texto h1 no centro dessa imagem escrito Kep1er, com sombra roxa. e também fique oscilando no timer diferente do da imagem.
 
-Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar).
+
+Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar). obs. a <video id="intro-video" autoplay muted poster="midia/GRUPO_head.jpg"> já esta configurado para o tamanho certo no meu html, siga esse padrão de tamanho e responsividade
 
 ...................INICIO DO index.html......................
 ...restante do código...
 
+        <header>
+
+<div class="video-container">
+<video id="intro-video" autoplay muted poster="midia/GRUPO_head.jpg">
+<source src="midia/SEU_VIDEO_DO_KEP1ER_AQUI.webm" type="video/webm">
+Seu navegador não suporta o elemento de vídeo.
+</video>
+<button id="sound-toggle" class="sound-button" title="Ativar/Desativar som">🔇</button>
+</div>
+
+
+
+        </header>
 
 
 ...restante do código...
@@ -18,8 +31,36 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 
 ...................INICIO DO style.css......................
 ...restante do código...
+header {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    padding: 0px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+header > h1 {
+    border: 1px dotted black;
+    text-shadow: 2px 2px 0px black;
+
+    flex: 0 0 200px;
+    
+
+}
 
 
+/* CONFIGURAÇÃO VIDEO CABEÇALHO */
+
+.video-container {
+    position: relative;
+    width: 100%; /* Ajusta ao tamanho da tela */
+    max-width: 900px; /* Define uma largura máxima */
+    margin: 0 auto; /* Centraliza o vídeo */
+    
+}
 
 ...restante do código...
 ...................FIM DO style.css......................
