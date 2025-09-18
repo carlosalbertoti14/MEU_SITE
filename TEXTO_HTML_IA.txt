@@ -1,28 +1,318 @@
-Criei esse site e gostaria da sua ajuda para resolver algo. gostaria de fazer duas coisas
+Criei esse site e gostaria da sua ajuda para resolver algo.
 
-1 - deixar o bg preto, e fazer a imagem ficar piscando ocilando lentamente como um fade in e aut.
-2 - quer escrever um texto h1 no centro dessa imagem escrito Kep1er, com sombra roxa. e também fique oscilando no timer diferente do da imagem.
+1 - 
+2 - 
+3 - 
 
-
-Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar). obs. a <video id="intro-video" autoplay muted poster="midia/GRUPO_head.jpg"> já esta configurado para o tamanho certo no meu html, siga esse padrão de tamanho e responsividade
+Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar).
 
 ...................INICIO DO index.html......................
-...restante do código...
 
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CARLOS ALBERTO</title>
+
+        <link
+        rel="shortcut icon"
+        href="midia/favicon.ico"
+        type="image/x-icon"
+    />
+    <link rel="stylesheet" href="estilos/style.css" />
+
+    <style>
+        body {
+    
+    background-image: url('fotos/bg.jpg');
+    /* background-size: cover;  ajusta a imagem para cobrir todo o fundo */
+    background-repeat: no-repeat; /* impede que a imagem se repita */
+    background-position: TOP center; /* centraliza a imagem */
+
+
+    
+}
+
+
+    </style>
+    </head>
+
+    <body>
         <header>
-
-<div class="video-container">
-<video id="intro-video" autoplay muted poster="midia/GRUPO_head.jpg">
-<source src="midia/SEU_VIDEO_DO_KEP1ER_AQUI.webm" type="video/webm">
-Seu navegador não suporta o elemento de vídeo.
-</video>
-<button id="sound-toggle" class="sound-button" title="Ativar/Desativar som">🔇</button>
-</div>
-
-
+            <h1>CARLOS ALBERTO</h1>
 
         </header>
 
+            <div id="divcentral">
+                <div id="divmenu">
+                    <nav id="navmenu">
+                        <a href="#">HOME</a>
+                        
+                        <a href="#" id="projetos">PROJETOS</a>
+                        <ul id="projetolist" class="submenu">
+                            <li><a href="#" id="mostrar_sites_criados">SITES CRIADOS</a></li>
+                            <li><a href="#">PLANILHAS</a></li>
+                            <!-- <li><a href="#">PROJETOS</a></li> -->
+                            <li><a href="#">INVENÇÕES</a></li>
+                        </ul>
+            
+                        <a href="#">UTILITÁRIOS</a>
+                        <ul id="utilitarioslist" class="submenu">
+                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
+                            <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
+                            <li><a href="#">PINTAR CARRO (GUIA)</a></li>
+                            <li><a href="#">ALGUNS SITES UTEIS</a></li>
+                        </ul>
+                        
+                        <a href="#">SOBRE MIM</a>
+                        <ul id="sobrelist" class="submenu">
+                            <li><a href="#" id="mostrar-habilidades">HABILIDADES</a></li>
+                            <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
+                        </ul>
+
+                    </nav>
+                </div>
+            </div>
+
+
+
+
+            <div id="mainpai">
+                <div id="mianfilho">
+                    <main>
+
+                        <div id="mercado">
+
+                            <h1>Comparativo de Preços do Mercado</h1>
+
+
+                            <div class="botoes-controle">
+                                <button id="resetar-valores">Resetar Valores</button>
+                                <button id="fechar-mercado">Fechar Comparativo</button>
+                            </div>
+
+
+                            <div class="produto-card">
+                                <h2 class="produto-nome" data-produto-id="produto1">Produto 1</h2>
+                                <p>Valor: <input type="number" id="produto1-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto1-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto1-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto1-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="produto-card">
+                                <h2 class="produto-nome" data-produto-id="produto2">Produto 2</h2>
+                                <p>Valor: <input type="number" id="produto2-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto2-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto2-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto2-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="produto-card blanca">
+                                <h2 class="produto-nome" data-produto-id="produto3">Produto 3</h2>
+                                <p>Valor: <input type="number" id="produto3-valor" placeholder="Digite o valor"></p>
+                                <p>Volume: <input type="number" id="produto3-volume" placeholder="Digite o volume"></p>
+                                <p>QNT. Pacote: <input type="number" id="produto3-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
+                                <p>QNT.2: <input type="number" id="produto3-qnt2" value="1"></p>
+                                <p>Volume Total: <span class="vol-total"></span></p>
+                                <p>Preço por Volume: <span class="preco-volume"></span></p>
+                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
+                                <p>VALOR: <span class="pago-a-mais"></span></p>
+                            </div>
+
+                            <div class="menor-preco">
+                                <p>O menor preço é: <span id="menor-preco-produto"></span> <span id="menor-preco-valor"></span></p>
+                            </div>
+                    
+
+
+
+                        </div>
+
+
+                        <div id="soma_dinamica">
+
+                            <div class="botoes-controle">
+                                <button id="resetar-valores_soma_dinamica">Resetar Valores</button>
+                                <button id="fechar-soma_dinamica">Fechar Comparativo</button>
+                            </div>
+                                <h1>CALCULOS DINAMICOS</h1><br>
+
+                             <h2>CÁLCULOS DINÂMICOS</h2>
+
+                            <div id="organizar_tabela_soma">
+                                <table>
+                                        <div id="tabela-soma">
+                                            <thead>
+                                                <tr>
+                                                    
+                                                 <th><button id="botao-operacao">SOMA</button></th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                             <tbody id="tabela-corpoSOMA">
+                                                <tr>
+                                                    <td><input type="number" id="a" class="soma" value=""><label for="a">a</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" id="b" class="soma" value=""><label for="b">b</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" id="x" class="soma" value=""><label for="x">x</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" class="soma" value=""></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="totais">TOTAL: <button type="button" id="botao-soma-total" class="RESULTADO"><button></td>
+                                                </tr>
+                                            </tbody>
+                                        </div>
+                                </table>
+
+                                <table>
+                                        <div id="tabela_calculos">
+                                            <thead>
+                                                <tr>
+                                                    <th>NUMERO</th>
+                                                    <th>OPERADOR</th>
+                                                    <th>NUMERADOR</th>
+                                                    
+                                                </tr>
+
+
+...restante do código...
+
+
+
+                        <div id="sites_criados">
+
+                            <div class="botoes-controle">
+
+                                <button id="fechar-sites_crados">Fechar</button>
+
+                            </div>
+
+                            <h1>SITES CRIADOS POR MIM</h1>
+
+                            <div id="banners_sites_criados">
+                                <picture class="sites">
+                                
+                                
+                                    <a href="https://idiomastxt.netlify.app/" target="_blank">
+                                        <img src="midia/IDIOMASTXT_poster.jpg" alt="Site do Android">
+                                    </a>
+
+
+                                    <a href="https://carlosalbertoti14.github.io/HTML_CSS/PRIMEIRO_PROJETO/android.html#" target="_blank">
+                                        <img src="midia/android_poster.jpg" alt="Site do Android">
+                                    </a>
+
+
+                                    <a href="https://kpopbrasil.netlify.app/" target="_blank">
+                                        <img src="midia/KPOP_poster.jpg" alt="Site do Android">
+                                    </a>
+                                
+                                    <a href="https://babymonsterbrasil.netlify.app/" target="_blank">
+                                        <img src="midia/babymonster_poster.jpg" alt="Site do grupo BABYMONSTER">
+                                    </a>
+                                
+                                    <a href="https://aespabrasil.netlify.app/" target="_blank">
+                                        <img src="midia/aespa_poster.jpg" alt="Site do grupo aespa">
+                                    </a>
+                                
+                                    <a href="https://estudodeprovas.netlify.app/" target="_blank">
+                                       <img src="midia/estudodeprovas_poster.jpg" alt="Meu Site">
+                                    </a>
+
+                                    <a href="https://carneonline.netlify.app/" target="_blank">
+                                       <img src="midia/gerador_carne_poster.jpg" alt="Meu Site">
+                                    </a>
+                                
+                                </picture>
+                            </div>
+
+
+
+
+
+                        </div>
+                        
+...restante do código...
+
+                        <div id="curricuro">
+
+                            <h1>MEU CURRÍCULO</h1>
+                            <a href="#" id="mostrar-curriculo-menu">CURRÍCULO</a>
+                             <span id="fechar_curriculo" class="cur_fechar_botao">&times;</span> 
+
+                            <div id="curriculo-pdf-container" style="display:none;">
+                                <div class="cur-pdf-header">
+                                    <button id="fechar-pdf" class="cur-pdf-btn-close">&times;</button>
+                                </div>
+                                <iframe id="curriculo-pdf-iframe" src="arquivos/Curriculo.pdf" frameborder="0"></iframe>
+                                <div class="cur-pdf-footer">
+                                    <a href="arquivos/Curriculo.pdf" download class="cur-pdf-btn-download">Baixar Currículo</a>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+                
+                    </main>
+                </div> <!-- DIV FILHO -->
+            </div> <!-- DIV PAI -->
+
+
+
+
+
+        <footer>
+            ENTRAR
+
+        </footer>
+
+
+        <script src="script/MENU.js"></script> 
+        <script src="script/MERCADO.js"></script>
+        <script src="script/calculos_dinamicos.js"></script>
+        <script src="script/HABILIDADES.js"></script>
+        <script src="script/CURRICULO.js"></script>
+    </body>
+</html>
 
 ...restante do código...
 ...................FIM DO index.html......................
@@ -31,36 +321,335 @@ Seu navegador não suporta o elemento de vídeo.
 
 ...................INICIO DO style.css......................
 ...restante do código...
-header {
-    background-color: rgb(0, 0, 0);
-    color: white;
+@charset "UTF=8";
+
+/*  SITES RELEVANTES
+
+Curso em Vídeo Modulo 2
+https://www.youtube.com/watch?v=I_vi2q6sC1k&list=PLHz_AreHm4dlUpEXkY1AyVLQGcpSgVF8s&index=36
+
+Fontes do Google
+https://fonts.google.com/
+
+caracteres especiais
+https://emojipedia.org/check-mark
+
+
+
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+@font-face {
+    font-family: "Android";
+    src: url("../fontes/idroid.otf") format("opentype");
+    font-weight: normal;
+}
+
+:root {
+    --cor0: #ddedf0;
+    --cor1: #83b3e1;
+    --cor2: #3e8feb;
+    --cor3: #1273c4;
+    --cor4: #1d3fda;
+    --cor5: #200e86;
+    --cor6: #000000;
+
+    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
+    --fonte-destaque: "Bebas Neue", cursive;
+    --fonte-title: sans-serif, cursive;
+}
+
+* {
+    /* configuração global para todos os elementos */
+    margin: 0px;
     padding: 0px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+    color: var(--cor4);
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    font-family: var(--fonte-title);
+    font-weight: bolder;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+body {
+    
+background-color: #000000;
+/* font-family: var(--fonte-padrao); */
+
+}
+
+a.externo::after {
+    content: '\🔗';
+}
+
+header {
+
+    min-height: 50px;
+    text-align: center;
+    padding-top: 40px;
+
+}
+
+
+/**********************************  inicio botões de controle ***********************************/
+
+div.botoes-controle button {
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--cor3);
+}
+
+/**********************************  fim botões de controle ***********************************/
+
+/**********************************  inicio configuração do menu ***********************************/
+#divcentral{
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    align-items: center;
-
+    max-width: 800px; 
+    margin: auto;
+    justify-content: space-around;
 }
 
-header > h1 {
-    border: 1px dotted black;
-    text-shadow: 2px 2px 0px black;
+#divmenu {
+  /*   background-color: #f0f0f0; */
+    max-width: 800px;
+    padding: 10px;
+    justify-content: space-around;
+}
 
-    flex: 0 0 200px;
+#navmenu{
+    display: flex; /* Alinha os itens horizontalmente */
+    width: 800px;
+    justify-content: space-around;
+    padding: 10px;
+    text-shadow: 0px 7px 9px rgba(0, 0, 0, 0.452);
+   
+}
+
+nav a {
+
+    color: var(--cor2);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: var(--fonte-destaque);
+    font-size: 2em;
+    text-decoration: none;
+    font-weight: bold;
+    transition-duration: .5s;    /* da um atraso para fazser o efeito*/
     
-
 }
 
 
-/* CONFIGURAÇÃO VIDEO CABEÇALHO */
+/* extracurriculares */
 
-.video-container {
+/* Estilos para Habilidades Extracurriculares */
+.cur_habilidade_item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #fefefe; /* Fundo mais claro para destaque */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border-left: 4px solid #17a2b8; /* Linha lateral em tom de azul/ciano */
+    transition: all 0.3s ease;
+}
+
+.cur_habilidade_item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left-color: #007bff; /* Mudar a cor da linha ao passar o mouse */
+}
+
+.cur_nome_habilidade {
+    font-size: 1.6em;
+    color: #17a2b8; /* Cor do título da habilidade */
+    margin-bottom: 10px;
     position: relative;
-    width: 100%; /* Ajusta ao tamanho da tela */
-    max-width: 900px; /* Define uma largura máxima */
-    margin: 0 auto; /* Centraliza o vídeo */
-    
+    padding-bottom: 5px;
 }
+
+.cur_nome_habilidade::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #17a2b8;
+}
+
+.cur_descricao_habilidade {
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+}
+
+/* Ajustes de responsividade para .cur_habilidade_item */
+@media (max-width: 768px) {
+    .cur_habilidade_item {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .cur_nome_habilidade {
+        font-size: 1.4em;
+    }
+    .cur_descricao_habilidade {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .cur_habilidade_item {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    .cur_nome_habilidade {
+        font-size: 1.2em;
+    }
+    .cur_descricao_habilidade {
+        font-size: 0.9em;
+    }
+...restante do código...
+
+/************************************** MEU CURRICULO ************************/
+
+/* Se você manter a div #curricuro, REMOVA o display: none; daqui. */
+/* Ela pode ter outros estilos, mas não o display: none; se ela contém o modal. */
+/* Exemplo: */
+#curricuro {
+    position: relative;
+   display: NONE; 
+   background-color: rgba(168, 197, 231, 0.658);
+   padding: 10px;
+
+   max-width: 800px;
+   margin: 10px;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* O resto do CSS para #curriculo-pdf-container e seus elementos internos está correto para um modal */
+#curriculo-pdf-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex; /* O JavaScript vai alternar entre 'none' e 'flex' */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Cabeçalho do PDF (onde estará o botão de fechar) */
+.cur-pdf-header {
+    width: 100%;
+    max-width: 800px; /* Mesma largura do iframe */
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão à direita */
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Botão de Fechar */
+.cur-pdf-btn-close {
+    background: none;
+    border: none;
+    font-size: 3em; /* Tamanho grande para o 'X' */
+    color: #fff; /* Cor branca para o 'X' */
+    cursor: pointer;
+    line-height: 1; /* Remove espaçamento extra */
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.cur-pdf-btn-close:hover {
+    color: #dc3545; /* Vermelho ao passar o mouse */
+}
+
+/* Iframe do PDF */
+#curriculo-pdf-iframe {
+    width: 100%;
+    max-width: 800px; /* Largura máxima do PDF */
+    height: 80%; /* Altura do iframe */
+    background-color: #fff; /* Fundo branco para o iframe */
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para o iframe */
+}
+
+/* Rodapé do PDF (onde estará o botão de download) */
+.cur-pdf-footer {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: center; /* Centraliza o botão de download */
+    padding-top: 15px;
+    box-sizing: border-box;
+}
+
+/* Botão de Download */
+.cur-pdf-btn-download {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+.cur-pdf-btn-download:hover {
+    background-color: #0056b3;
+}
+
+/* Responsividade */
+@media (max-width: 850px) {
+    #curriculo-pdf-iframe,
+    .cur-pdf-header,
+    .cur-pdf-footer {
+        width: 95%; /* Ocupa mais largura em telas menores */
+    }
+}
+
+@media (max-width: 600px) {
+    #curriculo-pdf-container {
+        padding: 10px;
+    }
+    .cur-pdf-btn-close {
+        font-size: 2.5em;
+    }
+    #curriculo-pdf-iframe {
+        height: 75%; /* Ajusta a altura em telas menores */
+    }
+    .cur-pdf-btn-download {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
+}
+
+#fechar_curriculo {
+    
+
+
+}
+
+
+
 
 ...restante do código...
 ...................FIM DO style.css......................
@@ -75,3 +664,6 @@ header > h1 {
 ...................FIM DO script.js......................
 
 LISTA DE ARQUIVOS midia/:
+
+
+Fim dos códigos.

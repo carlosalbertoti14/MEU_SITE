@@ -43,15 +43,15 @@
                         <ul id="projetolist" class="submenu">
                             <li><a href="#" id="mostrar_sites_criados">SITES CRIADOS</a></li>
                             <li><a href="#">PLANILHAS</a></li>
-                            <li><a href="#">PROJETOS</a></li>
-                            <li><a href="#">INVENÇÕES</a></li>
+                            <!-- <li><a href="#">PROJETOS</a></li> -->
+                            <li><a href="#"  id="invencoes" >INVENÇÕES</a></li>
                         </ul>
             
                         <a href="#">UTILITÁRIOS</a>
                         <ul id="utilitarioslist" class="submenu">
                             <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
                             <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
-                            <li><a href="#">PINTAR CARRO (GUIA)</a></li>
+                           <!--  <li><a href="#">PINTAR CARRO (GUIA)</a></li> -->
                             <li><a href="#">ALGUNS SITES UTEIS</a></li>
                         </ul>
                         
@@ -71,6 +71,28 @@
             <div id="mainpai">
                 <div id="mianfilho">
                     <main>
+                        <div id="invencoes_section" style="display: none;">
+                            <div class="botoes-controle">
+                                <button id="fechar-invencoes">Fechar</button>
+                            </div>
+                            <h1>MINHAS INVENÇÕES</h1>
+
+                            <div class="invencao-item">
+                                <h2>SEPARADOR DINÂMICO</h2>
+                                <img src="midia/separador_dinamico.jpg" alt="Foto do Separador Dinâmico" class="invencao-media">
+                                <p>O Separador Dinâmico, é uma solução inovadora projetada para otimizar a organização e o arquivamento de documentos fiscais, garantindo que sejam ordenados de forma ágil e precisa por data. Sua estrutura consiste em um conjunto de tiras de papel cartão, medindo 2 cm de largura por 37 cm de comprimento, fixadas em uma de suas extremidades para formar uma configuração em leque. O design permite a visualização clara dos números de identificação. Conforme ilustrado na imagem, cada divisória do leque é destinada a um dia específico do mês, facilitando a rápida inserção e localização dos documentos.</p>
+                                </div>
+
+                            <div class="invencao-item">
+                                <h2>SUPORTE PARA VOLANTE</h2>
+                                <video controls muted autoplay loop class="invencao-media">
+                                    <source src="midia/SUPORTE_VOLANTE.webm" type="video/webm">
+                                    Seu navegador não suporta a tag de vídeo.
+                                </video>
+                                <p>O Suporte para Volante, é um dispositivo de fixação para smartphones, desenvolvido para uso em veículos. O suporte é preso ao volante por meio de cintas elásticas ajustáveis e de fácil remoção. Ele mantém o aparelho estável e alinhado mesmo durante a rotação do volante. A estrutura foi concebida para permitir a inserção e remoção do celular sem a necessidade de desconectar o cabo de carregamento, que, inclusive, proporciona uma estabilidade adicional ao equipamento. E ainda mais, o sistema de giro do suporte amortece os movimentos bruscos do carro, prevenindo danos ao dispositivo e evitando que o mesmo se quebre.</p>
+                                </div>
+                        </div>
+
 
                         <div id="mercado">
 
@@ -774,6 +796,13 @@
                             </p>
                         </div>
                         <div class="cur_subsecao_cursos">
+                            <h4 class="cur_nome_curso">Gestão de Enegria</h4>
+                            <p class="cur_detalhe_curso">
+                                Curso Técnico em Gestão de Energia para o Mercado Livre de Energia, pela empresa Proton. O curso abrange análise de dados, viabilidade, cálculos de impostos, contratos e desenvolvimento de planilhas dinâmicas.
+                             </p>
+                        </div>
+
+                        <div class="cur_subsecao_cursos">
                             <h4 class="cur_nome_curso">Eletricista Residencial</h4>
                             <p class="cur_detalhe_curso">
                                 Curso de Eletricista Residencial no SENAC – Niterói (6 meses). Capacidade de realizar instalações elétricas residenciais completas,
@@ -800,7 +829,7 @@
 
 
 
-                            <div class="cur_secao_info">
+                    <div class="cur_secao_info">
                     <h3 class="cur_subtitulo_secao" id="cur_habilidades_extra_toggle">
                         Habilidades Extracurriculares <span class="cur_toggle_icon">+</span>
                     </h3>
@@ -896,7 +925,7 @@
                         </div>
 
                         <div class="cur_habilidade_item">
-                            <h4 class="cur_nome_habilidade">Visual Basic for Applications (VBA)</h4>
+                            <h4 class="cur_nome_habilidade">Visual Basic Script (VBS)</h4>
                             <p class="cur_descricao_habilidade">
                                 Habilidade em desenvolver automações, desde simples a avançadas, no ambiente Windows utilizando VBA.
                                 Exemplos incluem organização e categorização automática de arquivos em pastas (ex: downloads, vídeos, músicas, contas a pagar)
@@ -985,9 +1014,6 @@
 
 
 
-                   
-
-
 
 
 
@@ -1011,5 +1037,6 @@
         <script src="script/calculos_dinamicos.js"></script>
         <script src="script/HABILIDADES.js"></script>
         <script src="script/CURRICULO.js"></script>
+        <script src="script/invencoes.js"></script>
     </body>
 </html>

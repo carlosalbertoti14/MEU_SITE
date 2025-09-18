@@ -10,6 +10,28 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 ...restante do código...
 
 
+            <div id="mainpai">
+                <div id="mianfilho">
+                    <main>
+
+                    <div id="invencoes_section" style="display: none;"> <div class="botoes-controle">
+                            <button id="fechar-invencoes">Fechar</button>
+                        </div>
+
+                        <h1>MINHAS INVENÇÕES</h1>
+
+                        <div class="invencao-item">
+                            <h2>Nome da Invenção 1</h2>
+                            <p>Descrição detalhada da invenção, o problema que ela resolve e as tecnologias envolvidas.</p>
+                            <a href="#" target="_blank">Mais detalhes</a>
+                        </div>
+
+                        <div class="invencao-item">
+                            <h2>Nome da Invenção 2</h2>
+                            <p>Outra invenção interessante, explicando seu funcionamento e impacto.</p>
+                            <a href="#" target="_blank">Mais detalhes</a>
+                        </div>
+                        </div>
 
 ...restante do código...
 ...................FIM DO index.html......................
@@ -20,6 +42,134 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 ...restante do código...
 
 
+/**************************************CONFIGURAÇÃO DO INVENÇÕES*********************** */
+
+
+#invencoes_section {
+    position: relative; /* Para que os botões de controle fiquem bem posicionados */
+    display: none; /* Inicialmente oculto, será exibido via JavaScript */
+    background-color: rgba(168, 197, 231, 0.658); /* Cor de fundo semelhante a outras seções */
+    max-width: 800px;
+    margin: 10px auto; /* Centraliza a seção e adiciona margem */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o texto principal */
+}
+
+#invencoes_section h1 {
+    color: white; /* Mantém a cor do título */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+/* Estilos para os itens individuais do projeto */
+.invencao-item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #fefefe; /* Fundo mais claro para destacar o item */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border-left: 4px solid var(--cor3); /* Usa uma cor existente para a borda lateral */
+    text-align: left; /* Alinha o texto dos projetos à esquerda */
+    transition: all 0.3s ease;
+}
+
+.invencao-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left-color: var(--cor4); /* Muda a cor da borda ao passar o mouse */
+}
+
+.invencao-item h2 {
+    font-size: 1.6em;
+    color: var(--cor4); /* Cor para o título do projeto */
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.invencao-item h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--cor2); /* Cor para a linha abaixo do título */
+}
+
+.invencao-item p {
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.invencao-item a {
+    display: inline-block;
+    background-color: var(--cor3);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.invencao-item a:hover {
+    background-color: var(--cor4);
+}
+
+/* Ajustes de responsividade */
+@media (max-width: 768px) {
+    #invencoes_section {
+        margin: 10px 5px; /* Ajusta margem em telas menores */
+        padding: 15px;
+    }
+    .invencao-item {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .invencao-item h2 {
+        font-size: 1.4em;
+    }
+    .invencao-item p {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    #invencoes_section h1 {
+        font-size: 1.8em;
+    }
+    .invencao-item {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    .invencao-item h2 {
+        font-size: 1.2em;
+    }
+    .invencao-item p {
+        font-size: 0.9em;
+    }
+    .invencao-item a {
+        font-size: 0.9em;
+        padding: 6px 12px;
+    }
+}
+
+/* Estilos para os botões de controle na seção de Projetos (similar aos outros) */
+#invencoes_section .botoes-controle button {
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--cor3);
+    padding: 5px 15px; /* Ajuste o padding conforme necessário */
+    margin-bottom: 20px; /* Espaço abaixo do botão */
+}
+
+/**************************************CONFIGURAÇÃO DO FIM DO INVENÇÕES*********************** */
 
 ...restante do código...
 ...................FIM DO style.css......................
@@ -28,7 +178,92 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 ...................INICIO DO script.js......................
 ...restante do código...
 
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Lógica para a seção de INVENÇÕES ---
+    const invencoesLink = document.getElementById('invencoes'); // Link do menu
+    const invencoesSection = document.getElementById('invencoes_section'); // A div principal para exibir as invenções
+    const fecharInvencoesBtn = document.getElementById('fechar-invencoes'); // Botão de fechar dentro da div de invenções
 
+    // Verifica se todos os elementos existem antes de adicionar os listeners
+    if (invencoesLink && invencoesSection && fecharInvencoesBtn) {
+
+        // Listener para o clique no link "INVENÇÕES" do menu
+        invencoesLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Impede o comportamento padrão do link
+
+            // Alterna a exibição da div de invenções
+            if (invencoesSection.style.display === 'block' || invencoesSection.style.display === 'flex') {
+                invencoesSection.style.display = 'none'; // Se estiver visível, esconde
+            } else {
+                // Você pode querer definir um display específico aqui, dependendo de como você quer que ela apareça.
+                // 'block' é comum para seções de conteúdo.
+                invencoesSection.style.display = 'block';
+            }
+        });
+
+        // Listener para o clique no botão "Fechar" da seção de invenções
+        fecharInvencoesBtn.addEventListener('click', function() {
+            invencoesSection.style.display = 'none'; // Oculta a div de invenções
+        });
+
+        // Opcional: Fechar a seção de invenções ao pressionar a tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && invencoesSection.style.display === 'block') {
+                invencoesSection.style.display = 'none';
+            }
+        });
+
+    } else {
+        console.error("Um ou mais elementos para a seção de INVENÇÕES não foram encontrados!");
+    }
+
+    // --- O restante do seu código JavaScript existente (para Currículo, etc.) ---
+    // ... (seu código para currículo, HABILIDADES, etc.) ...
+
+    // Exemplo do seu código de currículo aqui (para garantir que tudo funcione junto)
+    const fecharCurriculo = document.getElementById('fechar_curriculo');
+    const mostrarCurriculopdf = document.getElementById('mostrar-curriculo-menu');
+    const mostrarCurriculoLink = document.getElementById('mostrar-curriculo');
+    const curriculoDiv2 = document.getElementById('curricuro');
+    const curriculoPdfContainer = document.getElementById('curriculo-pdf-container');
+    const fecharPdfBtn = document.getElementById('fechar-pdf');
+
+    if (mostrarCurriculopdf && curriculoPdfContainer) {
+        mostrarCurriculopdf.addEventListener('click', function(event) {
+            event.preventDefault();
+            curriculoPdfContainer.style.display = 'flex';
+        });
+    }
+
+    if (fecharPdfBtn && curriculoPdfContainer) {
+        fecharPdfBtn.addEventListener('click', function() {
+            curriculoPdfContainer.style.display = 'none';
+        });
+    }
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && curriculoPdfContainer.style.display === 'flex') {
+            curriculoPdfContainer.style.display = 'none';
+        }
+    });
+
+    if (fecharCurriculo && curriculoDiv2) {
+        fecharCurriculo.addEventListener('click', function() {
+            curriculoDiv2.style.display = 'none';
+        });
+    }
+
+    if (mostrarCurriculoLink) { // Verifique se o elemento existe
+        mostrarCurriculoLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            if (curriculoDiv2.style.display === 'block') {
+                curriculoDiv2.style.display = 'none';
+            } else {
+                curriculoDiv2.style.display = 'block';
+            }
+        });
+    }
+});
 
 ...restante do código...
 ...................FIM DO script.js......................

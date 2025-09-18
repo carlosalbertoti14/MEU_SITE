@@ -348,6 +348,157 @@ footer a:hover {
     color: var(--cor1);
 }
 
+
+
+
+
+/**************************************CONFIGURAÇÃO DO INVENÇÕES*********************** */
+
+
+#invencoes_section {
+    position: relative; /* Para que os botões de controle fiquem bem posicionados */
+    display: block; /* Inicialmente oculto, será exibido via JavaScript */
+    background-color: rgba(168, 197, 231, 0.658); /* Cor de fundo semelhante a outras seções */
+    max-width: 800px;
+    margin: 10px auto; /* Centraliza a seção e adiciona margem */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o texto principal */
+}
+
+#invencoes_section h1 {
+    color:#ffffff; /* Mantém a cor do título */
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+/* Estilos para os itens individuais do projeto */
+.invencao-item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #fefefe; /* Fundo mais claro para destacar o item */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border-left: 4px solid var(--cor3); /* Usa uma cor existente para a borda lateral */
+    text-align: left; /* Alinha o texto dos projetos à esquerda */
+    transition: all 0.3s ease;
+}
+
+.invencao-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left-color: var(--cor4); /* Muda a cor da borda ao passar o mouse */
+}
+
+.invencao-item h2 {
+    font-size: 1.6em;
+    color: var(--cor4); /* Cor para o título do projeto */
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.invencao-item h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--cor2); /* Cor para a linha abaixo do título */
+}
+
+.invencao-item p {
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.invencao-item a {
+    display: inline-block;
+    background-color: var(--cor3);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.invencao-item a:hover {
+    background-color: var(--cor4);
+}
+
+/* Ajustes de responsividade */
+@media (max-width: 768px) {
+    #invencoes_section {
+        margin: 10px 5px; /* Ajusta margem em telas menores */
+        padding: 15px;
+    }
+    .invencao-item {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .invencao-item h2 {
+        font-size: 1.4em;
+    }
+    .invencao-item p {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    #invencoes_section h1 {
+        font-size: 1.8em;
+    }
+    .invencao-item {
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+    .invencao-item h2 {
+        font-size: 1.2em;
+    }
+    .invencao-item p {
+        font-size: 0.9em;
+    }
+    .invencao-item a {
+        font-size: 0.9em;
+        padding: 6px 12px;
+    }
+}
+
+/* Estilos para os botões de controle na seção de Projetos (similar aos outros) */
+#invencoes_section .botoes-controle button {
+    font-weight: bold;
+    border-radius: 5px;
+    background-color: var(--cor3);
+    padding: 5px 15px; /* Ajuste o padding conforme necessário */
+    margin-bottom: 20px; /* Espaço abaixo do botão */
+}
+
+/* confi midias */
+
+/* Estilos para Imagens e Vídeos nas Invenções */
+.invencao-media {
+    max-width: 100%; /* Garante que a mídia não saia do container */
+    height: auto;
+    display: block; /* Garante que a mídia se comporte como um bloco */
+    margin: 15px auto; /* Adiciona margem acima/abaixo e centraliza */
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* fim confi midias */
+
+
+
+/**************************************CONFIGURAÇÃO DO FIM DO INVENÇÕES*********************** */
+
+
 /**************************************CONFIGURAÇÃO DO COMPARATIVO DO PREÇO DO MERCADO*********************** */
 #mercado{
    display: none;
