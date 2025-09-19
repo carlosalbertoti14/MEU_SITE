@@ -16,7 +16,7 @@ PROGRAMA3path:
 
 
 arquivos3path:
-F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\album.html
+F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\script\invencoes.js
 
 PROGRAMA4path:
 

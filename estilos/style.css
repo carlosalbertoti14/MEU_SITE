@@ -499,6 +499,73 @@ footer a:hover {
 /**************************************CONFIGURAÇÃO DO FIM DO INVENÇÕES*********************** */
 
 
+/**************************************CONFIGURAÇÃO de PLANILHAS*********************** */
+
+#planilhas_section {
+    position: relative;
+    display: none;
+    background-color: rgba(168, 197, 231, 0.658);
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+#planilhas_section h1 {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+.planilha-item {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    border-left: 4px solid var(--cor3);
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.planilha-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left-color: var(--cor4);
+}
+
+.planilha-item h2 {
+    font-size: 1.6em;
+    color: var(--cor4);
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.planilha-item h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--cor2);
+}
+
+.planilha-item p {
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+/**************************************FIM DE CONFIGURAÇÃO de PLANILHAS*********************** */
+
+
+
 /**************************************CONFIGURAÇÃO DO COMPARATIVO DO PREÇO DO MERCADO*********************** */
 #mercado{
    display: none;

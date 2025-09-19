@@ -1,8 +1,4 @@
-Criei esse site e gostaria da sua ajuda para resolver algo.
 
-1 - 
-2 - 
-3 - 
 
 Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar).
 
@@ -10,28 +6,28 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 ...restante do código...
 
 
-            <div id="mainpai">
-                <div id="mianfilho">
-                    <main>
+                            <div id="invencoes_section">
+                                <h1>MINHAS INVENÇÕES</h1>
 
-                    <div id="invencoes_section" style="display: none;"> <div class="botoes-controle">
-                            <button id="fechar-invencoes">Fechar</button>
-                        </div>
+                                <div class="invencao-item">
+                                    <h2>SEPARADOR DINÂMICO</h2>
+                                    <img src="midia/separador_dinamico.jpg" alt="Foto do Separador Dinâmico" class="invencao-media">
+                                    <p>O Separador Dinâmico, é uma solução inovadora projetada para otimizar a organização e o arquivamento de documentos fiscais, garantindo que sejam ordenados de forma ágil e precisa por data. Sua estrutura consiste em um conjunto de tiras de papel cartão, medindo 2 cm de largura por 37 cm de comprimento, fixadas em uma de suas extremidades para formar uma configuração em leque. O design permite a visualização clara dos números de identificação. Conforme ilustrado na imagem, cada divisória do leque é destinada a um dia específico do mês, facilitando a rápida inserção e localização dos documentos.</p>
+                                <!--   <a href="#" target="_blank">Mais detalhes</a> -->
+                                </div>
 
-                        <h1>MINHAS INVENÇÕES</h1>
+                                <div class="invencao-item">
+                                    <h2>SUPORTE PARA VOLANTE</h2>
 
-                        <div class="invencao-item">
-                            <h2>Nome da Invenção 1</h2>
-                            <p>Descrição detalhada da invenção, o problema que ela resolve e as tecnologias envolvidas.</p>
-                            <a href="#" target="_blank">Mais detalhes</a>
-                        </div>
+                                    <video controls muted autoplay loop class="invencao-media">
+                                <source src="midia/SUPORTE_VOLANTE.webm" type="video/webm">
+                                Seu navegador não suporta a tag de vídeo.
+                                </video>
 
-                        <div class="invencao-item">
-                            <h2>Nome da Invenção 2</h2>
-                            <p>Outra invenção interessante, explicando seu funcionamento e impacto.</p>
-                            <a href="#" target="_blank">Mais detalhes</a>
-                        </div>
-                        </div>
+                                    <p>O Suporte para Volante, é um dispositivo de fixação para smartphones, desenvolvido para uso em veículos. O suporte é preso ao volante por meio de cintas elásticas ajustáveis e de fácil remoção. Ele mantém o aparelho estável e alinhado mesmo durante a rotação do volante. A estrutura foi concebida para permitir a inserção e remoção do celular sem a necessidade de desconectar o cabo de carregamento, que, inclusive, proporciona uma estabilidade adicional ao equipamento. E ainda mais, o sistema de giro do suporte amortece os movimentos bruscos do carro, prevenindo danos ao dispositivo e evitando que o mesmo se quebre.</p>
+                                    <!-- <a href="#" target="_blank">Mais detalhes</a> -->
+                                </div>
+                            </div>
 
 ...restante do código...
 ...................FIM DO index.html......................
@@ -177,7 +173,6 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 
 ...................INICIO DO script.js......................
 ...restante do código...
-
 document.addEventListener('DOMContentLoaded', function() {
     // --- Lógica para a seção de INVENÇÕES ---
     const invencoesLink = document.getElementById('invencoes'); // Link do menu
@@ -269,6 +264,9 @@ document.addEventListener('DOMContentLoaded', function() {
 ...................FIM DO script.js......................
 
 LISTA DE ARQUIVOS midia/:
+
+separador_dinamico.jpg
+SUPORTE_VOLANTE.webm
 
 
 Fim dos códigos.
