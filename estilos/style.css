@@ -352,7 +352,7 @@ footer a:hover {
 
 
 
-/**************************************CONFIGURAÇÃO DO INVENÇÕES*********************** */
+
 
 /**************************************CONFIGURAÇÃO De SITES UTEIS*********************** */
 
@@ -421,9 +421,12 @@ footer a:hover {
 /**************************************FIM DE CONFIGURAÇÃO De SITES UTEIS*********************** */
 
 
+
+/**************************************CONFIGURAÇÃO DO INVENÇÕES*********************** */
+
 #invencoes_section {
     position: relative; /* Para que os botões de controle fiquem bem posicionados */
-    display: block; /* Inicialmente oculto, será exibido via JavaScript */
+    display: none; /* Inicialmente oculto, será exibido via JavaScript */
     background-color: rgba(168, 197, 231, 0.658); /* Cor de fundo semelhante a outras seções */
     max-width: 800px;
     margin: 10px auto; /* Centraliza a seção e adiciona margem */
@@ -562,7 +565,7 @@ footer a:hover {
 
 
 
-/**************************************CONFIGURAÇÃO DO FIM DO INVENÇÕES*********************** */
+/**************************************FIM CONFIGURAÇÃO  DO INVENÇÕES*********************** */
 
 
 /**************************************CONFIGURAÇÃO de PLANILHAS*********************** */
@@ -1951,3 +1954,30 @@ button:hover {
 }
 
 
+/* --- Botão Ir para o Topo --- */
+#scrollToTopBtn {
+    display: none; /* Esconde o botão por padrão */
+    position: fixed; /* Fixa o botão na tela */
+    bottom: 30px; /* Distância do fundo da tela */
+    right: 30px; /* Distância da direita da tela */
+    z-index: 99; /* Garante que o botão fique acima de outros elementos */
+    border: none; /* Remove a borda padrão do botão */
+    outline: none; /* Remove o contorno ao focar */
+    background-color: #409fec; /* Cor de fundo (pode usar a mesma cor do seu botão de apoio) */
+    color: white; /* Cor do texto/seta */
+    cursor: pointer; /* Muda o cursor para indicar que é clicável */
+    padding: 15px 20px; /* Espaçamento interno */
+    border-radius: 50%; /* Torna o botão redondo */
+    font-size: 24px; /* Tamanho da seta */
+    line-height: 1; /* Ajusta a altura da linha para centralizar a seta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidade */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+}
+
+#scrollToTopBtn:hover {
+    background-color: #280c8a; /* Cor de hover */
+    transform: translateY(-3px); /* Leve movimento para cima */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra mais intensa no hover */
+}
+
+/* fim do botão ir para o top */
