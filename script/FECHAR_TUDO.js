@@ -8,7 +8,9 @@ function ocultarDivs() {
     "soma_dinamica",
     "sites_criados",
     "cur_habilidades",
-    "curricuro"
+    "curricuro",
+    "contato"
+    
   ];
 
   idsParaOcultar.forEach(id => {
@@ -40,4 +42,5 @@ document.addEventListener("DOMContentLoaded", function() {
     event.preventDefault(); 
     ocultarDivs();
   });
+
 });

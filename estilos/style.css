@@ -570,10 +570,13 @@ footer a:hover {
 
 /**************************************CONFIGURAÇÃO de PLANILHAS*********************** */
 
+
+
+
 #planilhas_section {
     position: relative;
     display: none;
-    background-color: rgba(168, 197, 231, 0.658);
+    background-color: rgba(209, 5, 5, 0.068);
     max-width: 800px;
     margin: 10px auto;
     padding: 20px;
@@ -587,6 +590,11 @@ footer a:hover {
     font-size: 2em;
     margin-bottom: 20px;
     text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+#contato .botoes-controle button {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .planilha-item {
@@ -631,7 +639,97 @@ footer a:hover {
     margin-bottom: 15px;
 }
 
-/**************************************FIM DE CONFIGURAÇÃO de PLANILHAS*********************** */
+/**************************************FIM DE CONFIGURAÇÃO de PLANILHAS************************/
+
+
+/**************************************CONFIGURAÇÃO de CONTATO ************************/
+
+#contato {
+    position: relative;
+    display: block;
+   
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 8px;
+   
+    text-align: center;
+}
+
+#contato h1 {
+    color: white;
+}
+
+#BG_CONTATO h1 {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
+}
+
+#BG_CONTATO {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #ffffff1e;
+    border-radius: 8px;
+   
+/*     border-left: 4px solid var(--cor3); */
+    text-align: left;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* #BG_CONTATO:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left-color: var(--cor4); 
+} */
+
+ 
+
+#BG_CONTATO h2 {
+    font-size: 1.6em;
+    color: white;
+    margin-bottom: 10px;
+    position: relative;
+    padding-bottom: 5px;
+    text-align: center;
+    background-image: none;
+}
+
+#BG_CONTATO h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+ /*    background-color: var(--cor2); */
+}
+
+#BG_CONTATO p {
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+#social_midia {
+ background-color: none;
+  display: flex;
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  align-items: center;   /* Centraliza os itens verticalmente */
+  gap: 20px;            /* Adiciona um espaço entre os ícones */
+}
+
+#social_midia a{
+    background-color:rgba(255, 255, 255, 0);
+    text-decoration: none;
+
+         /* Adiciona um espaço entre os ícones */
+}
+
+/**************************************FIM DE CONFIGURAÇÃO de CONTATO ************************/
 
 
 
