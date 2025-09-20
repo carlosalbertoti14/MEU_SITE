@@ -1,268 +1,79 @@
 Criei esse site e gostaria da sua ajuda para resolver algo.
 
-1 - 
-2 - 
-3 - 
+1 - TEM ALGO ERRADO NO ID DE ALGUMA DIV POIS QUANDO CLICO NO MENU "SITES UTES" A DIV NÃO APARECE. 
 
-Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar).
+
+
+Obs.: meu site esta adaptado para mídia quiry para display first.
 
 ...................INICIO DO index.html......................
-
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>CARLOS ALBERTO</title>
-
-        <link
-        rel="shortcut icon"
-        href="midia/favicon.ico"
-        type="image/x-icon"
-    />
-    <link rel="stylesheet" href="estilos/style.css" />
-
-    <style>
-        body {
-    
-    background-image: url('fotos/bg.jpg');
-    /* background-size: cover;  ajusta a imagem para cobrir todo o fundo */
-    background-repeat: no-repeat; /* impede que a imagem se repita */
-    background-position: TOP center; /* centraliza a imagem */
-
-
-    
-}
-
-
-    </style>
-    </head>
-
-    <body>
-        <header>
-            <h1>CARLOS ALBERTO</h1>
-
-        </header>
-
-            <div id="divcentral">
-                <div id="divmenu">
-                    <nav id="navmenu">
-                        <a href="#">HOME</a>
-                        
-                        <a href="#" id="projetos">PROJETOS</a>
-                        <ul id="projetolist" class="submenu">
-                            <li><a href="#" id="mostrar_sites_criados">SITES CRIADOS</a></li>
-                            <li><a href="#">PLANILHAS</a></li>
-                            <!-- <li><a href="#">PROJETOS</a></li> -->
-                            <li><a href="#">INVENÇÕES</a></li>
-                        </ul>
-            
-                        <a href="#">UTILITÁRIOS</a>
-                        <ul id="utilitarioslist" class="submenu">
-                            <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
-                            <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
-                            <li><a href="#">PINTAR CARRO (GUIA)</a></li>
-                            <li><a href="#">ALGUNS SITES UTEIS</a></li>
-                        </ul>
-                        
-                        <a href="#">SOBRE MIM</a>
-                        <ul id="sobrelist" class="submenu">
-                            <li><a href="#" id="mostrar-habilidades">HABILIDADES</a></li>
-                            <li><a href="#" id="mostrar-curriculo">CURRÍCULO</a></li>
-                        </ul>
-
-                    </nav>
-                </div>
-            </div>
-
-
-
-
-            <div id="mainpai">
-                <div id="mianfilho">
-                    <main>
-
-                        <div id="mercado">
-
-                            <h1>Comparativo de Preços do Mercado</h1>
-
-
-                            <div class="botoes-controle">
-                                <button id="resetar-valores">Resetar Valores</button>
-                                <button id="fechar-mercado">Fechar Comparativo</button>
-                            </div>
-
-
-                            <div class="produto-card">
-                                <h2 class="produto-nome" data-produto-id="produto1">Produto 1</h2>
-                                <p>Valor: <input type="number" id="produto1-valor" placeholder="Digite o valor"></p>
-                                <p>Volume: <input type="number" id="produto1-volume" placeholder="Digite o volume"></p>
-                                <p>QNT. Pacote: <input type="number" id="produto1-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
-                                <p>QNT.2: <input type="number" id="produto1-qnt2" value="1"></p>
-                                <p>Volume Total: <span class="vol-total"></span></p>
-                                <p>Preço por Volume: <span class="preco-volume"></span></p>
-                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>VALOR: <span class="pago-a-mais"></span></p>
-                            </div>
-
-                            <div class="produto-card">
-                                <h2 class="produto-nome" data-produto-id="produto2">Produto 2</h2>
-                                <p>Valor: <input type="number" id="produto2-valor" placeholder="Digite o valor"></p>
-                                <p>Volume: <input type="number" id="produto2-volume" placeholder="Digite o volume"></p>
-                                <p>QNT. Pacote: <input type="number" id="produto2-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
-                                <p>QNT.2: <input type="number" id="produto2-qnt2" value="1"></p>
-                                <p>Volume Total: <span class="vol-total"></span></p>
-                                <p>Preço por Volume: <span class="preco-volume"></span></p>
-                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>VALOR: <span class="pago-a-mais"></span></p>
-                            </div>
-
-                            <div class="produto-card blanca">
-                                <h2 class="produto-nome" data-produto-id="produto3">Produto 3</h2>
-                                <p>Valor: <input type="number" id="produto3-valor" placeholder="Digite o valor"></p>
-                                <p>Volume: <input type="number" id="produto3-volume" placeholder="Digite o volume"></p>
-                                <p>QNT. Pacote: <input type="number" id="produto3-qnt-pac" placeholder="Digite a quantidade (pacote)"  value="1"></p>
-                                <p>QNT.2: <input type="number" id="produto3-qnt2" value="1"></p>
-                                <p>Volume Total: <span class="vol-total"></span></p>
-                                <p>Preço por Volume: <span class="preco-volume"></span></p>
-                                <p>Deveria Ser: <span class="deveria-ser"></span></p>
-                                <p>VALOR: <span class="pago-a-mais"></span></p>
-                            </div>
-
-                            <div class="menor-preco">
-                                <p>O menor preço é: <span id="menor-preco-produto"></span> <span id="menor-preco-valor"></span></p>
-                            </div>
-                    
-
-
-
-                        </div>
-
-
-                        <div id="soma_dinamica">
-
-                            <div class="botoes-controle">
-                                <button id="resetar-valores_soma_dinamica">Resetar Valores</button>
-                                <button id="fechar-soma_dinamica">Fechar Comparativo</button>
-                            </div>
-                                <h1>CALCULOS DINAMICOS</h1><br>
-
-                             <h2>CÁLCULOS DINÂMICOS</h2>
-
-                            <div id="organizar_tabela_soma">
-                                <table>
-                                        <div id="tabela-soma">
-                                            <thead>
-                                                <tr>
-                                                    
-                                                 <th><button id="botao-operacao">SOMA</button></th>
-                                                    
-                                                </tr>
-                                            </thead>
-                                             <tbody id="tabela-corpoSOMA">
-                                                <tr>
-                                                    <td><input type="number" id="a" class="soma" value=""><label for="a">a</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" id="b" class="soma" value=""><label for="b">b</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" id="x" class="soma" value=""><label for="x">x</label></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="number" class="soma" value=""></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="totais">TOTAL: <button type="button" id="botao-soma-total" class="RESULTADO"><button></td>
-                                                </tr>
-                                            </tbody>
-                                        </div>
-                                </table>
-
-                                <table>
-                                        <div id="tabela_calculos">
-                                            <thead>
-                                                <tr>
-                                                    <th>NUMERO</th>
-                                                    <th>OPERADOR</th>
-                                                    <th>NUMERADOR</th>
-                                                    
-                                                </tr>
-
-
 ...restante do código...
 
-
-
-                        <div id="sites_criados">
-
+                        <div id="sites">
                             <div class="botoes-controle">
-
-                                <button id="fechar-sites_crados">Fechar</button>
-
+                                <button id="fechar-sites_uteis">Fechar</button>
                             </div>
+                            <h1>ALGUNS SITES ÚTEIS</h1>
 
-                            <h1>SITES CRIADOS POR MIM</h1>
+                           
 
-                            <div id="banners_sites_criados">
-                                <picture class="sites">
-                                
-                                
-                                    <a href="https://idiomastxt.netlify.app/" target="_blank">
-                                        <img src="midia/IDIOMASTXT_poster.jpg" alt="Site do Android">
-                                    </a>
+<div id="sites-uteis-container">
+    <h1>ALGUNS SITES ÚTEIS</h1>
+    <h2>PESSOAL</h2>
+    <br>
+    <ul>
+        <li>
+            <a href="https://irpf.cav.receita.fazenda.gov.br/portalmir/pagina-inicial" target="_blank">
+                <p><strong>e-CAC:</strong> Consulte suas Dívidas ativas e sua situação cadastral junto à Receita Federal.</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/download/pgd/dirpf" target="_blank">
+                <p><strong>IRPF:</strong> Baixe os programas de declaração de imposto de renda pessoa física.</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/cnpjreva_Solicitacao.asp" target="_blank">
+                <p><strong>CNPJ:</strong> Consulte a situação do seu CNPJ assim como endereço e contato.</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/ConsultaPublica.asp" target="_blank">
+                <p><strong>CPF:</strong> Consulte a Situação do Seu CPF junto à Receita Federal.</p>
+            </a>
+        </li>
+    </ul>
 
+    <h2>DETRAN</h2>
+    <br>
+    <ul>
+        <li>
+            <a href="https://www.detran.rj.gov.br/consultas/consultas-drv/nada-consta.html" target="_blank">
+                <p><strong>MULTAS:</strong> Consulte todas as multas recebidas, tenha em mãos o Renavam e CPF do proprietário do veículo.</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://www.ib7.bradesco.com.br/ibpfdetranrj/debitoVeiculoRJGrmConsultar.do" target="_blank">
+                <p><strong>PAGAR MULTAS e DUDA:</strong> Pague suas multas vencidas diretamente no site do Bradesco, clique em visualizar a multa, copie o código de números que aparece encima da "Vencimento", cole no seu banco digital.</p>
+            </a>
+        </li>
+    </ul>
 
-                                    <a href="https://carlosalbertoti14.github.io/HTML_CSS/PRIMEIRO_PROJETO/android.html#" target="_blank">
-                                        <img src="midia/android_poster.jpg" alt="Site do Android">
-                                    </a>
-
-
-                                    <a href="https://kpopbrasil.netlify.app/" target="_blank">
-                                        <img src="midia/KPOP_poster.jpg" alt="Site do Android">
-                                    </a>
-                                
-                                    <a href="https://babymonsterbrasil.netlify.app/" target="_blank">
-                                        <img src="midia/babymonster_poster.jpg" alt="Site do grupo BABYMONSTER">
-                                    </a>
-                                
-                                    <a href="https://aespabrasil.netlify.app/" target="_blank">
-                                        <img src="midia/aespa_poster.jpg" alt="Site do grupo aespa">
-                                    </a>
-                                
-                                    <a href="https://estudodeprovas.netlify.app/" target="_blank">
-                                       <img src="midia/estudodeprovas_poster.jpg" alt="Meu Site">
-                                    </a>
-
-                                    <a href="https://carneonline.netlify.app/" target="_blank">
-                                       <img src="midia/gerador_carne_poster.jpg" alt="Meu Site">
-                                    </a>
-                                
-                                </picture>
-                            </div>
-
-
-
-
-
+    <h2>INTELIGENCIA ARTIFICIAL</h2>
+    <br>
+    <ul>
+        <li>
+            <a href="https://gemini.google.com/app" target="_blank">
+                <p><strong>Gemini:</strong> Inteligência artificial da Google.</p>
+            </a>
+        </li>
+        <li>
+            <a href="https://app.heygen.com/login" target="_blank">
+                <p><strong>HeyGen:</strong> Crie Vídeos e Avatares com IA.</p>
+            </a>
+        </li>
+    </ul>
+</div>v>
                         </div>
                         
 ...restante do código...
@@ -311,6 +122,9 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
         <script src="script/calculos_dinamicos.js"></script>
         <script src="script/HABILIDADES.js"></script>
         <script src="script/CURRICULO.js"></script>
+        <script src="script/invencoes.js"></script>
+        <script src="script/PLANILHAS.js"></script>
+        <script src="script/SITES.js"></script>
     </body>
 </html>
 
@@ -321,334 +135,72 @@ Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres q
 
 ...................INICIO DO style.css......................
 ...restante do código...
-@charset "UTF=8";
-
-/*  SITES RELEVANTES
-
-Curso em Vídeo Modulo 2
-https://www.youtube.com/watch?v=I_vi2q6sC1k&list=PLHz_AreHm4dlUpEXkY1AyVLQGcpSgVF8s&index=36
-
-Fontes do Google
-https://fonts.google.com/
-
-caracteres especiais
-https://emojipedia.org/check-mark
 
 
+/**************************************CONFIGURAÇÃO De SITES UTEIS*********************** */
 
-*/
-
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-
-@font-face {
-    font-family: "Android";
-    src: url("../fontes/idroid.otf") format("opentype");
-    font-weight: normal;
+#sites {
+    display: none;
+    background-color: rgba(168, 197, 231, 0.658);
+    padding: 20px;
+    max-width: 800px; /* Mantém a largura máxima para telas maiores */
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-:root {
-    --cor0: #ddedf0;
-    --cor1: #83b3e1;
-    --cor2: #3e8feb;
-    --cor3: #1273c4;
-    --cor4: #1d3fda;
-    --cor5: #200e86;
-    --cor6: #000000;
-
-    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
-    --fonte-destaque: "Bebas Neue", cursive;
-    --fonte-title: sans-serif, cursive;
+#sites-uteis-container ul {
+    list-style: none; /* Remove os marcadores de lista padrão */
+    padding: 0; /* Remove o padding padrão da lista */
+    margin: 0; /* Remove a margem padrão da lista */
 }
 
-* {
-    /* configuração global para todos os elementos */
-    margin: 0px;
-    padding: 0px;
+#sites-uteis-container li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Adiciona espaçamento entre os itens da lista */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
 }
 
-a {
-    text-decoration: none;
-    font-weight: bolder;
+#sites-uteis-container li:hover {
+    transform: translateX(5px); /* Efeito de deslizar para o lado ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#sites-uteis-container a {
+    display: block; /* O link ocupa toda a área do item da lista */
+    padding: 5px;
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: #333;
+    border-radius: 8px;
+}
+
+#sites-uteis-container strong {
     color: var(--cor4);
 }
 
-h1 {
-    text-align: center;
-    color: white;
-    font-family: var(--fonte-title);
-    font-weight: bolder;
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.452);
-}
+#sites-uteis-container p {
 
-body {
-    
-background-color: #000000;
-/* font-family: var(--fonte-padrao); */
-
-}
-
-a.externo::after {
-    content: '\🔗';
-}
-
-header {
-
-    min-height: 50px;
-    text-align: center;
-    padding-top: 40px;
-
-}
-
-
-/**********************************  inicio botões de controle ***********************************/
-
-div.botoes-controle button {
-    font-weight: bold;
-    border-radius: 5px;
-    background-color: var(--cor3);
-}
-
-/**********************************  fim botões de controle ***********************************/
-
-/**********************************  inicio configuração do menu ***********************************/
-#divcentral{
-    display: flex;
-    max-width: 800px; 
-    margin: auto;
-    justify-content: space-around;
-}
-
-#divmenu {
-  /*   background-color: #f0f0f0; */
-    max-width: 800px;
-    padding: 10px;
-    justify-content: space-around;
-}
-
-#navmenu{
-    display: flex; /* Alinha os itens horizontalmente */
-    width: 800px;
-    justify-content: space-around;
-    padding: 10px;
-    text-shadow: 0px 7px 9px rgba(0, 0, 0, 0.452);
-   
-}
-
-nav a {
-
-    color: var(--cor2);
-    padding: 10px;
-    border-radius: 5px;
-    font-family: var(--fonte-destaque);
-    font-size: 2em;
-    text-decoration: none;
-    font-weight: bold;
-    transition-duration: .5s;    /* da um atraso para fazser o efeito*/
-    
-}
-
-
-/* extracurriculares */
-
-/* Estilos para Habilidades Extracurriculares */
-.cur_habilidade_item {
-    margin-bottom: 25px;
-    padding: 20px;
-    background-color: #fefefe; /* Fundo mais claro para destaque */
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-    border-left: 4px solid #17a2b8; /* Linha lateral em tom de azul/ciano */
-    transition: all 0.3s ease;
-}
-
-.cur_habilidade_item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-left-color: #007bff; /* Mudar a cor da linha ao passar o mouse */
-}
-
-.cur_nome_habilidade {
-    font-size: 1.6em;
-    color: #17a2b8; /* Cor do título da habilidade */
-    margin-bottom: 10px;
-    position: relative;
-    padding-bottom: 5px;
-}
-
-.cur_nome_habilidade::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 40px;
-    height: 2px;
-    background-color: #17a2b8;
-}
-
-.cur_descricao_habilidade {
-    font-size: 1.05em;
-    color: #555;
+    margin: 0px 0px;
     text-align: justify;
-}
-
-/* Ajustes de responsividade para .cur_habilidade_item */
-@media (max-width: 768px) {
-    .cur_habilidade_item {
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-    .cur_nome_habilidade {
-        font-size: 1.4em;
-    }
-    .cur_descricao_habilidade {
-        font-size: 0.95em;
-    }
-}
-
-@media (max-width: 480px) {
-    .cur_habilidade_item {
-        padding: 10px;
-        margin-bottom: 15px;
-    }
-    .cur_nome_habilidade {
-        font-size: 1.2em;
-    }
-    .cur_descricao_habilidade {
-        font-size: 0.9em;
-    }
-...restante do código...
-
-/************************************** MEU CURRICULO ************************/
-
-/* Se você manter a div #curricuro, REMOVA o display: none; daqui. */
-/* Ela pode ter outros estilos, mas não o display: none; se ela contém o modal. */
-/* Exemplo: */
-#curricuro {
-    position: relative;
-   display: NONE; 
-   background-color: rgba(168, 197, 231, 0.658);
-   padding: 10px;
-
-   max-width: 800px;
-   margin: 10px;
-   padding: 20px;
-   border-radius: 8px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* O resto do CSS para #curriculo-pdf-container e seus elementos internos está correto para um modal */
-#curriculo-pdf-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex; /* O JavaScript vai alternar entre 'none' e 'flex' */
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Cabeçalho do PDF (onde estará o botão de fechar) */
-.cur-pdf-header {
-    width: 100%;
-    max-width: 800px; /* Mesma largura do iframe */
-    display: flex;
-    justify-content: flex-end; /* Alinha o botão à direita */
-    padding-bottom: 10px;
-    box-sizing: border-box;
-}
-
-/* Botão de Fechar */
-.cur-pdf-btn-close {
-    background: none;
-    border: none;
-    font-size: 3em; /* Tamanho grande para o 'X' */
-    color: #fff; /* Cor branca para o 'X' */
-    cursor: pointer;
-    line-height: 1; /* Remove espaçamento extra */
-    padding: 0 10px;
-    transition: color 0.3s ease;
-}
-
-.cur-pdf-btn-close:hover {
-    color: #dc3545; /* Vermelho ao passar o mouse */
-}
-
-/* Iframe do PDF */
-#curriculo-pdf-iframe {
-    width: 100%;
-    max-width: 800px; /* Largura máxima do PDF */
-    height: 80%; /* Altura do iframe */
-    background-color: #fff; /* Fundo branco para o iframe */
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para o iframe */
-}
-
-/* Rodapé do PDF (onde estará o botão de download) */
-.cur-pdf-footer {
-    width: 100%;
-    max-width: 800px;
-    display: flex;
-    justify-content: center; /* Centraliza o botão de download */
-    padding-top: 15px;
-    box-sizing: border-box;
-}
-
-/* Botão de Download */
-.cur-pdf-btn-download {
-    display: inline-block;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease;
-}
-
-.cur-pdf-btn-download:hover {
-    background-color: #0056b3;
-}
-
-/* Responsividade */
-@media (max-width: 850px) {
-    #curriculo-pdf-iframe,
-    .cur-pdf-header,
-    .cur-pdf-footer {
-        width: 95%; /* Ocupa mais largura em telas menores */
-    }
-}
-
-@media (max-width: 600px) {
-    #curriculo-pdf-container {
-        padding: 10px;
-    }
-    .cur-pdf-btn-close {
-        font-size: 2.5em;
-    }
-    #curriculo-pdf-iframe {
-        height: 75%; /* Ajusta a altura em telas menores */
-    }
-    .cur-pdf-btn-download {
-        font-size: 1em;
-        padding: 8px 15px;
-    }
-}
-
-#fechar_curriculo {
-    
-
+    text-indent: 15px;
+    font-size: 1em;
+    line-height: 2em;
 
 }
 
 
+/*
+    A partir de agora, o layout já é naturalmente responsivo
+    porque os itens de lista (`<li>`) se empilham
+    automaticamente em telas menores. Não é necessário um @media query
+    específico para a lista, a menos que você queira
+    mudar a aparência em diferentes tamanhos de tela.
+*/
+
+/**************************************FIM DE CONFIGURAÇÃO De SITES UTEIS*********************** */
 
 
 ...restante do código...
@@ -658,12 +210,61 @@ nav a {
 ...................INICIO DO script.js......................
 ...restante do código...
 
-
+document.addEventListener('DOMContentLoaded', function() {
+// Função para esconder todas as seções com a classe 'conteudo-secao'
+function esconderTodasAsSecoes() {
+const secoes = document.querySelectorAll('.conteudo-secao');
+secoes.forEach(secao => {
+secao.style.display = 'none';
+});
+}
+// -------------------- LÓGICA PARA SITES ÚTEIS --------------------
+const sitesUteisLink = document.getElementById('sites_uteis');
+const fecharSitesBtn = document.getElementById('fechar-sites_uteis');
+const sitesDiv = document.getElementById('sites');
+sitesUteisLink.addEventListener('click', function(event) {
+event.preventDefault(); // Impede que a página recarregue
+esconderTodasAsSecoes(); // Esconde todas as outras seções
+sitesDiv.style.display = 'block'; // Mostra a seção de sites úteis
+});
+fecharSitesBtn.addEventListener('click', function() {
+sitesDiv.style.display = 'none'; // Oculta a seção de sites úteis
+});
+// -------------------- LÓGICA PARA SITES CRIADOS --------------------
+// Adicionei um exemplo para você ver como funciona.
+// A div `sites_criados` precisa existir no seu HTML.
+const sitesCriadosLink = document.getElementById('mostrar_sites_criados');
+const sitesCriadosDiv = document.getElementById('sites_criados');
+if (sitesCriadosLink && sitesCriadosDiv) {
+sitesCriadosLink.addEventListener('click', function(event) {
+event.preventDefault();
+esconderTodasAsSecoes();
+sitesCriadosDiv.style.display = 'block';
+});
+}
+// -------------------- LÓGICA PARA CURRÍCULO --------------------
+const curriculoLink = document.getElementById('mostrar-curriculo');
+const curriculoDiv = document.getElementById('curricuro');
+const fecharCurriculoBtn = document.getElementById('fechar_curriculo');
+if (curriculoLink && curriculoDiv) {
+curriculoLink.addEventListener('click', function(event) {
+event.preventDefault();
+esconderTodasAsSecoes();
+curriculoDiv.style.display = 'block';
+});
+}
+if (fecharCurriculoBtn) {
+fecharCurriculoBtn.addEventListener('click', function() {
+curriculoDiv.style.display = 'none';
+});
+}
+});
 
 ...restante do código...
 ...................FIM DO script.js......................
 
 LISTA DE ARQUIVOS midia/:
+
 
 
 Fim dos códigos.

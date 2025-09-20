@@ -52,7 +52,7 @@
                             <li><a href="#" id="mostrar-mercado">MERCADO</a></li> 
                             <li><a href="#" id="mostrar-soma_dinamica">CALCULOS DINÂMICOS</a></li>
                            <!--  <li><a href="#">PINTAR CARRO (GUIA)</a></li> -->
-                            <li><a href="#">ALGUNS SITES UTEIS</a></li>
+                            <li><a href="#" id="sites_uteis">ALGUNS SITES UTEIS</a></li>
                         </ul>
                         
                         <a href="#">SOBRE MIM</a>
@@ -126,7 +126,110 @@
                                 </video>
                                 <p>O Suporte para Volante, é um dispositivo de fixação para smartphones, desenvolvido para uso em veículos. O suporte é preso ao volante por meio de cintas elásticas ajustáveis e de fácil remoção. Ele mantém o aparelho estável e alinhado mesmo durante a rotação do volante. A estrutura foi concebida para permitir a inserção e remoção do celular sem a necessidade de desconectar o cabo de carregamento, que, inclusive, proporciona uma estabilidade adicional ao equipamento. E ainda mais, o sistema de giro do suporte amortece os movimentos bruscos do carro, prevenindo danos ao dispositivo e evitando que o mesmo se quebre.</p>
                                 </div>
+
+                            <div class="invencao-item">
+                                <h2>KEY RAT JOY</h2>
+                                <img src="midia/KEYRAT_JOY.png" alt="Foto do Separador Dinâmico" class="invencao-media">
+                                <p>
+                                    O projeto "KEY RAT JOY" foi concebido para superar a limitação de sistemas operacionais, como o Windows, que unificam a entrada de múltiplos mouses e teclados, impedindo a jogabilidade de multijogadores locais em um único computador. Buscando uma solução independente e de baixo custo para essa restrição, desenvolvi um método que permite a utilização de dois mouses e dois teclados de forma totalmente autônoma, simulando dois jogadores distintos.<br><br>
+                                    A solução técnica empregada consistiu na integração de um <strong>Arduino</strong>, um <strong>USB Host Shield</strong> e um <strong>Hub USB</strong>. Essa combinação hardware-software permitiu a criação de um dispositivo que emula um joystick. Dessa forma, qualquer mouse e teclado conectado ao Arduino é mapeado como um controlador de jogo, permitindo a conexão de múltiplos dispositivos de entrada, como joysticks, volantes ou armas, para uma experiência de jogo cooperativa.<br><br>
+                                    <strong>Tecnologias Utilizadas:</strong><br>
+                                    Linguagem de Programação: C++ para programação do Arduino.<br>
+                                    Programas instalados: Arduino IDE e bibliotecas associadas.<br><br>
+                                    <strong>Desafios Técnicos:</strong><br>
+                                    O principal desafio encontrado durante o desenvolvimento foi a <strong>memória interna limitada</strong> do Arduino, exigindo uma otimização cuidadosa do código para garantir o pleno funcionamento do sistema.
+                                </p>
+                            </div>
+
                         </div>
+
+
+...
+<DIV ID="sites">
+
+    <div class="botoes-controle">
+        <button id="fechar-sites_uteis">Fechar</button>
+    </div>
+
+        <div id="sites-uteis-container">
+            <h1>ALGUNS SITES ÚTEIS</h1>
+            <h2>PESSOAL</h2>
+            <br>
+            <ul>
+                <li>
+                    <a href="https://irpf.cav.receita.fazenda.gov.br/portalmir/pagina-inicial" target="_blank">
+                        <p><strong>e-CAC:</strong> Consulte suas Dívidas ativas e sua situação cadastral junto à Receita Federal.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/download/pgd/dirpf" target="_blank">
+                        <p><strong>IRPF:</strong> Baixe os programas de declaração de imposto de renda pessoa física.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/cnpjreva_Solicitacao.asp" target="_blank">
+                        <p><strong>CNPJ:</strong> Consulte a situação do seu CNPJ assim como endereço e contato.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/ConsultaPublica.asp" target="_blank">
+                        <p><strong>CPF:</strong> Consulte a Situação do Seu CPF junto à Receita Federal.</p>
+                    </a>
+                </li>
+            </ul>
+
+            <h2>DETRAN</h2>
+            <br>
+            <ul>
+                <li>
+                    <a href="https://www.detran.rj.gov.br/consultas/consultas-drv/nada-consta.html" target="_blank">
+                        <p><strong>MULTAS:</strong> Consulte todas as multas recebidas, tenha em mãos o Renavam e CPF do proprietário do veículo.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.ib7.bradesco.com.br/ibpfdetranrj/debitoVeiculoRJGrmConsultar.do" target="_blank">
+                        <p><strong>PAGAR MULTAS e DUDA:</strong> Pague suas multas vencidas diretamente no site do Bradesco, clique em visualizar a multa, copie o código de números que aparece encima da "Vencimento", cole no seu banco digital.</p>
+                    </a>
+                </li>
+            </ul>
+
+            <h2>INTELIGENCIA ARTIFICIAL</h2>
+            <br>
+            <ul>
+                <li>
+                    <a href="https://gemini.google.com/app" target="_blank">
+                        <p><strong>Gemini:</strong> Inteligência artificial da Google.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://chatgpt.com/c/68cebdb7-ab94-8323-b271-d6b9a6bb81db" target="_blank">
+                        <p><strong>ChatGPT:</strong> Inteligência artificial da OpenAI.</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://copilot.microsoft.com/" target="_blank">
+                        <p><strong>Copilot:</strong> Inteligência artificial da Microsoft.</p>
+                    </a>
+                </li>
+            </ul>
+            <li>
+                <a href="https://app.heygen.com/login" target="_blank">
+                    <p><strong>HeyGen:</strong> Crie Vídeos e Avatares com IA.</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://nanobanana.io/pt" target="_blank">
+                    <p><strong>Nano Banna:</strong> Crie Imagens Realistas com IA do Gemine.</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://picwish.com/pt/photo-enhancer?apptype=ads-gg-unblur-br" target="_blank">
+                    <p><strong>PicWish:</strong> Melhore a qualidade das suas totos com IA.</p>
+                </a>
+            </li>
+        </div>
+</div>
+...
 
 
                         <div id="mercado">
@@ -1074,5 +1177,6 @@
         <script src="script/CURRICULO.js"></script>
         <script src="script/invencoes.js"></script>
         <script src="script/PLANILHAS.js"></script>
+        <script src="script/SITES.js"></script>
     </body>
 </html>

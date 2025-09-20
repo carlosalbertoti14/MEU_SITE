@@ -354,6 +354,72 @@ footer a:hover {
 
 /**************************************CONFIGURAÇÃO DO INVENÇÕES*********************** */
 
+/**************************************CONFIGURAÇÃO De SITES UTEIS*********************** */
+
+#sites {
+    display: none;
+    background-color: rgba(168, 197, 231, 0.658);
+    padding: 20px;
+    max-width: 800px; /* Mantém a largura máxima para telas maiores */
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#sites-uteis-container ul {
+    list-style: none; /* Remove os marcadores de lista padrão */
+    padding: 0; /* Remove o padding padrão da lista */
+    margin: 0; /* Remove a margem padrão da lista */
+}
+
+#sites-uteis-container li {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Adiciona espaçamento entre os itens da lista */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+#sites-uteis-container li:hover {
+    transform: translateX(5px); /* Efeito de deslizar para o lado ao passar o mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#sites-uteis-container a {
+    display: block; /* O link ocupa toda a área do item da lista */
+    padding: 5px;
+    text-decoration: none; /* Remove o sublinhado do link */
+    color: #333;
+    border-radius: 8px;
+    background-color: white;
+}
+
+#sites-uteis-container strong {
+    color: var(--cor4);
+}
+
+#sites-uteis-container p {
+
+    margin: 0px 0px;
+    text-align: justify;
+    text-indent: 15px;
+    font-size: 1em;
+    line-height: 2em;
+
+}
+
+
+/*
+    A partir de agora, o layout já é naturalmente responsivo
+    porque os itens de lista (`<li>`) se empilham
+    automaticamente em telas menores. Não é necessário um @media query
+    específico para a lista, a menos que você queira
+    mudar a aparência em diferentes tamanhos de tela.
+*/
+
+/**************************************FIM DE CONFIGURAÇÃO De SITES UTEIS*********************** */
+
 
 #invencoes_section {
     position: relative; /* Para que os botões de controle fiquem bem posicionados */
