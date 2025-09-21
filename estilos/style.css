@@ -646,14 +646,22 @@ footer a:hover {
 
 #contato {
     position: relative;
-    display: block;
-   
     max-width: 800px;
     margin: 10px auto;
     padding: 20px;
     border-radius: 8px;
-   
     text-align: center;
+
+    /* Estado inicial: não ocupa espaço e está invisível */
+    display: none;
+    opacity: 0;
+
+    /* A transição será aplicada quando a opacidade mudar */
+    transition: opacity 3s ease-in-out;
+}
+
+#contato.show {
+    opacity: 1;
 }
 
 #contato h1 {

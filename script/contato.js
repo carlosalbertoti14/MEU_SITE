@@ -7,20 +7,38 @@ if (contatoLink && contatoSection && fecharContatoBtn) {
     contatoLink.addEventListener('click', function(event) {
         event.preventDefault();
 
-        if (contatoSection.style.display === 'block') {
-            contatoSection.style.display = 'none';
-        } else {
-            contatoSection.style.display = 'block';
-        }
+        // 1. Torna o elemento visível para que ele ocupe espaço
+        contatoSection.style.display = 'block';
+
+        // 2. Aguarda uma pequena pausa para o navegador processar a mudança de display
+        // antes de iniciar a transição de opacidade.
+        setTimeout(() => {
+            contatoSection.classList.add('show');
+        }, 10);
     });
 
-    fecharContatoBtn.addEventListener('click', function() {
-        contatoSection.style.display = 'none';
-    });
+    // Lógica para fechar a seção
+    function fecharContato() {
+        // Remove a classe 'show' para iniciar a transição de fade out
+        contatoSection.classList.remove('show');
 
+        // Adiciona um listener para a transição. Quando ela terminar...
+        contatoSection.addEventListener('transitionend', function handler(e) {
+            // ...se a opacidade for 0, oculta o elemento completamente
+            if (e.propertyName === 'opacity' && contatoSection.style.opacity == 0) {
+                contatoSection.style.display = 'none';
+                
+                // Remove o listener para não acumular
+                contatoSection.removeEventListener('transitionend', handler);
+            }
+        });
+    }
+
+    fecharContatoBtn.addEventListener('click', fecharContato);
+    
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape' && contatoSection.style.display === 'block') {
-            contatoSection.style.display = 'none';
+            fecharContato();
         }
     });
 } else {
