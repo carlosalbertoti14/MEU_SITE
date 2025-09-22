@@ -22,7 +22,12 @@ async function copyToClipboard(element, textToCopy) {
 if (contatoLink && contatoSection && fecharContatoBtn && telefoneEl && emailEl) {
     contatoLink.addEventListener('click', function(event) {
         event.preventDefault();
-        contatoSection.style.display = 'block';
+        
+        // 1. Garante que a opacidade esteja 0 antes de iniciar o processo
+        contatoSection.classList.remove('show');
+        contatoSection.style.display = 'block'; // Garante que a div está no fluxo
+
+        // 2. Pequeno delay para o navegador registrar a mudança de estado
         setTimeout(() => {
             contatoSection.classList.add('show');
         }, 10);
@@ -30,9 +35,14 @@ if (contatoLink && contatoSection && fecharContatoBtn && telefoneEl && emailEl) 
 
     function fecharContato() {
         contatoSection.classList.remove('show');
+        
+        // Listener para garantir que o display mude após a transição
         contatoSection.addEventListener('transitionend', function handler(e) {
-            if (e.propertyName === 'opacity' && contatoSection.style.opacity == 0) {
+            // Verifica se a transição de opacidade terminou
+            if (e.propertyName === 'opacity') {
                 contatoSection.style.display = 'none';
+                
+                // Remove o listener para evitar múltiplas execuções
                 contatoSection.removeEventListener('transitionend', handler);
             }
         });
