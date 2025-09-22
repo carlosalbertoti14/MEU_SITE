@@ -161,17 +161,17 @@ ul li {
 
 ul#projetolist{
 /*     margin-top: -10px; */
-    margin-left: 25%;
+    margin-left: 20%;
 
 }
 
 ul#utilitarioslist{
-    margin-left: 50%;
+    margin-left: 40%;
     
 }
 
 ul#sobrelist{
-    margin-left: 80%;
+    margin-left: 70%;
     
 }
 
@@ -651,9 +651,10 @@ footer a:hover {
     padding: 20px;
     border-radius: 8px;
     text-align: center;
+    
 
     /* Estado inicial: não ocupa espaço e está invisível */
-    display: none;
+    display: block;
     opacity: 0;
 
     /* A transição será aplicada quando a opacidade mudar */
@@ -682,7 +683,7 @@ footer a:hover {
     border-radius: 8px;
    
 /*     border-left: 4px solid var(--cor3); */
-    text-align: left;
+    text-align: center;
     transition: all 0.3s ease;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -705,6 +706,24 @@ footer a:hover {
     background-image: none;
 }
 
+
+
+#BG_CONTATO a {
+    text-decoration: none;
+    background-color: rgb(0, 0, 0);
+    border-radius: 10px;
+    font-size: 1.6em;
+    color: white;
+    margin-bottom: 10px;
+    position: center;
+    padding-bottom: 5px;
+
+
+    
+}
+
+
+
 #BG_CONTATO h2::after {
     content: '';
     position: absolute;
@@ -723,8 +742,9 @@ footer a:hover {
 }
 
 #social_midia {
- background-color: none;
+ 
   display: flex;
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
   justify-content: center; /* Centraliza os itens horizontalmente */
   align-items: center;   /* Centraliza os itens verticalmente */
   gap: 20px;            /* Adiciona um espaço entre os ícones */
