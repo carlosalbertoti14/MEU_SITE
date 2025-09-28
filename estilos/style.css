@@ -305,7 +305,7 @@ div.video > iframe {
 }
 
 footer {
-    background: var(--cor5);
+    background: BLACK;
     color: white;
     text-align: center;
     font-size: 0.8;
