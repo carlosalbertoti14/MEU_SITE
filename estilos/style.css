@@ -239,7 +239,7 @@ main p{
     text-align: justify;
     text-indent: 30px;    /* é o quanto ele dará de recuo de paragrafo no inicio do texto*/
     font-size: 1em;
-    line-height: 2em;     /*  é o espaçamento de uma linha para outra linha de baixo e de cima, parecido com o padding  */
+    line-height: 1em;     /*  é o espaçamento de uma linha para outra linha de baixo e de cima, parecido com o padding  */
 }
 
 main strong {
@@ -2106,4 +2106,127 @@ button:hover {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Sombra mais intensa no hover */
 }
 
-/* fim do botão ir para o top */
+/****************************** fim do botão ir para o top ***********************************/
+
+
+/****************************** SYSTEM Styles ******************************/
+/* SYSTEM Styles */
+#mostrar_SYSTEM {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.SYSTEM-info {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.SYSTEM-category {
+    margin-bottom: 20px;
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.SYSTEM-category h3 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.SYSTEM-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.SYSTEM-category li {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+}
+
+.SYSTEM-category li:last-child {
+    border-bottom: none;
+}
+
+.SYSTEM-category strong {
+    color: #555;
+    min-width: 180px;
+    display: inline-block;
+}
+
+.atalhos-uteis {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ffc107;
+}
+
+.atalhos-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.atalho-item {
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    border: 2px solid #ffc107;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.atalho-item:hover {
+    background: #fff8e1;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.atalho-item strong {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 14px;
+}
+
+.atalho-item small {
+    color: #666;
+    font-size: 12px;
+}
+
+.botoes-controle {
+    text-align: right;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+#fechar-SYSTEM {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#fechar-SYSTEM:hover {
+    background: #c82333;
+}
+
+/****************************** SYSTEM Styles ******************************/

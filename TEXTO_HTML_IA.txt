@@ -1,132 +1,15 @@
 Criei esse site e gostaria da sua ajuda para resolver algo.
 
-1 - TEM ALGO ERRADO NO ID DE ALGUMA DIV POIS QUANDO CLICO NO MENU "SITES UTES" A DIV NÃO APARECE. 
+1 - 
+2 - 
+3 - 
 
-
-
-Obs.: meu site esta adaptado para mídia quiry para display first.
+Obs.: Não coloque espaço antes dos código (para não dar erro de caracteres quando eu for colar).
 
 ...................INICIO DO index.html......................
 ...restante do código...
 
-                        <div id="sites">
-                            <div class="botoes-controle">
-                                <button id="fechar-sites_uteis">Fechar</button>
-                            </div>
-                            <h1>ALGUNS SITES ÚTEIS</h1>
 
-                           
-
-<div id="sites-uteis-container">
-    <h1>ALGUNS SITES ÚTEIS</h1>
-    <h2>PESSOAL</h2>
-    <br>
-    <ul>
-        <li>
-            <a href="https://irpf.cav.receita.fazenda.gov.br/portalmir/pagina-inicial" target="_blank">
-                <p><strong>e-CAC:</strong> Consulte suas Dívidas ativas e sua situação cadastral junto à Receita Federal.</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/download/pgd/dirpf" target="_blank">
-                <p><strong>IRPF:</strong> Baixe os programas de declaração de imposto de renda pessoa física.</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/cnpjreva_Solicitacao.asp" target="_blank">
-                <p><strong>CNPJ:</strong> Consulte a situação do seu CNPJ assim como endereço e contato.</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/ConsultaPublica.asp" target="_blank">
-                <p><strong>CPF:</strong> Consulte a Situação do Seu CPF junto à Receita Federal.</p>
-            </a>
-        </li>
-    </ul>
-
-    <h2>DETRAN</h2>
-    <br>
-    <ul>
-        <li>
-            <a href="https://www.detran.rj.gov.br/consultas/consultas-drv/nada-consta.html" target="_blank">
-                <p><strong>MULTAS:</strong> Consulte todas as multas recebidas, tenha em mãos o Renavam e CPF do proprietário do veículo.</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://www.ib7.bradesco.com.br/ibpfdetranrj/debitoVeiculoRJGrmConsultar.do" target="_blank">
-                <p><strong>PAGAR MULTAS e DUDA:</strong> Pague suas multas vencidas diretamente no site do Bradesco, clique em visualizar a multa, copie o código de números que aparece encima da "Vencimento", cole no seu banco digital.</p>
-            </a>
-        </li>
-    </ul>
-
-    <h2>INTELIGENCIA ARTIFICIAL</h2>
-    <br>
-    <ul>
-        <li>
-            <a href="https://gemini.google.com/app" target="_blank">
-                <p><strong>Gemini:</strong> Inteligência artificial da Google.</p>
-            </a>
-        </li>
-        <li>
-            <a href="https://app.heygen.com/login" target="_blank">
-                <p><strong>HeyGen:</strong> Crie Vídeos e Avatares com IA.</p>
-            </a>
-        </li>
-    </ul>
-</div>v>
-                        </div>
-                        
-...restante do código...
-
-                        <div id="curricuro">
-
-                            <h1>MEU CURRÍCULO</h1>
-                            <a href="#" id="mostrar-curriculo-menu">CURRÍCULO</a>
-                             <span id="fechar_curriculo" class="cur_fechar_botao">&times;</span> 
-
-                            <div id="curriculo-pdf-container" style="display:none;">
-                                <div class="cur-pdf-header">
-                                    <button id="fechar-pdf" class="cur-pdf-btn-close">&times;</button>
-                                </div>
-                                <iframe id="curriculo-pdf-iframe" src="arquivos/Curriculo.pdf" frameborder="0"></iframe>
-                                <div class="cur-pdf-footer">
-                                    <a href="arquivos/Curriculo.pdf" download class="cur-pdf-btn-download">Baixar Currículo</a>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-                
-                    </main>
-                </div> <!-- DIV FILHO -->
-            </div> <!-- DIV PAI -->
-
-
-
-
-
-        <footer>
-            ENTRAR
-
-        </footer>
-
-
-        <script src="script/MENU.js"></script> 
-        <script src="script/MERCADO.js"></script>
-        <script src="script/calculos_dinamicos.js"></script>
-        <script src="script/HABILIDADES.js"></script>
-        <script src="script/CURRICULO.js"></script>
-        <script src="script/invencoes.js"></script>
-        <script src="script/PLANILHAS.js"></script>
-        <script src="script/SITES.js"></script>
-    </body>
-</html>
 
 ...restante do código...
 ...................FIM DO index.html......................
@@ -137,71 +20,6 @@ Obs.: meu site esta adaptado para mídia quiry para display first.
 ...restante do código...
 
 
-/**************************************CONFIGURAÇÃO De SITES UTEIS*********************** */
-
-#sites {
-    display: none;
-    background-color: rgba(168, 197, 231, 0.658);
-    padding: 20px;
-    max-width: 800px; /* Mantém a largura máxima para telas maiores */
-    margin: 20px auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-#sites-uteis-container ul {
-    list-style: none; /* Remove os marcadores de lista padrão */
-    padding: 0; /* Remove o padding padrão da lista */
-    margin: 0; /* Remove a margem padrão da lista */
-}
-
-#sites-uteis-container li {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin-bottom: 10px; /* Adiciona espaçamento entre os itens da lista */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-#sites-uteis-container li:hover {
-    transform: translateX(5px); /* Efeito de deslizar para o lado ao passar o mouse */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#sites-uteis-container a {
-    display: block; /* O link ocupa toda a área do item da lista */
-    padding: 5px;
-    text-decoration: none; /* Remove o sublinhado do link */
-    color: #333;
-    border-radius: 8px;
-}
-
-#sites-uteis-container strong {
-    color: var(--cor4);
-}
-
-#sites-uteis-container p {
-
-    margin: 0px 0px;
-    text-align: justify;
-    text-indent: 15px;
-    font-size: 1em;
-    line-height: 2em;
-
-}
-
-
-/*
-    A partir de agora, o layout já é naturalmente responsivo
-    porque os itens de lista (`<li>`) se empilham
-    automaticamente em telas menores. Não é necessário um @media query
-    específico para a lista, a menos que você queira
-    mudar a aparência em diferentes tamanhos de tela.
-*/
-
-/**************************************FIM DE CONFIGURAÇÃO De SITES UTEIS*********************** */
-
 
 ...restante do código...
 ...................FIM DO style.css......................
@@ -210,61 +28,12 @@ Obs.: meu site esta adaptado para mídia quiry para display first.
 ...................INICIO DO script.js......................
 ...restante do código...
 
-document.addEventListener('DOMContentLoaded', function() {
-// Função para esconder todas as seções com a classe 'conteudo-secao'
-function esconderTodasAsSecoes() {
-const secoes = document.querySelectorAll('.conteudo-secao');
-secoes.forEach(secao => {
-secao.style.display = 'none';
-});
-}
-// -------------------- LÓGICA PARA SITES ÚTEIS --------------------
-const sitesUteisLink = document.getElementById('sites_uteis');
-const fecharSitesBtn = document.getElementById('fechar-sites_uteis');
-const sitesDiv = document.getElementById('sites');
-sitesUteisLink.addEventListener('click', function(event) {
-event.preventDefault(); // Impede que a página recarregue
-esconderTodasAsSecoes(); // Esconde todas as outras seções
-sitesDiv.style.display = 'block'; // Mostra a seção de sites úteis
-});
-fecharSitesBtn.addEventListener('click', function() {
-sitesDiv.style.display = 'none'; // Oculta a seção de sites úteis
-});
-// -------------------- LÓGICA PARA SITES CRIADOS --------------------
-// Adicionei um exemplo para você ver como funciona.
-// A div `sites_criados` precisa existir no seu HTML.
-const sitesCriadosLink = document.getElementById('mostrar_sites_criados');
-const sitesCriadosDiv = document.getElementById('sites_criados');
-if (sitesCriadosLink && sitesCriadosDiv) {
-sitesCriadosLink.addEventListener('click', function(event) {
-event.preventDefault();
-esconderTodasAsSecoes();
-sitesCriadosDiv.style.display = 'block';
-});
-}
-// -------------------- LÓGICA PARA CURRÍCULO --------------------
-const curriculoLink = document.getElementById('mostrar-curriculo');
-const curriculoDiv = document.getElementById('curricuro');
-const fecharCurriculoBtn = document.getElementById('fechar_curriculo');
-if (curriculoLink && curriculoDiv) {
-curriculoLink.addEventListener('click', function(event) {
-event.preventDefault();
-esconderTodasAsSecoes();
-curriculoDiv.style.display = 'block';
-});
-}
-if (fecharCurriculoBtn) {
-fecharCurriculoBtn.addEventListener('click', function() {
-curriculoDiv.style.display = 'none';
-});
-}
-});
+
 
 ...restante do código...
 ...................FIM DO script.js......................
 
 LISTA DE ARQUIVOS midia/:
-
 
 
 Fim dos códigos.

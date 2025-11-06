@@ -9,7 +9,8 @@ function ocultarDivs() {
     "sites_criados",
     "cur_habilidades",
     "curricuro",
-    "contato"
+    "contato",
+    "mostrar_SYSTEM"
     
   ];
 
