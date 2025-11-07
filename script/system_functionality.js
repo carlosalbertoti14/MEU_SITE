@@ -227,7 +227,6 @@ function inicializarAtalhos() {
         { nome: "PROMPT DE COMANDO", comando: "cmd" },
         { nome: "REGEDIT", comando: "regedit" },
         { nome: "DISPOSITIVOS E IMPRESSORAS", comando: "control printers" },
-        { nome: "PASTA TEMP DE APLICATIVOS", comando: "%username%\\AppData\\Local\\Temp" },
         { nome: "WINDOWS POWERSHELL", comando: "powershell" },
         { nome: "SERVIÇOS", comando: "services.msc" },
         { nome: "POLÍTICA DE GRUPO", comando: "gpedit.msc" },
@@ -237,6 +236,8 @@ function inicializarAtalhos() {
         { nome: "ATUALIZAÇÕES DO WINDOWS", comando: "wuapp" },
         { nome: "GERENCIADOR DE COMPUTADOR", comando: "compmgmt.msc" },
         { nome: "SERVIÇO DE COMPONENTES", comando: "dcomcnfg" },
+        { nome: "JOYSTICK", comando: "joy.cpl" },
+        { nome: "PASTA TEMP DE APLICATIVOS", comando: "%username%\\AppData\\Local\\Temp" },
         { nome: "PASTA MINIDUMP", comando: "%systemroot%\\Minidump" },
         { nome: "LOGS CBS", comando: "%systemroot%\\Logs\\CBS" },
         { nome: "LOGS DISM", comando: "%systemroot%\\Logs\\DISM" },
@@ -266,3 +267,4 @@ function inicializarAtalhos() {
     atalhosContainer.innerHTML = html;
     console.log("Atalhos inicializados");
 }
+
