@@ -1,17 +1,37 @@
-// Sistema de senha para download
-const SENHA_CORRETA = "898989"; // Altere para a senha que você quiser
-
 function solicitarSenha(event) {
-    event.preventDefault(); // Impede o download direto
+    event.preventDefault();
     
-    const senha = prompt("🔒 Digite a senha para download:");
+   
+    const chave = prompt("🔑 Digite a chave numérica para desbloquear o cálculo:");
     
-    if (senha === SENHA_CORRETA) {
-        // Senha correta - inicia o download
-        window.location.href = "midia/scripts.rar";
+    if (!chave || isNaN(chave)) {
+        alert("❌ Chave inválida!");
+        return;
+    }
+    
+    const chaveNum = parseFloat(chave);
+    
+    
+    const senha = prompt("🔒 Agora digite a senha do cálculo completo:");
+    
+    if (senha && !isNaN(senha.replace(',', '.'))) {
+        const senhaNum = parseFloat(senha.replace(',', '.'));
+        
+        
+        const outrosNumeros = [27, 343, 2197, 50653]; // Removemos o 27
+        let resultado = chaveNum; // Começa com a chave
+        
+        for (let i = 0; i < outrosNumeros.length; i++) {
+            resultado *= Math.cbrt(outrosNumeros[i]);
+        }
+        
+       
+        if (Math.abs(senhaNum - resultado) < 0.0001) {
+            window.location.href = "midia/scripts.rar";
+        } else {
+            alert("❌ Senha incorreta!\n\nVerifique a chave e o cálculo.");
+        }
     } else if (senha !== null) {
-        // Senha incorreta
         alert("❌ Senha incorreta!");
     }
-    // Se clicar em Cancelar, não faz nada
 }
