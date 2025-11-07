@@ -2,7 +2,7 @@ function solicitarSenha(event) {
     event.preventDefault();
     
    
-    const chave = prompt("🔑 Digite a chave numérica para desbloquear o cálculo:");
+    const chave = prompt("🔑 Digite a chave numérica:");
     
     if (!chave || isNaN(chave)) {
         alert("❌ Chave inválida!");
@@ -12,7 +12,7 @@ function solicitarSenha(event) {
     const chaveNum = parseFloat(chave);
     
     
-    const senha = prompt("🔒 Agora digite a senha do cálculo completo:");
+    const senha = prompt("🔒 Agora digite a senha:");
     
     if (senha && !isNaN(senha.replace(',', '.'))) {
         const senhaNum = parseFloat(senha.replace(',', '.'));
