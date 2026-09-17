@@ -4,13 +4,13 @@ PROGRAMA1path:
 arquivos1path:
 F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\index.html
 
-F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\estilos\style.css
+
 
 PROGRAMA2path:
 "C:\Program Files\Google\Chrome\Application\chrome.exe"
 
 arquivos2path:
-F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\index.html
+F:\Users\Caio89-W11\Documents\Caio89\SITES\SITES_CRIADOS\MEU_SITE\estilos\style.css
 
 PROGRAMA3path:
 
