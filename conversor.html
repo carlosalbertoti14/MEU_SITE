@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conversor de Mídia | FFmpeg</title>
+
+  <!-- INJETOR DE CABEÇALHOS COOP/COEP -->
+<!-- Inclusão do FFmpeg WASM UMD autossuficiente -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ffmpeg/0.11.6/ffmpeg.min.js"></script>
+
+  <link rel="stylesheet" href="estilos/style.css" />
+<style>
+    :root {
+        --bg: #12121c;
+        --panel: #1c1c2a;
+        --panel-2: #232336;
+        --border: #35354d;
+        --text: #e6e6f0;
+        --text-dim: #9a9ab0;
+        --accent: #4a9eff;
+        --accent-2: #ff9800;
+        --success: #4caf50;
+        --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+
+    body.conversor-body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: none;
+    }
+
+    .conv-wrapper {
+        max-width: 780px;
+        margin: 24px auto;
+        padding: 0 16px 60px;
+    }
+
+    .conv-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .conv-header h1 {
+        font-size: 1.5rem;
+        letter-spacing: 3px;
+        margin: 0 0 6px;
+        color: var(--accent);
+    }
+
+    .conv-header p {
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .conv-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        margin-top: 14px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+    }
+    .conv-status.loading { color: var(--accent-2); }
+    .conv-status.ready   { color: var(--success); }
+    .conv-status.error   { color: var(--danger); }
+
+    .conv-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid var(--border);
+        border-top-color: var(--accent-2);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .conv-card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 16px;
+    }
+
+    .conv-card h2 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--accent);
+        margin: 0 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .conv-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .conv-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .conv-field label {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .conv-input,
+    .conv-select {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 9px 12px;
+        color: var(--text);
+        font-size: 0.88rem;
+        outline: none;
+        transition: border-color 0.2s;
+        width: 100%;
+    }
+    .conv-input:focus,
+    .conv-select:focus { border-color: var(--accent); }
+
+    .conv-input[readonly] {
+        opacity: 0.7;
+        cursor: default;
+    }
+
+    input[type="file"].conv-input {
+        padding: 6px;
+        cursor: pointer;
+    }
+    input[type="file"]::file-selector-button {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 0.85rem;
+    }
+    input[type="file"]::file-selector-button:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+
+    .conv-btn {
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 18px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+    .conv-btn:hover:not(:disabled) { filter: brightness(1.15); }
+    .conv-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .conv-btn.secondary {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        color: var(--text);
+    }
+    .conv-btn.success { background: var(--success); }
+    .conv-btn.warning { background: var(--accent-2); }
+    .conv-btn.danger  { background: var(--danger); }
+
+    .conv-btn.full { width: 100%; }
+
+    .conv-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        padding: 6px 0;
+    }
+    .conv-checkbox input {
+        width: 17px;
+        height: 17px;
+        cursor: pointer;
+        accent-color: var(--accent);
+    }
+
+    .conv-presets {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-top: 10px;
+    }
+    .conv-presets .conv-btn {
+        padding: 8px 6px;
+        font-size: 0.78rem;
+    }
+
+    .conv-progress-wrap {
+        display: none;
+        margin-top: 14px;
+    }
+    .conv-progress-wrap.active { display: block; }
+
+    .conv-progress-bar {
+        width: 100%;
+        height: 8px;
+        background: var(--panel-2);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+    .conv-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        transition: width 0.3s ease;
+    }
+
+    .conv-progress-text {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        margin-top: 6px;
+    }
+
+    /* Preview */
+    .conv-preview {
+        display: none;
+        margin-top: 14px;
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px;
+    }
+    .conv-preview.active { display: block; }
+    .conv-preview h3 {
+        margin: 0 0 10px;
+        font-size: 0.9rem;
+        color: var(--success);
+    }
+    .conv-preview video,
+    .conv-preview audio,
+    .conv-preview img {
+        width: 100%;
+        border-radius: 6px;
+        background: #000;
+        max-height: 340px;
+        display: block;
+    }
+    .conv-preview img { object-fit: contain; }
+
+    .conv-download-link {
+        display: inline-block;
+        margin-top: 12px;
+        background: var(--success);
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        font-weight: 600;
+    }
+    .conv-download-link:hover { filter: brightness(1.15); }
+
+    /* Modal Concat */
+    .conv-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .conv-modal-overlay.active { display: flex; }
+
+    .conv-modal {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        width: 100%;
+        max-width: 560px;
+        padding: 22px;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .conv-modal h2 {
+        margin: 0 0 4px;
+        font-size: 1.1rem;
+        color: var(--accent);
+    }
+    .conv-modal p.hint {
+        margin: 0 0 14px;
+        font-size: 0.8rem;
+        color: var(--text-dim);
+    }
+
+    .conv-modal-list {
+        background: var(--panel-2);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        min-height: 180px;
+        max-height: 260px;
+        overflow-y: auto;
+        padding: 8px;
+        margin-bottom: 12px;
+        font-size: 0.82rem;
+    }
+    .conv-modal-list .item {
+        padding: 7px 10px;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+    .conv-modal-list .item:hover { background: var(--panel); }
+    .conv-modal-list .item.selected {
+        background: rgba(74, 158, 255, 0.2);
+        outline: 1px solid var(--accent);
+    }
+    .conv-modal-list .item span.name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .conv-modal-list .empty {
+        text-align: center;
+        color: var(--text-dim);
+        padding: 60px 0;
+        font-style: italic;
+    }
+
+    .conv-modal-actions {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    .conv-modal-actions .conv-btn { font-size: 0.8rem; padding: 9px; }
+
+    .conv-modal-footer {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    .conv-warning-box {
+        background: rgba(255, 152, 0, 0.1);
+        border: 1px solid var(--accent-2);
+        color: var(--accent-2);
+        padding: 10px 14px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        margin-bottom: 14px;
+    }
+
+    @media (max-width: 520px) {
+        .conv-presets { grid-template-columns: 1fr; }
+        .conv-modal-actions { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body class="conversor-body">
+
+<div class="conv-wrapper">
+
+    <header class="conv-header">
+        <h1>CONVERSOR DE MÍDIA</h1>
+        <p>FFmpeg no navegador • 100% local • Nada é enviado para servidores</p>
+        <div id="convStatus" class="conv-status loading">
+            <div class="conv-spinner"></div>
+            <span id="convStatusText">Carregando FFmpeg (pode levar alguns segundos)...</span>
+        </div>
+    </header>
+
+    <!-- ARQUIVO DE ENTRADA -->
+    <section class="conv-card">
+        <h2>Arquivo de Entrada</h2>
+        <div class="conv-row">
+            <div class="conv-field" style="flex: 3;">
+                <label for="convFileInput">Selecione o arquivo</label>
+                <input type="file" id="convFileInput" class="conv-input"
+                       accept="video/*,audio/*,image/*,.mkv,.webm,.avi,.mov,.mp4,.mp3,.gif,.png,.jpg,.jpeg,.ico" />
+            </div>
+            <button id="convPlayInput" class="conv-btn secondary" disabled>▶ Assistir</button>
+        </div>
+        <div id="convFileName" style="font-size:0.78rem;color:var(--text-dim);margin-top:8px;">
+            Nenhum arquivo selecionado.
+        </div>
+    </section>
+
+    <!-- FORMATO E PRESETS -->
+    <section class="conv-card">
+        <h2>Formato Final e Compactação</h2>
+
+        <div class="conv-row">
+            <div class="conv-field">
+                <label>Formato de Saída</label>
+                <select id="convFormat" class="conv-select">
+                    <option value=".mp4" selected>.mp4</option>
+                    <option value=".mkv">.mkv</option>
+                    <option value=".webm">.webm</option>
+                    <option value=".avi">.avi</option>
+                    <option value=".mov">.mov</option>
+                    <option value=".mp3">.mp3 (só áudio)</option>
+                    <option value=".gif">.gif</option>
+                    <option value=".png">.png (1 frame)</option>
+                    <option value=".jpg">.jpg (1 frame)</option>
+                    <option value=".ico">.ico (256x256)</option>
+                </select>
+            </div>
+            <div class="conv-field">
+                <label>Resolução (largura)</label>
+                <input type="number" id="convScale" class="conv-input" value="240" />
+            </div>
+        </div>
+
+        <div class="conv-row" style="margin-top:10px;">
+            <div class="conv-field">
+                <label>Bitrate Vídeo</label>
+                <input type="text" id="convVBitrate" class="conv-input" value="250k" />
+            </div>
+            <div class="conv-field">
+                <label>Bitrate Áudio</label>
+                <input type="text" id="convABitrate" class="conv-input" value="60k" />
+            </div>
+        </div>
+
+        <div class="conv-presets">
+            <button class="conv-btn secondary" data-preset="180|150k|48k">🎯 Ultra Leve</button>
+            <button class="conv-btn secondary" data-preset="240|250k|60k">🎯 Padrão</button>
+            <button class="conv-btn secondary" data-preset="720|1200k|128k">🎯 HD Limpo</button>
+            <button class="conv-btn secondary" data-preset="3840|9000k|192k">🎯 4K Ultra</button>
+        </div>
+    </section>
+
+    <!-- TEMPOS DE CORTE -->
+    <section class="conv-card">
+        <h2>Tempos de Corte</h2>
+        <div class="conv-row">
+            <div class="conv-field">
+                <label>Início (HH:MM:SS.ms)</label>
+                <input type="text" id="convStart" class="conv-input" value="00:00:00.500" />
+            </div>
+            <div class="conv-field">
+                <label>Fim (HH:MM:SS.ms)</label>
+                <input type="text" id="convEnd" class="conv-input" value="00:00:00.500" />
+            </div>
+            <button id="convZerar" class="conv-btn secondary" style="align-self:end;">Zerar</button>
+        </div>
+    </section>
+
+    <!-- EFEITOS -->
+    <section class="conv-card">
+        <h2>Efeitos Especiais</h2>
+        <div class="conv-row">
+            <div class="conv-field">
+                <label>Velocidade</label>
+                <select id="convSpeed" class="conv-select">
+                    <option value="0.25">0.25x (Super Lenta)</option>
+                    <option value="0.5">0.5x (Lenta)</option>
+                    <option value="0.75">0.75x (Lenta leve)</option>
+                    <option value="1" selected>1.0x (Normal)</option>
+                    <option value="1.5">1.5x (Rápida)</option>
+                    <option value="2">2.0x (Super Rápida)</option>
+                </select>
+            </div>
+            <div class="conv-field">
+                <label>Brilho</label>
+                <select id="convBrightness" class="conv-select">
+                    <option value="0" selected>Normal</option>
+                    <option value="-0.50">-50%</option>
+                    <option value="-0.25">-25%</option>
+                    <option value="0.25">+25%</option>
+                    <option value="0.50">+50%</option>
+                    <option value="1.0">+100%</option>
+                </select>
+            </div>
+        </div>
+        <div class="conv-row" style="margin-top:10px;">
+            <div class="conv-field">
+                <label>Ganho de Áudio (ex: 10dB)</label>
+                <input type="text" id="convAudioGain" class="conv-input" value="10dB" />
+            </div>
+            <label class="conv-checkbox" style="align-self:end;">
+                <input type="checkbox" id="convRemoveAudio" />
+                Remover Áudio
+            </label>
+        </div>
+        <div class="conv-row" style="margin-top:12px;">
+            <label class="conv-checkbox">
+                <input type="checkbox" id="convPlayAfter" checked />
+                Executar / Baixar automaticamente após converter
+            </label>
+        </div>
+    </section>
+
+    <!-- AÇÕES -->
+    <section class="conv-card">
+        <h2>Executar</h2>
+        <button id="convBtnConvert" class="conv-btn full" style="margin-bottom:8px;">
+            🔄 Apenas Converter
+        </button>
+        <button id="convBtnCutOnly" class="conv-btn secondary full" style="margin-bottom:8px;">
+            ✂️ Apenas Cortar (sem perda)
+        </button>
+        <button id="convBtnCutConvert" class="conv-btn success full" style="margin-bottom:8px;">
+            ⚡ EXECUTAR TUDO! (Converter + Cortar)
+        </button>
+        <button id="convBtnConcat" class="conv-btn warning full">
+            🎬 Juntar Vários Vídeos
+        </button>
+
+        <div id="convProgressWrap" class="conv-progress-wrap">
+            <div class="conv-progress-bar">
+                <div id="convProgressFill" class="conv-progress-fill"></div>
+            </div>
+            <div id="convProgressText" class="conv-progress-text">0%</div>
+        </div>
+
+        <div id="convPreview" class="conv-preview">
+            <h3>✔ Arquivo gerado com sucesso!</h3>
+            <div id="convPreviewContent"></div>
+            <a id="convDownloadLink" class="conv-download-link" download>⬇ Baixar Arquivo</a>
+        </div>
+    </section>
+
+</div>
+
+<!-- MODAL DE CONCATENAÇÃO -->
+<div id="convConcatModal" class="conv-modal-overlay">
+    <div class="conv-modal">
+        <h2>Juntar Vários Vídeos</h2>
+        <p class="hint">Adicione os vídeos na ordem em que devem ser unificados:</p>
+
+        <div id="convConcatList" class="conv-modal-list">
+            <div class="empty">Nenhum vídeo adicionado.</div>
+        </div>
+
+        <div class="conv-modal-actions">
+            <button id="convConcatAdd" class="conv-btn secondary">+ Adicionar Vídeo</button>
+            <button id="convConcatRemove" class="conv-btn secondary">– Remover Item</button>
+            <button id="convConcatClear" class="conv-btn secondary">🗑 Limpar Tudo</button>
+            <button id="convConcatProcess" class="conv-btn success">✔ Processar Unificação</button>
+        </div>
+
+        <div class="conv-warning-box">
+            ⚠️ Vídeos com resoluções/bitrates diferentes serão normalizados automaticamente para 1280x720 @ 30fps.
+        </div>
+
+        <div class="conv-modal-footer">
+            <button id="convConcatClose" class="conv-btn secondary">Fechar</button>
+        </div>
+
+        <div id="convConcatProgress" class="conv-progress-wrap">
+            <div class="conv-progress-bar">
+                <div id="convConcatProgressFill" class="conv-progress-fill"></div>
+            </div>
+            <div id="convConcatProgressText" class="conv-progress-text">0%</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- CARREGAMENTO DO FFMPEG.WASM -->
+<!-- ============================================== -->
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+<script>
+(function () {
+    'use strict';
+
+    const { FFmpeg } = FFmpegWASM;
+    const { fetchFile, toBlobURL } = FFmpegUtil;
+
+    // ---------- ESTADO GLOBAL ----------
+    const state = {
+        ffmpeg: null,
+        loaded: false,
+        busy: false,
+        inputFile: null,
+        concatList: [],
+        concatSelectedIndex: -1,
+    };
+
+    // ---------- ELEMENTOS ----------
+    const $ = (id) => document.getElementById(id);
+
+    const el = {
+        status:          $('convStatus'),
+        statusText:      $('convStatusText'),
+        fileInput:       $('convFileInput'),
+        fileName:        $('convFileName'),
+        playInput:       $('convPlayInput'),
+        format:          $('convFormat'),
+        scale:           $('convScale'),
+        vbitrate:        $('convVBitrate'),
+        abitrate:        $('convABitrate'),
+        start:           $('convStart'),
+        end:             $('convEnd'),
+        zerar:           $('convZerar'),
+        speed:           $('convSpeed'),
+        brightness:      $('convBrightness'),
+        audioGain:       $('convAudioGain'),
+        removeAudio:     $('convRemoveAudio'),
+        playAfter:       $('convPlayAfter'),
+        btnConvert:      $('convBtnConvert'),
+        btnCutOnly:      $('convBtnCutOnly'),
+        btnCutConvert:   $('convBtnCutConvert'),
+        btnConcat:       $('convBtnConcat'),
+        progressWrap:    $('convProgressWrap'),
+        progressFill:    $('convProgressFill'),
+        progressText:    $('convProgressText'),
+        preview:         $('convPreview'),
+        previewContent:  $('convPreviewContent'),
+        downloadLink:    $('convDownloadLink'),
+        // modal
+        modal:           $('convConcatModal'),
+        concatList:      $('convConcatList'),
+        concatAdd:       $('convConcatAdd'),
+        concatRemove:    $('convConcatRemove'),
+        concatClear:     $('convConcatClear'),
+        concatProcess:   $('convConcatProcess'),
+        concatClose:     $('convConcatClose'),
+        concatProgWrap:  $('convConcatProgress'),
+        concatProgFill:  $('convConcatProgressFill'),
+        concatProgText:  $('convConcatProgressText'),
+    };
+
+    // ---------- UTILITÁRIOS ----------
+    function getExt(name) {
+        const i = name.lastIndexOf('.');
+        return i >= 0 ? name.slice(i).toLowerCase() : '';
+    }
+
+    function mimeFor(ext) {
+        const map = {
+            '.mp4': 'video/mp4',
+            '.mkv': 'video/x-matroska',
+            '.webm': 'video/webm',
+            '.avi': 'video/x-msvideo',
+            '.mov': 'video/quicktime',
+            '.mp3': 'audio/mpeg',
+            '.gif': 'image/gif',
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.ico': 'image/x-icon',
+        };
+        return map[ext] || 'application/octet-stream';
+    }
+
+    function timeToSeconds(str) {
+        if (!str) return 0;
+        const parts = String(str).trim().split(':');
+        if (parts.length === 3) {
+            const [h, m, s] = parts.map((p) => parseFloat(p) || 0);
+            return h * 3600 + m * 60 + s;
+        }
+        const n = parseFloat(str);
+        return isNaN(n) ? 0 : n;
+    }
+
+    function setStatus(kind, text) {
+        el.status.className = 'conv-status ' + kind;
+        if (kind === 'loading') {
+            el.status.innerHTML = '<div class="conv-spinner"></div><span>' + text + '</span>';
+        } else {
+            el.status.textContent = text;
+        }
+    }
+
+    function setBusy(busy) {
+        state.busy = busy;
+        const dis = busy || !state.loaded;
+        [el.btnConvert, el.btnCutOnly, el.btnCutConvert, el.btnConcat].forEach((b) => {
+            b.disabled = dis;
+        });
+        el.fileInput.disabled = busy;
+    }
+
+    function showProgress(percent, text) {
+        el.progressWrap.classList.add('active');
+        const p = Math.max(0, Math.min(100, percent));
+        el.progressFill.style.width = p + '%';
+        el.progressText.textContent = text || (p.toFixed(1) + '%');
+    }
+
+    function hideProgress() {
+        el.progressWrap.classList.remove('active');
+        el.progressFill.style.width = '0%';
+        el.progressText.textContent = '0%';
+    }
+
+    function showPreview(blob, filename) {
+        el.preview.classList.add('active');
+        const url = URL.createObjectURL(blob);
+        const ext = getExt(filename);
+        el.previewContent.innerHTML = '';
+
+        if (['.mp4', '.mkv', '.webm', '.avi', '.mov'].includes(ext)) {
+            const v = document.createElement('video');
+            v.controls = true;
+            v.src = url;
+            el.previewContent.appendChild(v);
+        } else if (['.mp3'].includes(ext)) {
+            const a = document.createElement('audio');
+            a.controls = true;
+            a.src = url;
+            el.previewContent.appendChild(a);
+        } else if (['.png', '.jpg', '.jpeg', '.gif', '.ico'].includes(ext)) {
+            const img = document.createElement('img');
+            img.src = url;
+            el.previewContent.appendChild(img);
+        }
+
+        el.downloadLink.href = url;
+        el.downloadLink.download = filename;
+        el.downloadLink.textContent = '⬇ Baixar "' + filename + '"';
+
+        if (el.playAfter.checked) {
+            el.downloadLink.click();
+        }
+    }
+
+    function clearPreview() {
+        el.preview.classList.remove('active');
+        el.previewContent.innerHTML = '';
+    }
+
+    // ---------- FILTROS / PARÂMETROS ----------
+    function buildVideoFilter() {
+        const parts = [];
+        const scale = el.scale.value || '240';
+        parts.push('scale=' + scale + ':-2');
+
+        const brightness = parseFloat(el.brightness.value) || 0;
+        if (brightness !== 0) {
+            parts.push('eq=brightness=' + brightness);
+        }
+
+        const speed = parseFloat(el.speed.value) || 1;
+        if (speed !== 1) {
+            const pts = (1 / speed).toFixed(6);
+            parts.push('setpts=' + pts + '*PTS');
+        }
+
+        return parts.join(',');
+    }
+
+    function atempoChain(speed) {
+        if (speed === 1) return null;
+        let s = speed;
+        const chain = [];
+        // atempo aceita 0.5 - 100; encadeia se necessário
+        while (s < 0.5) { chain.push('atempo=0.5'); s /= 0.5; }
+        while (s > 2.0) { chain.push('atempo=2.0'); s /= 2.0; }
+        chain.push('atempo=' + s.toFixed(6).replace(/0+$/, '').replace(/\.$/, ''));
+        return chain.join(',');
+    }
+
+    function buildAudioFilter() {
+        const parts = [];
+
+        const gain = (el.audioGain.value || '').trim();
+        if (gain && gain !== '0' && gain.toLowerCase() !== '0db') {
+            parts.push('volume=' + gain);
+        }
+
+        const speed = parseFloat(el.speed.value) || 1;
+        const chain = atempoChain(speed);
+        if (chain) parts.push(chain);
+
+        return parts.length ? parts.join(',') : '';
+    }
+
+    function buildAudioParams() {
+        if (el.removeAudio.checked) return { args: ['-an'], filter: '' };
+        const filter = buildAudioFilter();
+        return { args: filter ? ['-af', filter] : [], filter };
+    }
+
+    // ---------- EXECUÇÃO FFMPEG ----------
+    async function execCommand(args, outputName, outputExt) {
+        const ff = state.ffmpeg;
+        // limpa arquivos antigos
+        for (const f of [outputName]) {
+            try { await ff.deleteFile(f); } catch (_) {}
+        }
+        await ff.exec(args);
+
+        const data = await ff.readFile(outputName);
+        const blob = new Blob([data.buffer], { type: mimeFor(outputExt) });
+
+        try { await ff.deleteFile(outputName); } catch (_) {}
+        return blob;
+    }
+
+    async function prepareInput() {
+        const ff = state.ffmpeg;
+        const file = state.inputFile;
+        const ext = getExt(file.name);
+        const inName = 'input' + ext;
+
+        try { await ff.deleteFile(inName); } catch (_) {}
+        await ff.writeFile(inName, await fetchFile(file));
+
+        return { inName, ext };
+    }
+
+    async function cleanupInput(inName) {
+        try { await state.ffmpeg.deleteFile(inName); } catch (_) {}
+    }
+
+    // ---------- AÇÕES PRINCIPAIS ----------
+    async function runConvertOnly() {
+        if (!ensureReady()) return;
+        setBusy(true);
+        clearPreview();
+        showProgress(0, 'Preparando...');
+
+        const ff = state.ffmpeg;
+        const extOut = el.format.value;
+        try {
+            const { inName, ext: extIn } = await prepareInput();
+            const outName = 'output' + extOut;
+
+            const vFilter = buildVideoFilter();
+            const aParams = buildAudioParams();
+
+            let args;
+            if (extOut === '.gif') {
+                args = [
+                    '-i', inName,
+                    '-vf', 'fps=15,' + vFilter + ':flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse',
+                    '-an',
+                    outName,
+                ];
+            } else if (extOut === '.webm') {
+                args = ['-i', inName, '-vf', vFilter, ...aParams.args,
+                        '-c:v', 'libvpx-vp9', '-b:v', el.vbitrate.value,
+                        ...(el.removeAudio.checked ? ['-an'] : ['-c:a', 'libopus', '-b:a', el.abitrate.value]),
+                        outName];
+            } else if (extOut === '.mp3') {
+                args = ['-i', inName, ...aParams.args, '-b:a', el.abitrate.value, outName];
+            } else if (extOut === '.png' || extOut === '.jpg') {
+                args = ['-i', inName, '-vframes', '1', '-vf', vFilter, outName];
+            } else if (extOut === '.ico') {
+                args = ['-i', inName, '-vframes', '1', '-vf', 'scale=256:256:flags=lanczos', outName];
+            } else {
+                args = ['-i', inName, '-vf', vFilter, ...aParams.args,
+                        '-c:v', 'libx264', '-b:v', el.vbitrate.value,
+                        ...(el.removeAudio.checked ? ['-an'] : ['-c:a', 'aac', '-b:a', el.abitrate.value]),
+                        outName];
+            }
+
+            const blob = await execCommand(args, outName, extOut);
+            await cleanupInput(inName);
+
+            const baseName = state.inputFile.name.replace(/\.[^.]+$/, '');
+            showPreview(blob, baseName + '-convertido' + extOut);
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao converter: ' + (err.message || err));
+        } finally {
+            hideProgress();
+            setBusy(false);
+        }
+    }
+
+    async function runCutOnly() {
+        if (!ensureReady()) return;
+        setBusy(true);
+        clearPreview();
+        showProgress(0, 'Cortando...');
+
+        try {
+            const { inName, ext: extIn } = await prepareInput();
+            const extOut = el.format.value;
+            const outName = 'output' + extOut;
+
+            const start = el.start.value;
+            const end = el.end.value;
+            const startSec = timeToSeconds(start);
+            const endSec = timeToSeconds(end);
+            const dur = endSec - startSec;
+
+            if (dur <= 0) {
+                alert('O tempo final deve ser maior que o tempo inicial!');
+                await cleanupInput(inName);
+                setBusy(false);
+                hideProgress();
+                return;
+            }
+
+            const audioFlag = el.removeAudio.checked ? '-an' : '-c';
+            const audioVal  = el.removeAudio.checked ? null  : 'copy';
+
+            const args = ['-ss', start, '-i', inName, '-t', String(dur), audioFlag];
+            if (audioVal) args.push(audioVal);
+            args.push(outName);
+
+            const blob = await execCommand(args, outName, extOut);
+            await cleanupInput(inName);
+
+            const baseName = state.inputFile.name.replace(/\.[^.]+$/, '');
+            showPreview(blob, baseName + '-cortado' + extOut);
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao cortar: ' + (err.message || err));
+        } finally {
+            hideProgress();
+            setBusy(false);
+        }
+    }
+
+    async function runCutConvert() {
+        if (!ensureReady()) return;
+        setBusy(true);
+        clearPreview();
+        showProgress(0, 'Cortando e convertendo...');
+
+        try {
+            const { inName } = await prepareInput();
+            const extOut = el.format.value;
+            const outName = 'output' + extOut;
+
+            const start = el.start.value;
+            const end = el.end.value;
+            const startSec = timeToSeconds(start);
+            const endSec = timeToSeconds(end);
+            const dur = endSec - startSec;
+
+            if (dur <= 0) {
+                alert('O tempo final deve ser maior que o tempo inicial!');
+                await cleanupInput(inName);
+                setBusy(false);
+                hideProgress();
+                return;
+            }
+
+            const vFilter = buildVideoFilter();
+            const aParams = buildAudioParams();
+
+            let args;
+            if (extOut === '.gif') {
+                args = ['-ss', start, '-i', inName, '-t', String(dur),
+                        '-vf', 'fps=15,' + vFilter + ':flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse',
+                        '-an', outName];
+            } else if (extOut === '.webm') {
+                args = ['-ss', start, '-i', inName, '-t', String(dur),
+                        '-vf', vFilter, ...aParams.args,
+                        '-c:v', 'libvpx-vp9', '-b:v', el.vbitrate.value,
+                        ...(el.removeAudio.checked ? ['-an'] : ['-c:a', 'libopus', '-b:a', el.abitrate.value]),
+                        outName];
+            } else if (extOut === '.mp3') {
+                args = ['-ss', start, '-i', inName, '-t', String(dur),
+                        ...aParams.args, '-b:a', el.abitrate.value, outName];
+            } else if (extOut === '.png' || extOut === '.jpg') {
+                args = ['-ss', start, '-i', inName, '-vframes', '1', '-vf', vFilter, outName];
+            } else if (extOut === '.ico') {
+                args = ['-ss', start, '-i', inName, '-vframes', '1',
+                        '-vf', 'scale=256:256:flags=lanczos', outName];
+            } else {
+                args = ['-ss', start, '-i', inName, '-t', String(dur),
+                        '-vf', vFilter, ...aParams.args,
+                        '-c:v', 'libx264', '-b:v', el.vbitrate.value,
+                        ...(el.removeAudio.checked ? ['-an'] : ['-c:a', 'aac', '-b:a', el.abitrate.value]),
+                        outName];
+            }
+
+            const blob = await execCommand(args, outName, extOut);
+            await cleanupInput(inName);
+
+            const baseName = state.inputFile.name.replace(/\.[^.]+$/, '');
+            showPreview(blob, baseName + '-cortado-e-convertido' + extOut);
+        } catch (err) {
+            console.error(err);
+            alert('Erro: ' + (err.message || err));
+        } finally {
+            hideProgress();
+            setBusy(false);
+        }
+    }
+
+    function ensureReady() {
+        if (!state.loaded) {
+            alert('O FFmpeg ainda está carregando. Aguarde alguns segundos e tente novamente.');
+            return false;
+        }
+        if (state.busy) {
+            alert('Já existe uma operação em andamento.');
+            return false;
+        }
+        if (!state.inputFile) {
+            alert('Selecione um arquivo de entrada primeiro.');
+            return false;
+        }
+        return true;
+    }
+
+    // ---------- CONCATENAÇÃO ----------
+    function openModal() {
+        el.modal.classList.add('active');
+        renderConcatList();
+    }
+    function closeModal() {
+        el.modal.classList.remove('active');
+        state.concatSelectedIndex = -1;
+    }
+
+    function renderConcatList() {
+        if (state.concatList.length === 0) {
+            el.concatList.innerHTML = '<div class="empty">Nenhum vídeo adicionado.</div>';
+            return;
+        }
+        el.concatList.innerHTML = '';
+        state.concatList.forEach((f, i) => {
+            const div = document.createElement('div');
+            div.className = 'item' + (i === state.concatSelectedIndex ? ' selected' : '');
+            div.innerHTML = `<span class="name">${i + 1}. ${f.name}</span><span style="color:var(--text-dim);font-size:0.72rem;">${(f.size / 1024 / 1024).toFixed(1)} MB</span>`;
+            div.addEventListener('click', () => {
+                state.concatSelectedIndex = i;
+                renderConcatList();
+            });
+            el.concatList.appendChild(div);
+        });
+    }
+
+    function addToConcat() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'video/*,.mp4,.mkv,.avi,.mov,.webm';
+        input.multiple = true;
+        input.addEventListener('change', () => {
+            for (const f of input.files) state.concatList.push(f);
+            renderConcatList();
+        });
+        input.click();
+    }
+
+    function removeFromConcat() {
+        if (state.concatSelectedIndex < 0) {
+            alert('Selecione um item na lista para remover.');
+            return;
+        }
+        state.concatList.splice(state.concatSelectedIndex, 1);
+        state.concatSelectedIndex = -1;
+        renderConcatList();
+    }
+
+    function clearConcat() {
+        state.concatList = [];
+        state.concatSelectedIndex = -1;
+        renderConcatList();
+    }
+
+    async function processConcat() {
+        if (!state.loaded) { alert('FFmpeg ainda carregando...'); return; }
+        if (state.concatList.length < 2) {
+            alert('Adicione pelo menos 2 vídeos para unificar.');
+            return;
+        }
+        if (state.busy) { alert('Já existe uma operação em andamento.'); return; }
+
+        state.busy = true;
+        el.concatProgWrap.classList.add('active');
+        el.concatProgFill.style.width = '0%';
+        el.concatProgText.textContent = '0%';
+
+        const ff = state.ffmpeg;
+        const inputs = [];
+        try {
+            // Escreve todos os arquivos
+            for (let i = 0; i < state.concatList.length; i++) {
+                const f = state.concatList[i];
+                const name = 'in' + i + getExt(f.name);
+                try { await ff.deleteFile(name); } catch (_) {}
+                await ff.writeFile(name, await fetchFile(f));
+                inputs.push(name);
+            }
+
+            // filter_complex
+            const parts = [];
+            let concatInputs = '';
+            for (let i = 0; i < inputs.length; i++) {
+                parts.push(`[${i}:v]fps=30,scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2,format=yuv420p[v${i}]`);
+                parts.push(`[${i}:a]aformat=sample_rates=44100:channel_layouts=stereo[a${i}]`);
+                concatInputs += `[v${i}][a${i}]`;
+            }
+            const filterComplex = parts.join(';') + ';' + concatInputs + `concat=n=${inputs.length}:v=1:a=1[v][a]`;
+
+            const args = [];
+            for (const n of inputs) args.push('-i', n);
+            args.push('-filter_complex', filterComplex,
+                      '-map', '[v]', '-map', '[a]',
+                      '-c:v', 'libx264', '-preset', 'fast', '-crf', '22',
+                      '-c:a', 'aac', '-b:a', '128k',
+                      '-movflags', '+faststart',
+                      'output.mp4');
+
+            await ff.exec(args);
+            const data = await ff.readFile('output.mp4');
+            const blob = new Blob([data.buffer], { type: 'video/mp4' });
+
+            // limpeza
+            try { await ff.deleteFile('output.mp4'); } catch (_) {}
+            for (const n of inputs) { try { await ff.deleteFile(n); } catch (_) {} }
+
+            const baseName = state.concatList[0].name.replace(/\.[^.]+$/, '');
+            const outName = baseName + '-unificado.mp4';
+            const url = URL.createObjectURL(blob);
+
+            // Baixa
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = outName;
+            a.click();
+
+            alert('Vídeos unificados com sucesso!\n\nO download foi iniciado.');
+            closeModal();
+            clearConcat();
+        } catch (err) {
+            console.error(err);
+            alert('Erro ao unificar vídeos: ' + (err.message || err));
+            for (const n of inputs) { try { await ff.deleteFile(n); } catch (_) {} }
+        } finally {
+            state.busy = false;
+            el.concatProgWrap.classList.remove('active');
+        }
+    }
+
+// ---------- CARREGAMENTO COM CAMINHO ABSOLUTO / FALLBACK CDN ----------
+    async function loadFFmpeg() {
+        try {
+            setStatus('loading', 'Carregando motores do FFmpeg...');
+
+            const createFFmpeg = FFmpeg.createFFmpeg || window.FFmpeg.createFFmpeg;
+            
+            if (typeof createFFmpeg !== 'function') {
+                throw new Error('A biblioteca FFmpeg não foi carregada no <head>.');
+            }
+
+            // Constrói a URL absoluta apontando para a raiz do seu servidor local (http://127.0.0.1:5500/ffmpeg-core.js)
+            const localCorePath = new URL('./ffmpeg-core.js', window.location.href).href;
+
+            let ffmpeg;
+
+            // Tentativa 1: Tenta carregar usando o arquivo local com caminho absoluto resolvido
+            try {
+                ffmpeg = createFFmpeg({
+                    log: true,
+                    corePath: localCorePath
+                });
+            } catch (e) {
+                console.warn('Erro ao configurar caminho local, alternando para CDN...', e);
+            }
+
+            // Se falhar ou preferir CDN direta de fallback para v0.11.0:
+            if (!ffmpeg) {
+                ffmpeg = createFFmpeg({
+                    log: true,
+                    corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+                });
+            }
+
+            state.ffmpeg = ffmpeg;
+
+            // Evento de progresso
+            ffmpeg.setProgress(({ ratio }) => {
+                const p = Math.max(0, Math.min(1, ratio || 0)) * 100;
+                if (el.progressWrap && el.progressWrap.classList.contains('active')) {
+                    el.progressFill.style.width = p + '%';
+                    el.progressText.textContent = p.toFixed(1) + '%';
+                }
+                if (el.concatProgWrap && el.concatProgWrap.classList.contains('active')) {
+                    el.concatProgFill.style.width = p + '%';
+                    el.concatProgText.textContent = p.toFixed(1) + '%';
+                }
+            });
+
+            // Tenta inicializar. Se o arquivo local falhar, cai no catch interno e tenta a CDN.
+            try {
+                await ffmpeg.load();
+            } catch (errLoad) {
+                console.warn('Falha no ffmpeg.load() local. Tentando carregar via CDN v0.11.0...', errLoad);
+                
+                ffmpeg = createFFmpeg({
+                    log: true,
+                    corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+                });
+                state.ffmpeg = ffmpeg;
+                await ffmpeg.load();
+            }
+
+            state.loaded = true;
+            setStatus('ready', '✔ FFmpeg carregado e pronto para uso!');
+            setBusy(false);
+
+        } catch (err) {
+            console.error('Erro final ao inicializar FFmpeg:', err);
+            setStatus('error', '✖ Falha ao carregar os motores do FFmpeg.');
+
+            if (el.fileName) {
+                el.fileName.innerHTML = `
+                    <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); padding: 12px; border-radius: 8px; color: var(--text); margin-top: 10px;">
+                        <strong style="color: var(--danger);">Erro de Carregamento</strong><br>
+                        <p style="margin: 6px 0; font-size: 0.85rem;">Não foi possível carregar os binários do WebAssembly.</p>
+                    </div>
+                `;
+            }
+        }
+    }
+
+
+    // ---------- EVENTOS ----------
+    function bindEvents() {
+        el.fileInput.addEventListener('change', () => {
+            if (el.fileInput.files.length > 0) {
+                state.inputFile = el.fileInput.files[0];
+                el.fileName.textContent = '📄 ' + state.inputFile.name +
+                    ' (' + (state.inputFile.size / 1024 / 1024).toFixed(2) + ' MB)';
+                el.playInput.disabled = false;
+            } else {
+                state.inputFile = null;
+                el.fileName.textContent = 'Nenhum arquivo selecionado.';
+                el.playInput.disabled = true;
+            }
+        });
+
+        el.playInput.addEventListener('click', () => {
+            if (!state.inputFile) return;
+            const url = URL.createObjectURL(state.inputFile);
+            window.open(url, '_blank');
+        });
+
+        el.zerar.addEventListener('click', () => {
+            el.start.value = '00:00:00.000';
+            el.end.value = '00:00:00.000';
+        });
+
+        document.querySelectorAll('[data-preset]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const [s, v, a] = btn.getAttribute('data-preset').split('|');
+                el.scale.value = s;
+                el.vbitrate.value = v;
+                el.abitrate.value = a;
+            });
+        });
+
+        el.btnConvert.addEventListener('click', runConvertOnly);
+        el.btnCutOnly.addEventListener('click', runCutOnly);
+        el.btnCutConvert.addEventListener('click', runCutConvert);
+        el.btnConcat.addEventListener('click', openModal);
+
+        el.concatAdd.addEventListener('click', addToConcat);
+        el.concatRemove.addEventListener('click', removeFromConcat);
+        el.concatClear.addEventListener('click', clearConcat);
+        el.concatProcess.addEventListener('click', processConcat);
+        el.concatClose.addEventListener('click', closeModal);
+
+        el.modal.addEventListener('click', (e) => {
+            if (e.target === el.modal) closeModal();
+        });
+    }
+
+    // ---------- INICIALIZAÇÃO ----------
+    document.addEventListener('DOMContentLoaded', () => {
+        bindEvents();
+        setBusy(true);
+        loadFFmpeg();
+    });
+})();
+</script>
+
+</body>
+</html>
